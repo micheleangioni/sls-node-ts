@@ -1,0 +1,24 @@
+service:
+  name: sls-node-ts
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+functions:
+  graphql:
+    handler: handler.graphqlHandler
+    events:
+      - http:
+          method: post
+          path: graphql
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          method: get
+          path: hello
