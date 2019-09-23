@@ -1,10 +1,9 @@
 import { ApolloServer, gql } from 'apollo-server-lambda';
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import 'source-map-support/register';
-import infra from './src/infrastructure';
+import UserService from './src/application/user/userService';
+import { userRepo } from './src/infrastructure';
 import resolversCreator from './src/resolvers';
-
-const { repos } = infra();
 
 const typeDefs = gql`
   type User {
@@ -17,7 +16,7 @@ const typeDefs = gql`
   }
 `;
 
-const resolvers = resolversCreator();
+const resolvers = resolversCreator({ userService: new UserService(userRepo) });
 
 // @ts-ignore
 const server = new ApolloServer({
@@ -26,7 +25,7 @@ const server = new ApolloServer({
 });
 
 export const hello: APIGatewayProxyHandler = async (event, _context) => {
-  const allUsers = await repos.user.all();
+  const allUsers = await userRepo.all();
 
   return {
     body: JSON.stringify({

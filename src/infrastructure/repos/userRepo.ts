@@ -1,14 +1,10 @@
-import { Model } from 'mongoose';
-import { UserCreateData, UserData, UserUpdateData } from '../../domain/user/declarations';
-import { IUserRepo } from '../../domain/user/IUserRepo';
+import {Model} from 'mongoose';
+import {UserCreateData, UserData, UserUpdateData} from '../../domain/user/declarations';
+import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 
 class UserRepo implements IUserRepo {
-  protected userModel: Model<any>;
-
-  constructor(userModel: Model<any>) {
-    this.userModel = userModel;
-  }
+  constructor(private userModel: Model<any>) { this.userModel = userModel; }
 
   /**
    * Return all Users as an array of User entities.
