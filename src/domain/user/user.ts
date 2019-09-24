@@ -13,16 +13,14 @@ export default class User implements IEntity {
   public _id?: string;
   public readonly createdAt?: Moment;
   public readonly email: string;
-  public password: string;
   public updatedAt?: Moment;
   public username?: string;
 
-  constructor({ _id, createdAt, email, password, updatedAt, username }: UserData) {
+  constructor({ _id, createdAt, email, updatedAt, username }: UserData) {
     if (_id) { this._id = _id; }
 
     User.checkEmail(email);
     this.email = email;
-    this.password = password;
 
     if (createdAt) { this.createdAt = moment(createdAt); }
     if (updatedAt) { this.updatedAt = moment(updatedAt); }

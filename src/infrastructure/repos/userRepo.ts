@@ -111,7 +111,6 @@ class UserRepo implements IUserRepo {
     return new Promise((resolve, reject) => {
       const createData: UserCreateData = {
         email: user.email,
-        password: user.password,
         username: user.username,
       };
 
