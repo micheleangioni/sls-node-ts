@@ -104,12 +104,18 @@ class UserRepo implements IUserRepo {
   /**
    * Create a new User.
    *
-   * @param {UserCreateData} data
+   * @param {User} user
    * @returns {Promise<User>}
    */
-  public create (data: UserCreateData ): Promise<User> {
+  public create (user: User): Promise<User> {
     return new Promise((resolve, reject) => {
-      this.userModel.create(data)
+      const createData: UserCreateData = {
+        email: user.email,
+        password: user.password,
+        username: user.username,
+      };
+
+      this.userModel.create(createData)
         .then((userData: UserData) => {
           resolve(new User(userData));
         })
@@ -118,16 +124,27 @@ class UserRepo implements IUserRepo {
   }
 
   /**
-   * Update input User.
+   * Update input User with updatable fields.
    *
-   * @param {string} userId
-   * @param {UserUpdateData} data
+   * @param {User} user
    * @returns {Promise<User>}
    */
-  public updateUser(userId: string, data: UserUpdateData): Promise<User> {
+  public updateUser(user: User): Promise<User> {
     return new Promise((resolve, reject) => {
-      this.userModel.findByIdAndUpdate(userId, data)
-        .then((userData: UserData) => {
+      if (!user._id) {
+        return reject('Cannot update a non persisted User');
+      }
+
+      const updateData: UserUpdateData = {
+        username: user.username,
+      };
+
+      this.userModel.findByIdAndUpdate(user._id, updateData)
+        .then((userData: UserData | null) => {
+          if (!userData) {
+            return reject(`User ${user._id} not found`);
+          }
+
           resolve(new User(userData));
         })
         .catch((error: any) => reject(error));

@@ -1,7 +1,9 @@
 export type UserData = {
   _id?: string,
+  createdAt?: Date,
   email: string,
   password: string,
+  updatedAt?: Date,
   username: string|undefined|null,
 };
 
