@@ -1,13 +1,16 @@
 import { makeExecutableSchema } from 'graphql-tools';
 import UserService from '../application/user/userService';
-import userGraphQLcreator from './user';
+import userSchemacreator from './user';
 
 export default function ({ userService }: { userService: UserService }) {
-  // Define empty Type Defs and Resolvers
+  // Define empty Type Defs and Resolvers to be extended
 
   // tslint:disable-next-line:variable-name
   const Query = `
     type Query {
+      _empty: String
+    }
+    type Mutation {
       _empty: String
     }
    `;
@@ -16,11 +19,11 @@ export default function ({ userService }: { userService: UserService }) {
 
   // Merge Type Defs and Resolvers of each domain
 
-  const userGraphQL = userGraphQLcreator(userService);
+  const userSchema = userSchemacreator(userService);
 
   return makeExecutableSchema({
-    resolvers: { ...resolvers, ...userGraphQL.resolvers },
-    typeDefs: [ Query, userGraphQL.typeDef ],
+    resolvers: { ...resolvers, ...userSchema.resolvers },
+    typeDefs: [ Query, userSchema.typeDef ],
   });
 }
 

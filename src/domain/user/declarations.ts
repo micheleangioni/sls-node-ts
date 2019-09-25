@@ -3,7 +3,7 @@ export type UserData = {
   createdAt?: Date,
   email: string,
   updatedAt?: Date,
-  username: string|undefined|null,
+  username?: string,
 };
 
 export type UserCreateData = {
