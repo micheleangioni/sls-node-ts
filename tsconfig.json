@@ -9,6 +9,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
+    "esModuleInterop": true,
     "target": "esnext", // ,"es2017"
     "outDir": ".webpack"
   },
