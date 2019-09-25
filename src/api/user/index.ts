@@ -20,8 +20,10 @@ export default function (userService: UserService) {
     typeDef: `
       type User {
         _id: String
+        createdAt: String,
         email: String!
-        username: String!
+        updatedAt: String
+        username: String
       }
       extend type Query {
         getUsers: [User]

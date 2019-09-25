@@ -1,7 +1,7 @@
 export type TransformedUser = {
   _id: string,
-  createdAt?: Date,
+  createdAt?: string,
   email: string,
-  updatedAt?: Date,
+  updatedAt?: string,
   username?: string,
 };

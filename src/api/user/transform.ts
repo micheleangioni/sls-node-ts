@@ -4,9 +4,9 @@ import {TransformedUser} from './declarations';
 export default function (user: User): TransformedUser {
   return {
     _id: user._id || '',
-    createdAt: user.createdAt ? user.createdAt.toDate() : undefined,
+    createdAt: user.createdAt ? user.createdAt.toISOString() : undefined,
     email: user.email,
-    updatedAt: user.updatedAt ? user.updatedAt.toDate() : undefined,
+    updatedAt: user.updatedAt ? user.updatedAt.toISOString() : undefined,
     username: user.username,
   };
 }
