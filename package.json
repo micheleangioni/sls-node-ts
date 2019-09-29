@@ -2,7 +2,7 @@
   "name": "sls-node-ts",
   "version": "0.1.0",
   "description": "Serverless Node.js TypeScript starter",
-  "main": "handler.js",
+  "main": "handler.ts",
   "scripts": {
     "lint": "tslint --project .",
     "offline": "sls offline start --port 8090",
