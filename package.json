@@ -52,7 +52,7 @@
     "tslint": "^5.19.0",
     "typescript": "^3.6.0",
     "utf-8-validate": "^5.0.2",
-    "webpack": "^4.29.0"
+    "webpack": "^4.41.0"
   },
   "author": {
     "name": "Michele Angioni",
