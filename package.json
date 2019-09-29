@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "tslint --project .",
     "offline": "sls offline start --port 8090",
-    "test": "jest --runInBand --forceExit"
+    "test": "jest --runInBand --forceExit --verbose",
+    "watch-test": "jest --runInBand --verbose --watchAll"
   },
   "jest": {
     "transform": {
