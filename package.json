@@ -28,7 +28,7 @@
     "@types/mongoose": "^5.5.18",
     "@types/validator": "^10.11.3",
     "apollo-server-lambda": "^2.9.0",
-    "graphql": "^14.5.4",
+    "graphql": "^14.5.8",
     "graphql-tools": "^4.0.5",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
