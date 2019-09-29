@@ -1,8 +1,11 @@
 import mongoose, {Model} from 'mongoose';
-import config from '../../config';
 import usersSchema from './schemas/usersSchema';
 
-mongoose.connect(config.mongo.connection, {useNewUrlParser: true})
+const mongoUri = process.env.MONGO_URI
+  ? process.env.MONGO_URI
+  : `mongodb://localhost:27017/sls-node-ts-${process.env.NODE_ENV}`;
+
+mongoose.connect(mongoUri, {useNewUrlParser: true})
   .catch((e: any) => {
     throw e;
   });
