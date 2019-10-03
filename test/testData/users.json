@@ -1,0 +1,16 @@
+[
+  {
+    "_id" : "1d91fa92ae50f9739f38f274",
+    "email" : "test1@test.com",
+    "username" : "Test1",
+    "createdAt" : "2019-10-03T12:52:34.613Z",
+    "updatedAt" : "2019-10-03T12:52:34.613Z"
+  },
+  {
+    "_id" : "2d91fa92ae50f9739f38f274",
+    "email" : "test2@test.com",
+    "username" : "Test2",
+    "createdAt" : "2019-10-03T12:52:34.613Z",
+    "updatedAt" : "2019-10-03T12:52:34.613Z"
+  }
+]
