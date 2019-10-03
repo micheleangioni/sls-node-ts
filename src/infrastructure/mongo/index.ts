@@ -5,7 +5,7 @@ const mongoUri = process.env.MONGO_URI
   ? process.env.MONGO_URI
   : `mongodb://localhost:27017/sls-node-ts-${process.env.NODE_ENV}`;
 
-mongoose.connect(mongoUri, {useNewUrlParser: true})
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((e: any) => {
     throw e;
   });
