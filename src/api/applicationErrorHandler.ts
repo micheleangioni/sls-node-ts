@@ -1,7 +1,7 @@
 import {APIGatewayProxyResult} from 'aws-lambda';
 import { getErrorResponse } from './responseGenerator';
 
-export function applicationErrorHandler(err: any): APIGatewayProxyResult {
+export default function applicationErrorHandler(err: any): APIGatewayProxyResult {
   if (err.statusCode && err.code) {
     if (err.statusCode >= 500) {
       console.error(err);

@@ -1,6 +1,6 @@
 import UserService from '../../application/user/userService';
 import {Dictionary} from '../../domain/declarations';
-import {applicationErrorHandler} from '../ApplicationErrorHandler';
+import applicationErrorHandler from '../applicationErrorHandler';
 import {ResolverContext} from '../declarations';
 import {TransformedUser} from './declarations';
 import transform from './transform';
