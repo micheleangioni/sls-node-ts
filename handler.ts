@@ -1,10 +1,17 @@
 import { ApolloServer } from 'apollo-server-lambda';
-import { APIGatewayProxyHandler } from 'aws-lambda';
+import {APIGatewayProxyEvent, APIGatewayProxyHandler, Callback, Context} from 'aws-lambda';
 import schemaCreator from './src/api';
+import { getErrorResponse } from './src/api/responseGenerator';
+import userRest from './src/api/user/rest';
 import UserService from './src/application/user/userService';
 import { userRepo } from './src/infrastructure';
 
-const schema = schemaCreator({ userService: new UserService(userRepo) });
+// Instantiate Application Services
+const userService = new UserService(userRepo);
+
+// Create GraphQL Server
+
+const schema = schemaCreator({ userService });
 
 const server = new ApolloServer({
   formatError: (err) => {
@@ -15,30 +22,29 @@ const server = new ApolloServer({
       console.error(JSON.stringify(err));
     }
 
-    // Return a cleaned error
-    return {
-      code: err.extensions && err.extensions.exception && err.extensions.exception.code
-        ? err.extensions.exception.code
-        : undefined,
-      message: err.message,
-      statusCode: err.extensions && err.extensions.exception && err.extensions.exception.statusCode
-        ? err.extensions.exception.statusCode
-        : undefined,
-    };
+    // Return proper error response
+    const code = err.extensions && err.extensions.exception && err.extensions.exception.code
+      ? err.extensions.exception.code
+      : undefined;
+    const statusCode = err.extensions && err.extensions.exception && err.extensions.exception.statusCode
+      ? err.extensions.exception.statusCode
+      : 500;
+
+    return getErrorResponse(err.message, code, statusCode);
   },
   schema,
 });
 
-export const hello: APIGatewayProxyHandler = async (event, _context) => {
-  const allUsers = await userRepo.all();
+// Add REST endpoints
 
-  return {
-    body: JSON.stringify({
-      input: event,
-      message: `Hello! ${allUsers.length} users are present in the Database`,
-    }, null, 2),
-    statusCode: 200,
-  };
+const restHandlers = userRest(userService);
+
+export const getUsers: APIGatewayProxyHandler = async (event, context) => {
+  return await restHandlers.getUsers({}, { event, context });
 };
 
-exports.graphqlHandler = server.createHandler();
+export function graphqlHandler(lambdaEvent: APIGatewayProxyEvent, lambdaContext: Context, callback: Callback) {
+  const handler = server.createHandler();
+
+  return handler(lambdaEvent, lambdaContext, callback);
+}

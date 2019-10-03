@@ -1,6 +1,6 @@
 import { makeExecutableSchema } from 'graphql-tools';
 import UserService from '../application/user/userService';
-import userSchemacreator from './user';
+import userSchemacreator from './user/graphql';
 
 export default function ({ userService }: { userService: UserService }) {
   // Define empty Type Defs and Resolvers to be extended

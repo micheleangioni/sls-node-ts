@@ -1,17 +1,26 @@
 import UserService from '../../application/user/userService';
 import {UserCreateData} from '../../domain/user/declarations';
+import {ResolverContext} from '../declarations';
 import transform from './transform';
 
 export default function (userService: UserService) {
   return {
     resolvers: {
       Mutation: {
-        createUser: async (_: string | undefined, { email, username }: UserCreateData) => {
+        createUser: async (
+          _source: string | undefined,
+          { email, username }: UserCreateData,
+          _context: ResolverContext,
+        ) => {
           return transform(await userService.createUser({ email, username }));
         },
       },
       Query: {
-        getUsers: async () => {
+        getUsers: async (
+          _source: string | undefined,
+          _params: object,
+          _context: ResolverContext,
+        ) => {
           return (await userService.getAll())
             .map((user) => transform(user));
         },

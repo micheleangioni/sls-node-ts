@@ -16,9 +16,9 @@ functions:
       - http:
           method: post
           path: graphql
-  hello:
-    handler: handler.hello
+  getCities:
+    handler: handler.getUsers
     events:
       - http:
           method: get
-          path: hello
+          path: users
