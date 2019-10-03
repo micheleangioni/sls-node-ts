@@ -22,3 +22,5 @@ functions:
       - http:
           method: get
           path: users
+  authorizerFunc:
+    handler: handler.authorizer
