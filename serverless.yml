@@ -8,6 +8,20 @@ plugins:
 provider:
   name: aws
   runtime: nodejs10.x
+  region: ${opt:region, 'eu-west-1'}
+  stage: ${opt:stage, 'development'}
+  iamManagedPolicies:
+    - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'secretsmanager:GetSecretValue'
+      Resource: [
+        "*"
+      ]
+  environment:
+    ENV: ${self:provider.stage}
+    REGION: ${self:provider.region}
 
 functions:
   graphql:
