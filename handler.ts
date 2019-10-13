@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-lambda';
 import {APIGatewayProxyEvent, APIGatewayProxyHandler, Callback, Context} from 'aws-lambda';
 import schemaCreator from './src/api';
 import apolloErrorHandler from './src/api/apolloErrorHandler';
+import applicationErrorHandler from './src/api/applicationErrorHandler';
 import authorizer from './src/api/authorizer';
 import userRest from './src/api/user/rest';
 import UserService from './src/application/user/userService';
@@ -45,5 +46,9 @@ export function graphqlHandler(lambdaEvent: APIGatewayProxyEvent, lambdaContext:
 const restHandlers = userRest(userService);
 
 export const getUsers: APIGatewayProxyHandler = async (event, context) => {
-  return await restHandlers.getUsers({}, { event, context });
+  try {
+    return await restHandlers.getUsers({}, { event, context });
+  } catch (err) {
+    return applicationErrorHandler(err);
+  }
 };

@@ -16,7 +16,7 @@ Run `npm install`.
 
 ## Running the Application
 
-To run the application locally, just run `sls offline start --port 8080`.
+To run the application locally, just run `npm run offline`.
 
 ## Env variables
 
@@ -26,6 +26,21 @@ To run the application locally, just run `sls offline start --port 8080`.
 ## Deployment
 
 The deployment is handled by the Serverless framework. Just run `sls deploy`.
+
+## Features
+
+#### Error Messages
+
+All error messages have the following format:
+
+```
+{
+    "code": (string),
+    "error": (string),
+    "hasError": 1,
+    "statusCode":  (number)
+}
+```
 
 ## Testing
 
