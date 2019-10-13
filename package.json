@@ -5,9 +5,11 @@
   "main": "handler.ts",
   "scripts": {
     "lint": "tslint --project .",
-    "offline": "sls offline start --port 8090",
+    "offline": "sls offline start --port 3000 --stage development",
     "test": "jest --runInBand --forceExit --verbose",
-    "watch-test": "jest --runInBand --verbose --watchAll"
+    "watch-test": "jest --runInBand --verbose --watchAll",
+    "deploy-staging": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless deploy --stage staging --region eu-west-1",
+    "deploy-production": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless deploy --stage production --region eu-west-1"
   },
   "jest": {
     "transform": {
