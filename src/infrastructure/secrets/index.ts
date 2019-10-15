@@ -42,9 +42,18 @@ function getSecretValue(client: AWS.SecretsManager, secretName: string, secretTy
         return resolve(buff.toString('ascii'));
       }
 
-      const secretObject: Dictionary<string> = JSON.parse(data.SecretString as string);
+      let secretValue: string;
 
-      resolve(Object.values(secretObject)[0]);
+      // Let's try to parse a JSON encoded secrets. If it fails, let's use it as a plaintext secret
+
+      try {
+        const secretObject: Dictionary<string> = JSON.parse(data.SecretString as string);
+        secretValue = Object.values(secretObject)[0];
+      } catch (_) {
+        secretValue = data.SecretString as string;
+      }
+
+      resolve(secretValue);
     });
   });
 }

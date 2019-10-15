@@ -3,7 +3,7 @@ import usersSchema from './schemas/usersSchema';
 
 const mongoUri = process.env.MONGO_URI
   ? process.env.MONGO_URI
-  : `mongodb://localhost:27017/sls-node-ts-${process.env.NODE_ENV}`;
+  : `mongodb://localhost:27017/sls-node-ts-${process.env.ENV}`;
 
 mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((e: any) => {
