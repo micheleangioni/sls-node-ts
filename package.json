@@ -27,7 +27,7 @@
   "dependencies": {
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.12",
-    "@types/mongoose": "^5.5.18",
+    "@types/mongoose": "^5.5.22",
     "@types/validator": "^10.11.3",
     "apollo-server-lambda": "^2.9.0",
     "graphql": "^14.5.8",
