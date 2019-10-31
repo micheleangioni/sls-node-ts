@@ -1,8 +1,10 @@
 // @ts-ignore
 import moment = require('moment-timezone');
-import {userRepo} from '../src/infrastructure';
 import {User as UserModel} from '../src/infrastructure/mongo';
+import userRepoCreator from '../src/infrastructure/repos/userRepo';
 import usersData from './testData/users.json';
+
+const userRepo = userRepoCreator(UserModel);
 
 export {userRepo};
 
