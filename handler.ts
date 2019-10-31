@@ -10,7 +10,8 @@ import { Dictionary } from './src/domain/declarations';
 import infraServicesCreator from './src/infrastructure';
 import { loadSecrets } from './src/infrastructure/secrets';
 
-console.log(`Booting City Manager API in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
+// tslint:disable-next-line:no-console
+console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
 
 type ApolloHandler = (
   event: APIGatewayProxyEvent,
@@ -42,6 +43,7 @@ async function createServiceInstances() {
     const infraServices = await infraServicesCreator();
     userRepo = infraServices.userRepo;
   } catch (e) {
+    // tslint:disable-next-line:no-console
     console.log('Error on infrastructure services startup', e);
     throw e;
   }
@@ -143,11 +145,11 @@ export { authorizer };
 
 // Add REST endpoints
 
-export const getUsers: APIGatewayProxyHandler = async (event, context) => {
+export const getUsers: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, context: Context) => {
   try {
     await createRESTHandlers();
 
-    return await restHandlers.getUsers({}, { event, context });
+    return await restHandlers.getUsers(event, context);
   } catch (err) {
     return applicationErrorHandler(err);
   }

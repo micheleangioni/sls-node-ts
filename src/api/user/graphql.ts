@@ -12,6 +12,9 @@ export default function (userService: UserService) {
           { email, username }: UserCreateData,
           _context: ResolverContext,
         ) => {
+          // In _context.event.requestContext.authorizer the Authorizer Context is available
+          // _context.event.requestContext.authorizer.userId is the Authenticated User id
+
           return transform(await userService.createUser({ email, username }));
         },
       },
@@ -21,6 +24,9 @@ export default function (userService: UserService) {
           _params: object,
           _context: ResolverContext,
         ) => {
+          // In _context.event.requestContext.authorizer the Authorizer Context is available
+          // _context.event.requestContext.authorizer.userId is the Authenticated User id
+
           return (await userService.getAll())
             .map((user) => transform(user));
         },
