@@ -38,7 +38,13 @@ class UserRepo implements IUserRepo {
 
           resolve(new User(userData));
         })
-        .catch((error: any) => reject(error));
+        .catch((error: any) => {
+          if (error.name === 'CastError') {
+            return resolve(null);
+          }
+
+          reject(error);
+        });
     });
   }
 
