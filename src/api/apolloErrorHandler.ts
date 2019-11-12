@@ -15,7 +15,9 @@ export default function apolloErrorHandler(error: GraphQLError): GraphQLFormatte
     : undefined;
   const statusCode = error.extensions && error.extensions.exception && error.extensions.exception.statusCode
     ? error.extensions.exception.statusCode
-    : 500;
+    : error.name === 'ValidationError'
+      ? 412
+      : 500;
 
   return getErrorResponse(error.message, code, statusCode);
 }
