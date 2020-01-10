@@ -1,4 +1,5 @@
-import { makeExecutableSchema } from 'graphql-tools';
+import deepmerge from 'deepmerge';
+import { IResolvers, makeExecutableSchema } from 'graphql-tools';
 import UserService from '../application/user/userService';
 import userSchemacreator from './user/graphql';
 
@@ -22,7 +23,7 @@ export default function ({ userService }: { userService: UserService }) {
   const userSchema = userSchemacreator(userService);
 
   return makeExecutableSchema({
-    resolvers: { ...resolvers, ...userSchema.resolvers },
+    resolvers: deepmerge.all([resolvers, userSchema.resolvers]) as IResolvers,
     typeDefs: [ Query, userSchema.typeDef ],
   });
 }
