@@ -29,18 +29,18 @@
     "@types/moment-timezone": "^0.5.12",
     "@types/mongoose": "^5.5.30",
     "@types/validator": "^10.11.3",
-    "apollo-server-lambda": "^2.9.7",
+    "apollo-server-lambda": "^2.9.13",
     "graphql": "^14.5.8",
     "graphql-tools": "^4.0.5",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
-    "mongoose": "^5.7.5",
+    "mongoose": "^5.7.14",
     "querystring": "^0.2.0",
     "source-map-support": "^0.5.10",
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.33",
+    "@types/aws-lambda": "^8.10.37",
     "@types/jest": "^24.0.18",
     "@types/node": "^10.12.18",
     "bufferutil": "^4.0.1",
@@ -52,9 +52,9 @@
     "ts-loader": "^6.2.0",
     "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
-    "typescript": "^3.6.0",
+    "typescript": "^3.7.3",
     "utf-8-validate": "^5.0.2",
-    "webpack": "^4.41.0"
+    "webpack": "^4.41.2"
   },
   "author": {
     "name": "Michele Angioni",
