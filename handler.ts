@@ -81,6 +81,7 @@ async function createApolloHandler(): Promise<ApolloHandler> {
       headers: event.headers,
     }),
     formatError: apolloErrorHandler,
+    introspection: true,
     schema,
   });
 
