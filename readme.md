@@ -20,7 +20,8 @@ To run the application locally, just run `npm run offline`.
 
 ## Env variables
 
- - NODE_ENV : Set the environment name
+ - NODE_ENV : Set the environment name, not used in the code
+ - ENV : Set manually the environment name, this is the variable used thoughout the code and set via serverless CLI
  - MONGO_URI : Set the complete MongoDB connection string
 
 ## Deployment
