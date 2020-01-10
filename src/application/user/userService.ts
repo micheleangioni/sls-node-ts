@@ -11,7 +11,10 @@ export default class UserService {
   }
 
   public async createUser(data: UserCreateData): Promise<User> {
-    const user = new User(data);
+    const user = new User({
+      _id: this.userRepo.nextIdentity(),
+      ...data,
+    });
 
     return await this.userRepo.create(user);
   }

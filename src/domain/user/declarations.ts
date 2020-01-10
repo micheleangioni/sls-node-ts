@@ -1,5 +1,5 @@
 export type UserData = {
-  _id?: string,
+  _id: string,
   createdAt?: Date,
   email: string,
   updatedAt?: Date,

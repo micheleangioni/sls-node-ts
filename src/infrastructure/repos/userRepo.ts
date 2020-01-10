@@ -1,10 +1,19 @@
-import {Model} from 'mongoose';
+import {Model, mongo} from 'mongoose';
 import {UserCreateData, UserData, UserUpdateData} from '../../domain/user/declarations';
 import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 
 class UserRepo implements IUserRepo {
-  constructor(private userModel: Model<any>) { this.userModel = userModel; }
+  constructor(private userModel: Model<any>) {}
+
+  /**
+   * Create and return a new MongoDB id.
+   *
+   * @return string
+   */
+  public nextIdentity(): string {
+    return new mongo.ObjectID().toString();
+  }
 
   /**
    * Return all Users as an array of User entities.

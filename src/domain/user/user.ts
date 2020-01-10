@@ -10,14 +10,14 @@ export default class User implements IEntity {
     }
   }
 
-  public _id?: string;
+  public _id: string;
   public readonly createdAt?: Moment;
   public readonly email: string;
   public updatedAt?: Moment;
   public username?: string;
 
   constructor({ _id, createdAt, email, updatedAt, username }: UserData) {
-    if (_id) { this._id = _id; }
+    this._id = _id;
 
     User.checkEmail(email);
     this.email = email;
