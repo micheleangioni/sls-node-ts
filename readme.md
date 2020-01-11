@@ -6,9 +6,9 @@
 
 ## Requirements
 
-- Node.js 10.x
+- Node.js 12.x
 - NPM / Yarn
-- An AWS Account
+- An AWS Account with proper permissions
 
 ## Installation
 

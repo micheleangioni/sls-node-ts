@@ -7,7 +7,7 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
   region: ${opt:region, 'eu-west-1'}
   stage: ${opt:stage, 'development'}
   iamManagedPolicies:
