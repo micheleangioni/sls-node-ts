@@ -1,5 +1,7 @@
 import { ApolloServer } from 'apollo-server-lambda';
 import { APIGatewayProxyCallback, APIGatewayProxyEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
+import middy from 'middy';
+import {cors} from 'middy/middlewares';
 import schemaCreator from './src/api';
 import apolloErrorHandler from './src/api/apolloErrorHandler';
 import applicationErrorHandler from './src/api/applicationErrorHandler';
@@ -129,11 +131,13 @@ function runApollo(event: APIGatewayProxyEvent, context: Context, apollo: Apollo
   });
 }
 
-export async function graphqlHandler(lambdaEvent: APIGatewayProxyEvent, lambdaContext: Context) {
+async function graphqlHandler(lambdaEvent: APIGatewayProxyEvent, lambdaContext: Context) {
   const apollo: ApolloHandler = await createApolloHandler();
 
   return await runApollo(lambdaEvent, lambdaContext, apollo);
 }
+
+export const enhancedGraphqlHandler: any = middy(graphqlHandler).use(cors());
 
 /**
  * Using AWS API Gateway Custom Authorizer to perform Authentication.
@@ -155,3 +159,5 @@ export const getUsers: APIGatewayProxyHandler = async (event: APIGatewayProxyEve
     return applicationErrorHandler(err);
   }
 };
+
+export const enhancedGetUsers: any = middy(getUsers).use(cors());

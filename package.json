@@ -33,6 +33,7 @@
     "deepmerge": "^4.2.2",
     "graphql": "^14.5.8",
     "graphql-tools": "^4.0.5",
+    "middy": "^0.33.2",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
     "mongoose": "^5.7.14",

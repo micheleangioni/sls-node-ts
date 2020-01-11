@@ -25,16 +25,37 @@ provider:
 
 functions:
   graphql:
-    handler: handler.graphqlHandler
+    handler: handler.enhancedGraphqlHandler
     events:
       - http:
           method: post
           path: graphql
   getCities:
-    handler: handler.getUsers
+    handler: handler.enhancedGetUsers
     events:
       - http:
           method: get
           path: users
   authorizerFunc:
     handler: handler.authorizer
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    GatewayResponseDefault5XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
