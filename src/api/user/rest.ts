@@ -1,6 +1,7 @@
 import {APIGatewayProxyEvent, Context} from 'aws-lambda';
 import UserService from '../../application/user/userService';
 import applicationErrorHandler from '../applicationErrorHandler';
+import {getSuccessResponse} from '../responseGenerator';
 import {TransformedUser} from './declarations';
 import transform from './transform';
 
@@ -19,7 +20,7 @@ export default function (userService: UserService) {
       }
 
       return {
-        body: JSON.stringify(users),
+        body: JSON.stringify(getSuccessResponse(users)),
         statusCode: 200,
       };
     },

@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server-lambda';
 import { APIGatewayProxyCallback, APIGatewayProxyEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
 import middy from 'middy';
-import {cors} from 'middy/middlewares';
+import { cors } from 'middy/middlewares';
 import schemaCreator from './src/api';
 import apolloErrorHandler from './src/api/apolloErrorHandler';
 import applicationErrorHandler from './src/api/applicationErrorHandler';
