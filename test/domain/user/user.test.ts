@@ -1,6 +1,7 @@
 import moment from 'moment-timezone';
-import {Moment} from 'moment-timezone/moment-timezone';
+import { Moment } from 'moment-timezone/moment-timezone';
 import User from '../../../src/domain/user/user';
+import { userRepo } from '../../seeder';
 
 describe('Test the User Entity', () => {
   describe('Test instantiation', () => {
@@ -11,6 +12,7 @@ describe('Test the User Entity', () => {
       const username = 'Test';
 
       const userData = {
+        _id: userRepo.nextIdentity(),
         createdAt,
         email,
         updatedAt,
