@@ -26,9 +26,22 @@ To run the application locally, just run `npm run offline`.
 
 ## Deployment
 
-The deployment is handled by the Serverless framework. Just run `sls deploy`.
+The deployment is handled by the Serverless Framework. Just run `sls deploy`.
+
+In order to deploy setting a `staging` environment, run `deploy-staging`.
+Instead, to deploy setting a `production` environment, run `deploy-production`.
 
 ## Features
+
+#### CORS
+
+CORS is setup out of the box, allowing access from all websites, by setting the `Access-Control-Allow-Origin` header
+equal to `'*'`.
+
+In order to customise the CORS response, check the [Middy CORS middleware](https://github.com/middyjs/middy/blob/master/docs/middlewares.md#cors).
+
+Furthermore, in order to properly [use CORS with custom authorizers](https://serverless.com/blog/cors-api-gateway-survival-guide/),
+their headers must be configured manually in the `serverless.yml` file.
 
 #### Error Messages
 
