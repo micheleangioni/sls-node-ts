@@ -36,7 +36,7 @@
     "middy": "^0.33.2",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
-    "mongoose": "^5.7.14",
+    "mongoose": "^5.8.7",
     "querystring": "^0.2.0",
     "source-map-support": "^0.5.10",
     "validator": "^11.1.0"
