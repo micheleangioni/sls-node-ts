@@ -1,5 +1,7 @@
 # Serverless Node TypeScript
 
+[![Build Status](https://api.travis-ci.org/micheleangioni/sls-node-ts.svg?branch=master)](https://travis-ci.org/micheleangioni/sls-node-ts)
+
 > Serverless Node TypeScript is a starter kit to write serverless applications 
 > by using the Serverless Framework in Node.js and TypeScript.
 > It comes with several configurations such as MongoDB and a GraphQL API set up out of the box.
