@@ -66,7 +66,7 @@ function getSecretValue(client: AWS.SecretsManager, secretName: string, secretTy
  * @return Promise<true>
  */
 export async function loadSecrets(fetchSecretsFromAWS = true) {
-  const region = process.env.REGION;
+  const region = process.env.REGION || 'eu-west-1';
 
   // Create a Secrets Manager client
   const client = new AWS.SecretsManager({
