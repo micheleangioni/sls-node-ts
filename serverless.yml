@@ -20,6 +20,7 @@ provider:
         "*"
       ]
   environment:
+    NODE_ENV: ${self:provider.stage}
     ENV: ${self:provider.stage}
     REGION: ${self:provider.region}
 
@@ -30,7 +31,7 @@ functions:
       - http:
           method: post
           path: graphql
-  getCities:
+  getUsers:
     handler: handler.enhancedGetUsers
     events:
       - http:
