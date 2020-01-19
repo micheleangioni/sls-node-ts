@@ -1,7 +1,7 @@
 {
   "name": "sls-node-ts",
   "version": "0.1.0",
-  "description": "Serverless Node.js TypeScript starter",
+  "description": "Serverless Node.js TypeScript starter to write serverless applications by using the Serverless Framework in Node.js and TypeScript",
   "main": "handler.ts",
   "scripts": {
     "lint": "tslint --project .",
@@ -30,7 +30,7 @@
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.12",
     "@types/mongoose": "^5.5.30",
-    "@types/validator": "^10.11.3",
+    "@types/validator": "^12.0.1",
     "apollo-server-lambda": "^2.9.13",
     "deepmerge": "^4.2.2",
     "graphql": "^14.5.8",
@@ -41,7 +41,7 @@
     "mongoose": "^5.7.14",
     "querystring": "^0.2.0",
     "source-map-support": "^0.5.10",
-    "validator": "^11.1.0"
+    "validator": "^12.1.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.39",
