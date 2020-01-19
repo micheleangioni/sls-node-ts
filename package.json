@@ -53,9 +53,9 @@
     "serverless-offline": "^5.12.1",
     "serverless-webpack": "^5.3.1",
     "ts-jest": "^24.3.0",
-    "ts-loader": "^6.2.0",
+    "ts-loader": "^6.2.1",
     "ts-node": "^8.6.1",
-    "tslint": "^5.19.0",
+    "tslint": "^5.20.1",
     "typescript": "^3.7.4",
     "utf-8-validate": "^5.0.2",
     "webpack": "^4.41.5"
