@@ -40,7 +40,7 @@
     "moment-timezone": "^0.5.26",
     "mongoose": "^5.8.9",
     "querystring": "^0.2.0",
-    "source-map-support": "^0.5.10",
+    "source-map-support": "^0.5.16",
     "validator": "^12.1.0"
   },
   "devDependencies": {
