@@ -41,7 +41,7 @@
     "mongoose": "^5.8.9",
     "querystring": "^0.2.0",
     "source-map-support": "^0.5.16",
-    "validator": "^12.1.0"
+    "validator": "^12.2.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.40",
