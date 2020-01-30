@@ -151,11 +151,24 @@ export { authorizer };
 
 // Add REST endpoints
 
+function getCorsHeaders() {
+  return {
+    'Access-Control-Allow-Credentials': true,
+    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Allow-Origin': '*',
+  };
+}
+
 export const getUsers: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, context: Context) => {
   try {
     await createRESTHandlers();
 
-    return await restHandlers.getUsers(event, context);
+    const responseBody = await restHandlers.getUsers(event, context);
+
+    return {
+      ...responseBody,
+      headers: getCorsHeaders(),
+    };
   } catch (err) {
     return applicationErrorHandler(err);
   }

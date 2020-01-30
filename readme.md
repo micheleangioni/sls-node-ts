@@ -102,6 +102,7 @@ CORS is setup out of the box, allowing access from all websites, by setting the 
 equal to `'*'`.
 
 In order to customise the CORS response, check the [Middy CORS middleware](https://github.com/middyjs/middy/blob/master/docs/middlewares.md#cors).
+and the `handler.ts` file.
 
 Furthermore, in order to properly [use CORS with custom authorizers](https://serverless.com/blog/cors-api-gateway-survival-guide/),
 their headers must be configured manually in the `serverless.yml` file.
