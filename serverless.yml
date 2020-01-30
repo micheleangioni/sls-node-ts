@@ -20,7 +20,6 @@ provider:
         "*"
       ]
   environment:
-    NODE_ENV: ${self:provider.stage}
     ENV: ${self:provider.stage}
     REGION: ${self:provider.region}
 

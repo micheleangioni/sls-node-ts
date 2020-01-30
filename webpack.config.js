@@ -8,9 +8,6 @@ module.exports = {
   resolve: {
     extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
   },
-  optimization: {
-    nodeEnv: false
-  },
   output: {
     libraryTarget: 'commonjs',
     path: path.join(__dirname, '.webpack'),
