@@ -1,8 +1,8 @@
+const env = process.env.ENV;
+
 const config = {
-  // Secrets to be fetched from AWS Secrets can be added here in the format { <env variable>: <Secret Name> }
-  secrets: {
-    // MONGO_URI: 'sls-node-ts/staging/mongo',
-  },
+  // This secret must contain all needed environment variables of the application (eg. MONGO_URI)
+  secret: `sls-node-ts/${env}`,
 };
 
 export default config;

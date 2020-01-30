@@ -128,17 +128,28 @@ In order to change it, head to the `src/infrastructure/mongo/index.ts` file.
 
 #### Secrets
 
-In `staging` and `development` environments, secrets are fetched from AWS Secrets Manager and saved into local environment variables.
+In `staging` and `production` environments, secrets are fetched from AWS Secrets Manager and saved into local environment variables.
 
-In order to add a new secret, for example the MongoDB connection string, which must be supplied through 
-the `MONGO_URI` environment variable, perform the following steps:
+A single JSON formatted Secret per environment must be created, named `sls-node-ts/<ENV>` (where `<ENV>` is either `staging` or `production`).
+Each secret per environment must contain all the necessary key value pairs in the format `<env variable>: <Secret Name>`, eg.
+
+```json
+{
+  "MONGO_URI": "<THE MONGODB CONNECTION STRING>"
+}
+```
+
+and they will be injected as environment variable in the application.
+
+In order to create, for example, the new secret for the `staging` environment containing, for example, the MongoDB connection string, 
+which must be supplied through the `MONGO_URI` environment variable, perform the following steps:
 
 1) Head over the AWS Console in the [Secrets Manager](https://aws.amazon.com/secrets-manager/) service
 2) In the menu on the left, select `Secrets`
 3) Click to the `Store a new secret` button
 4) Select `Other type of secrets`
-5) In the `Specify the key/value pairs to be stored in this secret` section, enter `MONGO_URI` as key and your full Mongo URI as value. Then click `Next` and complete the process
-6) In the `src/config/index.ts`, under `config.secrets` add a new key named `MONGO_URI` and the same Mongo URI you entered in the Secrets Manager as value  
+5) In the `Specify the key/value pairs to be stored in this secret` section, enter `MONGO_URI` as key and your full Mongo URI as value. Then click `Next`
+6) In the `Secret name` field, enter `sls-node-ts/staging` and click `Next` to complete the creation 
 
 ## Testing
 

@@ -1,9 +1,8 @@
 import AWS from 'aws-sdk';
 import config from '../../config';
 import {Dictionary} from '../../domain/declarations';
-import {SecretType} from './declarations';
 
-function getSecretValue(client: AWS.SecretsManager, secretName: string, secretType: SecretType): Promise<string> {
+function getSecretValue(client: AWS.SecretsManager, secretName: string): Promise<Dictionary<string>> {
   return new Promise((resolve, reject) => {
     client.getSecretValue({SecretId: secretName}, (err: any, data) => {
       if (err) {
@@ -34,26 +33,12 @@ function getSecretValue(client: AWS.SecretsManager, secretName: string, secretTy
       }
 
       // Decrypts secret using the associated KMS CMK.
-      // Depending on whether the secret is a string or binary, one of these fields will be populated.
 
-      if (secretType === SecretType.BINARY) {
-        const buff = new Buffer(data.SecretBinary as string, 'base64');
-
-        return resolve(buff.toString('ascii'));
+      if (!data || !data.SecretString) {
+        throw new Error(`No value available for secret ${secretName}`);
       }
 
-      let secretValue: string;
-
-      // Let's try to parse a JSON encoded secrets. If it fails, let's use it as a plaintext secret
-
-      try {
-        const secretObject: Dictionary<string> = JSON.parse(data.SecretString as string);
-        secretValue = Object.values(secretObject)[0];
-      } catch (_) {
-        secretValue = data.SecretString as string;
-      }
-
-      resolve(secretValue);
+      resolve(JSON.parse(data.SecretString));
     });
   });
 }
@@ -66,7 +51,7 @@ function getSecretValue(client: AWS.SecretsManager, secretName: string, secretTy
  * @return Promise<true>
  */
 export async function loadSecrets(fetchSecretsFromAWS = true) {
-  const region = process.env.REGION || 'eu-west-1';
+  const region = process.env.REGION;
 
   // Create a Secrets Manager client
   const client = new AWS.SecretsManager({
@@ -74,20 +59,13 @@ export async function loadSecrets(fetchSecretsFromAWS = true) {
   });
 
   if (fetchSecretsFromAWS) {
-    const secretList = Object.keys(config.secrets);
-    const promises = secretList.map((secretName) => getSecretValue(
-      client,
-      // @ts-ignore
-      config.secrets[secretName],
-      SecretType.STRING),
-    );
+    const secretName = config.secret;
+    const secrets = await getSecretValue(client, secretName);
 
-    const secrets = await Promise.all(promises);
-
-    secretList.forEach((secretName, index) => {
-      process.env[secretName] = secrets[index];
+    Object.keys(secrets).forEach((key) => {
+      process.env[key] = secrets[key];
     });
-  }
 
-  return true;
+    return true;
+  }
 }
