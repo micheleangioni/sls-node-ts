@@ -1,4 +1,4 @@
-import {UserCreateData} from '../../domain/user/declarations';
+import {UserCreateData} from './declarations';
 import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 
@@ -16,6 +16,6 @@ export default class UserService {
       ...data,
     });
 
-    return await this.userRepo.create(user);
+    return await this.userRepo.persist(user);
   }
 }

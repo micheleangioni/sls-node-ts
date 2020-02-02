@@ -1,7 +1,9 @@
+import moment from 'moment-timezone';
 import {Model, mongo} from 'mongoose';
-import {UserCreateData, UserData, UserUpdateData} from '../../domain/user/declarations';
+import {UserData} from '../../domain/user/declarations';
 import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
+import {UserDataToBePersisted} from './declarations';
 
 class UserRepo implements IUserRepo {
   constructor(private userModel: Model<any>) {}
@@ -20,7 +22,7 @@ class UserRepo implements IUserRepo {
    *
    * @returns {Promise<User[]>}
    */
-  public all (): Promise<User[]> {
+  public all(): Promise<User[]> {
     return new Promise((resolve, reject) => {
       this.userModel.find()
         .then((data: UserData[]) => resolve(data.map((userData: UserData) => new User(userData))))
@@ -35,7 +37,7 @@ class UserRepo implements IUserRepo {
    * @param {string} userId
    * @returns {Promise<User|null>}
    */
-  public findById (userId: string): Promise<User|null> {
+  public findById(userId: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       this.userModel.findById(userId)
         .then((userData: UserData | null) => {
@@ -64,7 +66,7 @@ class UserRepo implements IUserRepo {
    * @param {string} email
    * @returns {Promise<User|null>}
    */
-  public findByEmail (email: string): Promise<User|null> {
+  public findByEmail(email: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       this.userModel.findOne({ email })
         .then((userData: UserData | null) => {
@@ -87,7 +89,7 @@ class UserRepo implements IUserRepo {
    * @param {string} username
    * @returns {Promise<User|null>}
    */
-  public findByUsername (username: string): Promise<User|null> {
+  public findByUsername(username: string): Promise<User|null> {
     return new Promise((resolve, reject) => {
       this.userModel.findOne({ username })
         .then((userData: UserData | null) => {
@@ -108,7 +110,7 @@ class UserRepo implements IUserRepo {
    *
    * @return {Promise<number>}
    */
-  public count (): Promise<number> {
+  public count(): Promise<number> {
     return new Promise((resolve, reject) => {
       this.userModel.count({})
         .then((count: number) => resolve(count))
@@ -122,47 +124,30 @@ class UserRepo implements IUserRepo {
    * @param {User} user
    * @returns {Promise<User>}
    */
-  public create (user: User): Promise<User> {
-    return new Promise((resolve, reject) => {
-      const createData: UserCreateData = {
-        email: user.email,
-        username: user.username,
-      };
+  public persist(user: User): Promise<User> {
+    return new Promise(async (resolve, reject) => {
+      const dataToBePersisted: UserDataToBePersisted = this.getDataToBePersisted(user);
 
-      this.userModel.create(createData)
-        .then((userData: UserData) => {
-          resolve(new User(userData));
-        })
-        .catch((error: any) => reject(error));
+      try {
+        const updatedUser = await this.userModel.findOneAndUpdate(
+          { _id: user._id },
+          dataToBePersisted,
+          { new: true, upsert: true }).lean();
+
+        user.updateDates(moment(updatedUser.updatedAt));
+        resolve(user);
+      } catch (error) {
+        reject(error);
+      }
     });
   }
 
-  /**
-   * Update input User with updatable fields.
-   *
-   * @param {User} user
-   * @returns {Promise<User>}
-   */
-  public updateUser(user: User): Promise<User> {
-    return new Promise((resolve, reject) => {
-      if (!user._id) {
-        return reject('Cannot update a non persisted User');
-      }
-
-      const updateData: UserUpdateData = {
-        username: user.username,
-      };
-
-      this.userModel.findByIdAndUpdate(user._id, updateData)
-        .then((userData: UserData | null) => {
-          if (!userData) {
-            return reject(`User ${user._id} not found`);
-          }
-
-          resolve(new User(userData));
-        })
-        .catch((error: any) => reject(error));
-    });
+  private getDataToBePersisted(user: User): UserDataToBePersisted {
+    return {
+      _id: user._id,
+      email: user.email,
+      ...(user.username && { username: user.username }),
+    };
   }
 }
 

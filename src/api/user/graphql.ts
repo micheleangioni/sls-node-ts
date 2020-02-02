@@ -1,5 +1,5 @@
 import UserService from '../../application/user/userService';
-import {UserCreateData} from '../../domain/user/declarations';
+import {UserCreateData} from '../../application/user/declarations';
 import {ResolverContext} from '../declarations';
 import transform from './transform';
 

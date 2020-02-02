@@ -1,16 +1,10 @@
-export type UserData = {
+export type BaseUserData = {
   _id: string,
+  email: string,
+  username?: string,
+};
+
+export type UserData = BaseUserData & {
   createdAt?: Date,
-  email: string,
   updatedAt?: Date,
-  username?: string,
-};
-
-export type UserCreateData = {
-  email: string,
-  username?: string,
-};
-
-export type UserUpdateData = {
-  username?: string,
 };

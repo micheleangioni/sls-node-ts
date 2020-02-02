@@ -1,5 +1,5 @@
 import UserService from '../../../src/application/user/userService';
-import {UserCreateData} from '../../../src/domain/user/declarations';
+import {UserCreateData} from '../../../src/application/user/declarations';
 import {cleanDb, seedDb} from '../../seeder';
 import {userRepo} from '../../seeder';
 
