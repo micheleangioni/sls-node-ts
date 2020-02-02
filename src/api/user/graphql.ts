@@ -15,7 +15,7 @@ export default function (userService: UserService) {
           // In _context.event.requestContext.authorizer the Authorizer Context is available
           // _context.event.requestContext.authorizer.userId is the Authenticated User id
 
-          return transform(await userService.createUser({ email, username }));
+          return transform(await userService.createUser({ email, username }, '/graphql'));
         },
       },
       Query: {

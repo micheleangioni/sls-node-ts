@@ -7,8 +7,10 @@ import apolloErrorHandler from './src/api/apolloErrorHandler';
 import applicationErrorHandler from './src/api/applicationErrorHandler';
 import authorizer from './src/api/authorizer';
 import userRest from './src/api/user/rest';
+import EventPublisher from './src/application/eventPublisher';
 import UserService from './src/application/user/userService';
 import { Dictionary } from './src/domain/declarations';
+import {IUserRepo} from './src/domain/user/IUserRepo';
 import infraServicesCreator from './src/infrastructure';
 import { loadSecrets } from './src/infrastructure/secrets';
 
@@ -39,19 +41,18 @@ async function createServiceInstances() {
   const loadFromAWSSecrets = ['production', 'staging'].includes(process.env.ENV || 'development');
   await loadSecrets(loadFromAWSSecrets);
 
-  let userRepo;
+  let infraServices: { eventPublisher: EventPublisher, userRepo: IUserRepo };
 
   try {
-    const infraServices = await infraServicesCreator();
-    userRepo = infraServices.userRepo;
+    infraServices = await infraServicesCreator();
   } catch (e) {
     // tslint:disable-next-line:no-console
-    console.log('Error on infrastructure services startup', e);
+    console.error('Error on infrastructure services startup', e);
     throw e;
   }
 
   // Create Service Instances
-  const userService = new UserService(userRepo);
+  const userService = new UserService(infraServices.userRepo, infraServices.eventPublisher);
 
   services = {
     userService,

@@ -1,17 +1,30 @@
+import EventPublisher from '../../../src/application/eventPublisher';
 import UserService from '../../../src/application/user/userService';
 import {UserCreateData} from '../../../src/application/user/declarations';
+import {UserCreated} from '../../../src/domain/user/events/UserCreated';
 import {cleanDb, seedDb} from '../../seeder';
 import {userRepo} from '../../seeder';
 
 describe('Test the User Application Service', () => {
-  const userService = new UserService(userRepo);
+  const mockPublish = jest.fn();
+  // @ts-ignore
+  const mockEventPublisherFactory = jest.fn<EventPublisher, []>().mockImplementation(() => {
+    return {
+      publish: mockPublish,
+    };
+  });
+
+  const mockEventPublisher = new mockEventPublisherFactory();
+  const userService = new UserService(userRepo, mockEventPublisher);
 
   beforeAll(async (done) => {
+    process.env.SEND_DOMAIN_EVENTS = 'true';
     await cleanDb();
     done();
   });
 
   afterAll(async (done) => {
+    delete process.env.SEND_DOMAIN_EVENTS;
     await cleanDb();
     done();
   });
@@ -39,6 +52,7 @@ describe('Test the User Application Service', () => {
 
     afterEach(async (done) => {
       await cleanDb();
+      mockPublish.mockReset();
       done();
     });
 
@@ -47,13 +61,22 @@ describe('Test the User Application Service', () => {
         email: 'michele@test.com',
         username: 'Michele',
       };
-      const user = await userService.createUser(userData);
+      const user = await userService.createUser(userData, '/users');
 
       expect(user._id).not.toBe(undefined);
       expect(user.email).toBe(userData.email);
       expect(user.username).toBe(userData.username);
       expect(user.createdAt).not.toBe(undefined);
       expect(user.updatedAt).not.toBe(undefined);
+
+      expect(mockPublish).toBeCalledTimes(1);
+      expect(mockPublish.mock.calls[0][1][0]).toBeInstanceOf(UserCreated);
+      expect(mockPublish.mock.calls[0][1][0].getEventData()).toMatchObject({
+        _id: user._id,
+        createdAt: user.createdAt?.toISOString(),
+        email: user.email,
+        username: user.username,
+      });
       done();
     });
 
@@ -63,8 +86,8 @@ describe('Test the User Application Service', () => {
         username: 'Michele New',
       };
 
-      await userService.createUser(userData);
-      await expect(userService.createUser(userData)).rejects.toThrow();
+      await userService.createUser(userData, '/users');
+      await expect(userService.createUser(userData, '/users')).rejects.toThrow();
 
       done();
     });

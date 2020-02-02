@@ -21,7 +21,8 @@ provider:
       ]
   environment:
     ENV: ${self:provider.stage}
-    REGION: ${self:provider.region}
+    AWS_REGION: ${self:provider.region}
+    UNDERLYING_CLIENT: 'awssns'
 
 functions:
   graphql:
