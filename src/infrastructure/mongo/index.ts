@@ -1,9 +1,10 @@
+import {name} from '../../../package.json';
 import mongoose, {Model} from 'mongoose';
 import usersSchema from './schemas/usersSchema';
 
 const mongoUri = process.env.MONGO_URI
   ? process.env.MONGO_URI
-  : `mongodb://localhost:27017/sls-node-ts-${process.env.ENV}`;
+  : `mongodb://localhost:27017/${name}-${process.env.ENV}`;
 
 mongoose.connect(mongoUri, { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true })
   .catch((e: any) => {
