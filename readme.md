@@ -34,7 +34,9 @@ It comes with the following features out of the box:
 
 ## Installation
 
-Run `npm install`.
+First, edit the application name in the `name` field of the `package.json` file.
+
+Then tun run `npm install`.
 
 ## Running the Application
 
@@ -150,6 +152,9 @@ which must be supplied through the `MONGO_URI` environment variable, perform the
 4) Select `Other type of secrets`
 5) In the `Specify the key/value pairs to be stored in this secret` section, enter `MONGO_URI` as key and your full Mongo URI as value. Then click `Next`
 6) In the `Secret name` field, enter `sls-node-ts/staging` and click `Next` to complete the creation 
+
+(!) The name of the secret (in the above example `sls-node-ts/staging`) is bound to the **application name**,
+the one defined in the `name` field of the `package.json`. 
 
 ## Testing
 
