@@ -21,7 +21,7 @@ provider:
       ]
     - Effect: 'Allow'
       Action:
-        - 'SNS:Publish'
+        - 'sns:Publish'
       Resource:
         !Ref SnsUserTopic
   environment:
