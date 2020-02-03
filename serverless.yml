@@ -26,7 +26,7 @@ provider:
         !Ref SnsUserTopic
   environment:
     ENV: ${self:provider.stage}
-    AWS_REGION: ${self:provider.region}
+    REGION: ${self:provider.region}
     UNDERLYING_CLIENT: 'awssns'
 
 functions:

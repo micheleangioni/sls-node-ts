@@ -67,7 +67,7 @@ To run the application locally, just run `npm run offline`.
  - `NODE_ENV` : Set the environment name, not used in the code
  - `ENV` : Set the environment name, this is the variable used throughout the code and set via the Serverless CLI
  - `MONGO_URI` : Set the complete MongoDB connection string. Default `mongodb://localhost:27017/sls-node-ts-<ENV>}`, where `<ENV>` in the `ENV` env variable value
- - `AWS_REGION` : AWS region, default `eu-west-1`
+ - `REGION` : AWS region, default `eu-west-1`
  - `SEND_DOMAIN_EVENTS` : if set to `true`, the application will effectively emit the Domain Events of the related Aggregate to its AWS SNS topic. Default is `undefined`
  - `SNS_ENDPOINT` : in non `staging` or `production` environments, you can send Domain Events to a local implementation of AWS SNS. Default is `http://localhost:4575`, i.e. the local url for the [Localstack implementation](https://github.com/localstack/localstack)
 
