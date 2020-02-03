@@ -15,6 +15,7 @@ export default async function () {
   const userRepo = userRepoCreator(User);
 
   const snsBroker = brokerFactory(config.sns.topics);
+  await snsBroker.init();
   const eventPublisher = new EventPublisher(snsBroker, logger);
 
   return {
