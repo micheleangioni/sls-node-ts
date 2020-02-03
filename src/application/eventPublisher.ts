@@ -48,13 +48,13 @@ export default class EventPublisher {
       this.logger.info({
         data: events[0].getEventData(),
         message: `Successfully published ${events[0].getEventAggregate()} ${events[0].getEventName()} event`,
-        type: 'kafka',
+        type: 'sns',
       });
     } else {
       Object.keys(groupedEvents).forEach((aggregate) => {
         this.logger.info({
           message: `Successfully published ${groupedEvents[aggregate].length} ${aggregate} events`,
-          type: 'kafka',
+          type: 'sns',
         });
       });
     }
