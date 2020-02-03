@@ -1,3 +1,13 @@
+// tslint:disable-next-line:no-console
+console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
+
+// In non staging or development environments, use local SNS connection in `@micheleangioni/node-messagebrokers` package
+if (!['production', 'staging'].includes(process.env.ENV || 'development')) {
+  if (!process.env.SNS_ENDPOINT) {
+    process.env.SNS_ENDPOINT = 'http://localhost:4575';
+  }
+}
+
 import { ApolloServer } from 'apollo-server-lambda';
 import { APIGatewayProxyCallback, APIGatewayProxyEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
 import middy from 'middy';
@@ -10,12 +20,9 @@ import userRest from './src/api/user/rest';
 import EventPublisher from './src/application/eventPublisher';
 import UserService from './src/application/user/userService';
 import { Dictionary } from './src/domain/declarations';
-import {IUserRepo} from './src/domain/user/IUserRepo';
+import { IUserRepo } from './src/domain/user/IUserRepo';
 import infraServicesCreator from './src/infrastructure';
 import { loadSecrets } from './src/infrastructure/secrets';
-
-// tslint:disable-next-line:no-console
-console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
 
 type ApolloHandler = (
   event: APIGatewayProxyEvent,

@@ -1,4 +1,4 @@
-import { name } from '../../package.json';
+import {name} from '../../package.json';
 const env = process.env.ENV;
 
 const config = {
@@ -8,8 +8,18 @@ const config = {
   sns: {
     topics: {
       user: {
-        topic: 'events.aggregate.user',
+        topic: 'events_aggregate_user',
       },
+
+      /**
+       *  Add new aggregates with their own topics in the format
+       *
+       * {
+       *   <aggregate>: {
+       *     topic: <topic_name>
+       *   }
+       * }
+       */
     },
   },
 };
