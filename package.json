@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "tslint --project .",
     "offline": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless offline start --port 3000 --stage development",
+    "package": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless package --stage development",
     "test": "node --max-old-space-size=4096 node_modules/jest/bin/jest --runInBand --forceExit --verbose",
     "watch-test": "node --max-old-space-size=4096 node_modules/jest/bin/jest --runInBand --verbose --watchAll",
     "deploy-staging": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless deploy --stage staging --region eu-west-1",
