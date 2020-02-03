@@ -40,7 +40,7 @@
     "middy": "^0.33.2",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
-    "mongoose": "^5.8.10",
+    "mongoose": "^5.8.11",
     "querystring": "^0.2.0",
     "source-map-support": "^0.5.16",
     "validator": "^12.2.0"
@@ -54,7 +54,7 @@
     "serverless": "^1.62.0",
     "serverless-offline": "^5.12.1",
     "serverless-webpack": "^5.3.1",
-    "ts-jest": "^25.0.0",
+    "ts-jest": "^25.1.0",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "tslint": "^6.0.0",
