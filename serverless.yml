@@ -19,6 +19,11 @@ provider:
       Resource: [
         "*"
       ]
+    - Effect: 'Allow'
+      Action:
+        - 'SNS:Publish'
+      Resource:
+        !Ref SnsUserTopic
   environment:
     ENV: ${self:provider.stage}
     AWS_REGION: ${self:provider.region}
@@ -42,6 +47,11 @@ functions:
 
 resources:
   Resources:
+    SnsUserTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: Domain Events of User Aggregate Topic
+        TopicName: events_aggregate_user
     GatewayResponseDefault4XX:
       Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:
