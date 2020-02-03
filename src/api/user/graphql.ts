@@ -9,13 +9,13 @@ export default function (userService: UserService) {
       Mutation: {
         createUser: async (
           _source: string | undefined,
-          { email, username }: UserCreateData,
+          { userData }: { userData: UserCreateData },
           _context: ResolverContext,
         ) => {
           // In _context.event.requestContext.authorizer the Authorizer Context is available
           // _context.event.requestContext.authorizer.userId is the Authenticated User id
 
-          return transform(await userService.createUser({ email, username }, '/graphql'));
+          return transform(await userService.createUser(userData, '/graphql'));
         },
       },
       Query: {
@@ -40,11 +40,15 @@ export default function (userService: UserService) {
         updatedAt: String
         username: String
       }
+      input UserDataInput {
+        email: String!
+        username: String
+      }
       extend type Query {
         getUsers: [User]
       }
       extend type Mutation {
-        createUser(email: String!, username: String): User
+        createUser(userData: UserDataInput!): User
       }
     `,
   };

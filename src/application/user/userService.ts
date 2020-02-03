@@ -1,4 +1,6 @@
 import {AbstractApplicationService} from '../AbstractApplicationService';
+import {ApplicationError} from '../ApplicationError';
+import {ErrorCodes} from '../declarations';
 import EventPublisher from '../eventPublisher';
 import {UserCreateData} from './declarations';
 import {IUserRepo} from '../../domain/user/IUserRepo';
@@ -31,7 +33,26 @@ export default class UserService extends AbstractApplicationService {
       ...data,
     });
 
-    const persistedUser = await this.userRepo.persist(user);
+    let persistedUser: User;
+
+    try {
+      persistedUser = await this.userRepo.persist(user);
+    } catch (e) {
+      if (e.code === 11000) {
+        const message = e.keyValue && Object.keys(e.keyValue).length > 0
+          ? `The ${Object.keys(e.keyValue)[0]} ${Object.values(e.keyValue)[0]} already exists`
+          : 'Duplicated entry in the database';
+
+        throw new ApplicationError({
+          code: ErrorCodes.INVALID_DATA,
+          message,
+          statusCode: 412,
+        });
+      }
+
+      throw e;
+    }
+
     await this.sendApplicationEvents(source, persistedUser);
 
     return persistedUser;

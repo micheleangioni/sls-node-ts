@@ -113,7 +113,12 @@ and the following Mutation creates a new User:
 
 ```graphql
 mutation CreateNewUser {
-  createUser(email: "test@test.com", username: "Test") {
+  createUser(userData: {
+      email: "test6@test.com"
+      username: "Test6"
+  }) {
+    _id
+    createdAt
     email
     username
   }
