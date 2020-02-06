@@ -51,7 +51,7 @@
     "@types/node": "^12.12.25",
     "bufferutil": "^4.0.1",
     "jest": "^25.1.0",
-    "serverless": "^1.62.0",
+    "serverless": "^1.63.0",
     "serverless-offline": "^5.12.1",
     "serverless-webpack": "^5.3.1",
     "ts-jest": "^25.2.0",
