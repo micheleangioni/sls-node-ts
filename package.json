@@ -31,7 +31,7 @@
     "@micheleangioni/node-messagebrokers": "^0.5.1",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.12",
-    "@types/mongoose": "^5.7.0",
+    "@types/mongoose": "^5.7.1",
     "@types/validator": "^12.0.1",
     "apollo-server-lambda": "^2.10.0",
     "deepmerge": "^4.2.2",
