@@ -1,9 +1,17 @@
 import moment from 'moment-timezone';
 import { Moment } from 'moment-timezone/moment-timezone';
 import User from '../../../src/domain/user/user';
-import { userRepo } from '../../seeder';
+import { UserRepo } from '../../../src/infrastructure/repos/userRepo';
+import { getRepos } from '../../seeder';
 
 describe('Test the User Entity', () => {
+  let userRepo: UserRepo;
+
+  beforeAll(async (done) => {
+    userRepo = (await getRepos()).userRepo;
+    done();
+  });
+
   describe('Test instantiation', () => {
     test('It gets correctly instantiated', async (done) => {
       const createdAt = moment('2019-09-25T20:50:00.302Z').toDate();
