@@ -1,8 +1,9 @@
-service:
-  name: sls-node-ts
+service: ${file(package.json):name}
 
 plugins:
-  - serverless-webpack
+  - serverless-deployment-bucket
+  - serverless-plugin-typescript
+  - serverless-localstack
   - serverless-offline
 
 provider:
@@ -28,6 +29,25 @@ provider:
     ENV: ${self:provider.stage}
     REGION: ${self:provider.region}
     UNDERLYING_CLIENT: 'awssns'
+    # SLS_DEBUG: 'true'
+  deploymentBucket:
+    name: ${file(package.json):name}-bucket
+    serverSideEncryption: AES256
+
+custom:
+  defaultStage: local
+  localstack:
+    debug: true
+    stages:
+      - local
+    autostart: false
+    host: http://localhost
+    endpointFile: dev/localstack_endpoints.json
+#  lambda:
+#    # Enable this flag to improve performance
+#    mountCode: True
+  deploymentBucket:
+    versioning: false
 
 functions:
   graphql:

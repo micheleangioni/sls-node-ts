@@ -5,7 +5,7 @@ import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 import {UserDataToBePersisted} from './declarations';
 
-class UserRepo implements IUserRepo {
+export class UserRepo implements IUserRepo {
   constructor(private userModel: Model<any>) {}
 
   /**

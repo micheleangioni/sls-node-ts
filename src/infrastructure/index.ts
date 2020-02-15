@@ -3,6 +3,7 @@ import Logger from './logger';
 import userRepoCreator from './repos/userRepo';
 import brokerFactory from '@micheleangioni/node-messagebrokers';
 import config from '../config/index';
+import mongoInitializer from './mongo';
 
 export default async function () {
   // Add logger
@@ -11,7 +12,7 @@ export default async function () {
   // The repos need the secrets to be loaded
   // Require is used as dynamic imports is currently a Stage 4 (i.e. finished) proposal
   // https://github.com/tc39/proposals/blob/master/finished-proposals.md
-  const {User} = require('./mongo');
+  const { User } = await mongoInitializer();
   const userRepo = userRepoCreator(User);
 
   const snsBroker = brokerFactory(config.sns.topics);

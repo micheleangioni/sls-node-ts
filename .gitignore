@@ -2,11 +2,11 @@
 node_modules
 jspm_packages
 
+# Localstack
+.localstack
+
 # Serverless directories
 .serverless
-
-# Webpack directories
-.webpack
 
 # Environment
 .env
@@ -34,4 +34,5 @@ ehthumbs.db
 ehthumbs_vista.db
 
 # Build files
-build/
+.build
+build

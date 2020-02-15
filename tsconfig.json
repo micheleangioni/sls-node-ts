@@ -6,12 +6,16 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["es2018"],
     "moduleResolution": "node",
+    "module": "commonjs",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
+    "allowJs": true,
     "esModuleInterop": true,
     "target": "es2020",
-    "outDir": ".webpack"
+    "outDir": ".build",
+    "rootDir": "./"
   },
+  "include": ["src/infrastructure/mongo"],
   "exclude": ["node_modules", "test"]
 }
