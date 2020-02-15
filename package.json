@@ -9,8 +9,10 @@
     "package": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless package --stage development",
     "test": "node --max-old-space-size=4096 node_modules/jest/bin/jest --runInBand --forceExit --verbose",
     "watch-test": "node --max-old-space-size=4096 node_modules/jest/bin/jest --runInBand --verbose --watchAll",
+    "deploy-local": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless deploy --stage local --region us-east-1",
     "deploy-staging": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless deploy --stage staging --region eu-west-1",
     "deploy-production": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless deploy --stage production --region eu-west-1",
+    "remove-local": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless remove --stage local --region us-east-1",
     "remove-staging": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless remove --stage staging --region eu-west-1",
     "remove-production": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless remove --stage production --region eu-west-1"
   },
