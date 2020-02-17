@@ -43,6 +43,7 @@ It comes with the following features out of the box:
   - [Domain Events](#devents)
   - [Error Messages](#errmessages)
   - [MongoDB](#mongodb)
+  - [Monitoring](#monitoring)
   - [Secrets](#secrets)
 - [Testing](#testing)
 - [Contribution Guidelines](#guidelines)
@@ -222,6 +223,15 @@ All error messages have the following format:
     "statusCode":  (number)
 }
 ```
+
+#### <a name="monitoring">Monitoring
+
+Monitoring Serverless applications is generally harder than usual. For this reason new tools are needed.
+
+Amazon developed [AWS X-Ray](https://aws.amazon.com/xray/) to improve the monitoring of the flow of the events
+in a serverless environment. This provides useful information about the events that trigger the lambdas and other services.
+
+In order to enable X-Ray, simply set the `tracing.apiGateway` and `tracing.lambda` keys to `true` in the `serverless.yml` file,
 
 ### <a name="mongodb">MongoDB
 
