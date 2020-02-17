@@ -33,22 +33,22 @@
     "@micheleangioni/node-messagebrokers": "^0.5.1",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.12",
-    "@types/mongoose": "^5.7.0",
+    "@types/mongoose": "^5.7.1",
     "@types/validator": "^12.0.1",
-    "apollo-server-lambda": "^2.10.0",
+    "apollo-server-lambda": "^2.10.1",
     "deepmerge": "^4.2.2",
     "graphql": "^14.6.0",
     "graphql-tools": "^4.0.6",
     "middy": "^0.33.2",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
-    "mongoose": "^5.8.11",
+    "mongoose": "^5.9.1",
     "querystring": "^0.2.0",
     "source-map-support": "^0.5.16",
     "validator": "^12.2.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.40",
+    "@types/aws-lambda": "^8.10.41",
     "@types/jest": "^25.1.2",
     "@types/node": "^12.12.25",
     "bufferutil": "^4.0.1",
@@ -64,7 +64,7 @@
     "tslint": "^6.0.0",
     "typescript": "^3.7.5",
     "utf-8-validate": "^5.0.2",
-    "webpack": "^4.41.5"
+    "webpack": "^4.41.6"
   },
   "author": {
     "name": "Michele Angioni",
