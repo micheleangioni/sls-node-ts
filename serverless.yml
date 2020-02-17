@@ -29,7 +29,7 @@ provider:
     ENV: ${self:provider.stage}
     REGION: ${self:provider.region}
     UNDERLYING_CLIENT: 'awssns'
-    # SLS_DEBUG: 'true'
+    SLS_DEBUG: '*'
   deploymentBucket:
     name: ${file(package.json):name}-bucket
     serverSideEncryption: AES256
@@ -57,7 +57,7 @@ functions:
           method: post
           path: graphql
   getUsers:
-    handler: handler.enhancedGetUsers
+    handler: handler.getUsers
     events:
       - http:
           method: get

@@ -2,10 +2,12 @@
 console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
 
 // In non staging or development environments, use local SNS connection in `@micheleangioni/node-messagebrokers` package
-if (!['production', 'staging'].includes(process.env.ENV || 'development')) {
-  if (!process.env.SNS_ENDPOINT) {
-    process.env.SNS_ENDPOINT = 'http://localhost:4575';
-  }
+if (process.env.ENV === 'local' && !process.env.SNS_ENDPOINT) {
+  // If deploying to Localstack, point SNS to the Localstack container
+  process.env.SNS_ENDPOINT = 'http://localstack:4575';
+} else if (process.env.ENV === 'development' && !process.env.SNS_ENDPOINT) {
+  // If using serverless-offline, point SNS to the localhost Localstack
+  process.env.SNS_ENDPOINT = 'http://localhost:4575';
 }
 
 import { ApolloServer } from 'apollo-server-lambda';
@@ -181,5 +183,3 @@ export const getUsers: APIGatewayProxyHandler = async (event: APIGatewayProxyEve
     return applicationErrorHandler(err);
   }
 };
-
-export const enhancedGetUsers: any = middy(getUsers).use(cors());
