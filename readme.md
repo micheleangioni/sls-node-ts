@@ -25,6 +25,7 @@ It comes with the following features out of the box:
 - MongoDB integration
 - Domain Events via AWS SNS
 - [Offline bundling](https://github.com/dherault/serverless-offline) for local development
+- Local deployment to [Localstack](https://github.com/localstack/localstack)
 - Testing through Jest
 
 ## Contents
@@ -32,6 +33,7 @@ It comes with the following features out of the box:
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Running the Application locally](#running)
+- [Deploying the Application locally to Localstack](#localstack)
 - [Environment variables](#env)
 - [Deployment](#deployment)
 - [Features](#features)
@@ -51,6 +53,7 @@ It comes with the following features out of the box:
 - Node.js 12.x
 - NPM / Yarn
 - An AWS Account with proper permissions
+- Docker
 
 ## <a name="installation"></a>Installation
 
@@ -61,6 +64,57 @@ Then run `npm install` or `yarn install`.
 ## <a name="running"></a>Running the Application locally
 
 To run the application locally, just run `npm run offline`.
+
+## <a name="localstack"></a>Deploying the Application locally to Localstack
+
+#### Motivations
+
+When interacting with other AWS services such as SNS, SQS or S3, running the application offline is not enough
+to check that all binding we specified in the `serverless.yml` file are working as expected.
+
+A way to check whether the application would behave like expected once deployed to AWS, without really deploying it,
+is to deploy it locally by using [Localstack](https://github.com/localstack/localstack).
+
+#### How to deploy locally
+
+In order to deploy the application locally you need to:
+
+1. Create a local Docker network via `docker network create aws-nodejs`
+2. Run Localstack via docker compose by running `docker-compose up` (`TMPDIR=/private$TMPDIR docker-compose up` in MacOs)
+3. Deploy the application locally via `npm run deploy-local`
+4. Connect via HTTP client (eg. using `Postman`) to the deployed url `http://localhost:4567/restapis/<CODE>/local/_user_request_/hello`
+where `<CODE>` is found in the `endpoints` section of the console output given by serverless in step 3. 
+Eg. if the output contains
+```
+endpoints:
+  http://localhost:4567/restapis/trcki9mhws/local/_user_request_
+```
+then `<CODE>` is `trcki9mhws`. The `<CODE>` changes after every local deployment!
+
+#### Caveats and limitations
+
+**Deleting the Application or re-deploying**
+
+Due to limitations to Localstack, the best way to re-deploy the application effectively is to first stop and start Docker Compose
+and then deploying the application again.
+
+**Network name**
+
+The network name used in step 1 can be customised as preferred. 
+However, change it accordingly also in the `docker-compose.yaml` file under `networks.default.external.name` and in `LAMBDA_DOCKER_NETWORK`. 
+
+**Custom Authorizers**
+
+At the moment, Lambda Authorizers are [completely ignored by Localstack](https://github.com/localstack/localstack/issues/1315).
+
+**Connecting to other AWS services from inside the application**
+
+Due to how Docker Compose works, in order to connect to the AWS services hosted in the Localstack container,
+all calls to these services need to the redirected manually to `http://localstack:XXXX` (instead than `http://localhost:XXXX`).
+
+For SNS, this is done at the very top of the `handler.ts` file, by setting the `SNS_ENDPOINT` env variable.
+
+If willing to use other services, for example S3, you'll need to manually set the `endpoint` option key to point to `http://localstack:4572`.
 
 ## <a name="env"></a>Environment variables
 
@@ -78,7 +132,7 @@ The deployment is handled by the Serverless Framework.
 In order to deploy to a `staging` environment, run `npm run deploy-staging`.
 Instead, to deploy to a `production` environment, run `npm run deploy-production`.
 
-To remove the deployed environment, run `npm run remove-staging` or `npm run remove-production`.
+To completely remove the deployed application, run `npm run remove-staging` or `npm run remove-production`.
 
 ## <a name="features"></a>Features
 
@@ -133,7 +187,7 @@ equal to `'*'`.
 In order to customise the CORS response, check the [Middy CORS middleware](https://github.com/middyjs/middy/blob/master/docs/middlewares.md#cors).
 and the `handler.ts` file.
 
-Furthermore, in order to properly [use CORS with custom authorizers](https://serverless.com/blog/cors-api-gateway-survival-guide/),
+Furthermore, in order to properly [use CORS with lambda authorizers](https://serverless.com/blog/cors-api-gateway-survival-guide/),
 their headers must be configured manually in the `serverless.yml` file.
 
 ### <a name="devents">Domain Events
