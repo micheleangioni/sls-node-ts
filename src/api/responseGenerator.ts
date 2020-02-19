@@ -1,12 +1,12 @@
 import { IApiErrorResponse, IApiSuccessResponse, Metadata } from './declarations';
 
-export function getSuccessResponse(
+export const getSuccessResponse = (
   data: object | any[],
   metadataObject?: {
-    resultsName?: string,
-    metadata: Metadata,
+    resultsName?: string;
+    metadata: Metadata;
   },
-): IApiSuccessResponse {
+): IApiSuccessResponse => {
   if (metadataObject) {
 
     if (metadataObject.resultsName) {
@@ -23,17 +23,17 @@ export function getSuccessResponse(
   }
 
   return data;
-}
+};
 
-export function getErrorResponse(
+export const getErrorResponse = (
   errorMessage: string,
   code: string,
   statusCode: number = 500,
-): IApiErrorResponse {
+): IApiErrorResponse => {
   return {
     code,
     hasError: 1,
     message: errorMessage,
     statusCode,
   };
-}
+};

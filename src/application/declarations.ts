@@ -1,9 +1,9 @@
 import {IDomainEvent} from '../domain/IDomainEvent';
 
 export type ApplicationErrorData = {
-  code?: string,
-  message: string,
-  statusCode?: number,
+  code?: string;
+  message: string;
+  statusCode?: number;
 };
 
 export enum ErrorCodes {
@@ -15,9 +15,9 @@ export enum ErrorCodes {
 }
 
 export type GroupedByAggregateEvents = {
-  [aggregate: string]: IDomainEvent[],
+  [aggregate: string]: IDomainEvent[];
 };
 
 export type GroupedByAggregateCloudEvents = {
-  [aggregate: string]: any[],
+  [aggregate: string]: any[];
 };

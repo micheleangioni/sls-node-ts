@@ -3,7 +3,7 @@ import { IResolvers, makeExecutableSchema } from 'graphql-tools';
 import UserService from '../application/user/userService';
 import userSchemacreator from './user/graphql';
 
-export default function ({ userService }: { userService: UserService }) {
+export default ({ userService }: { userService: UserService }) => {
   // Define empty Type Defs and Resolvers to be extended
 
   // tslint:disable-next-line:variable-name
@@ -26,6 +26,6 @@ export default function ({ userService }: { userService: UserService }) {
     resolvers: deepmerge.all([resolvers, userSchema.resolvers]) as IResolvers,
     typeDefs: [ Query, userSchema.typeDef ],
   });
-}
+};
 
 

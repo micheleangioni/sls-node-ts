@@ -13,7 +13,7 @@ describe('Test the User Entity', () => {
   });
 
   describe('Test instantiation', () => {
-    test('It gets correctly instantiated', async (done) => {
+    test('It gets correctly instantiated', (done) => {
       const createdAt = moment('2019-09-25T20:50:00.302Z').toDate();
       const email = 'test@test.com';
       const updatedAt = moment('2019-09-25T22:00:00.143Z').toDate();

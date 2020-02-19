@@ -124,22 +124,17 @@ export class UserRepo implements IUserRepo {
    * @param {User} user
    * @returns {Promise<User>}
    */
-  public persist(user: User): Promise<User> {
-    return new Promise(async (resolve, reject) => {
-      const dataToBePersisted: UserDataToBePersisted = this.getDataToBePersisted(user);
+  public async persist(user: User): Promise<User> {
+    const dataToBePersisted: UserDataToBePersisted = this.getDataToBePersisted(user);
 
-      try {
-        const updatedUser = await this.userModel.findOneAndUpdate(
-          { _id: user._id },
-          dataToBePersisted,
-          { new: true, upsert: true }).lean();
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { _id: user._id },
+      dataToBePersisted,
+      { new: true, upsert: true }).lean();
 
-        user.updateDates(moment(updatedUser.updatedAt));
-        resolve(user);
-      } catch (error) {
-        reject(error);
-      }
-    });
+    user.updateDates(moment(updatedUser.updatedAt));
+
+    return user;
   }
 
   private getDataToBePersisted(user: User): UserDataToBePersisted {
@@ -151,6 +146,6 @@ export class UserRepo implements IUserRepo {
   }
 }
 
-export default function (userModel: Model<any>): UserRepo {
+export default (userModel: Model<any>): UserRepo => {
   return new UserRepo(userModel);
-}
+};

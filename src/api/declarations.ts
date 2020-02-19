@@ -2,9 +2,9 @@ import {APIGatewayProxyEvent, Context} from 'aws-lambda';
 import {Dictionary} from '../domain/declarations';
 
 export type ResolverContext = {
-  context?: Context,
-  event?: APIGatewayProxyEvent,
-  headers?: Dictionary<string>,
+  context?: Context;
+  event?: APIGatewayProxyEvent;
+  headers?: Dictionary<string>;
 };
 
 export type IApiSuccessResponse = {
@@ -20,5 +20,5 @@ export type IApiErrorResponse = {
 };
 
 export type Metadata = {
-  [s: string]: string|number|any[],
+  [s: string]: string|number|any[];
 };

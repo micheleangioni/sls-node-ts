@@ -16,6 +16,10 @@
     "outDir": ".build",
     "rootDir": "./"
   },
-  "include": ["src/infrastructure/mongo"],
-  "exclude": ["node_modules", "test"]
+  "include": [
+    "handler.ts",
+    "src/",
+    "test/"
+  ],
+  "exclude": ["node_modules"]
 }

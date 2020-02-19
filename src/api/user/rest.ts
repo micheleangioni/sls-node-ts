@@ -5,7 +5,7 @@ import {getSuccessResponse} from '../responseGenerator';
 import {TransformedUser} from './declarations';
 import transform from './transform';
 
-export default function (userService: UserService) {
+export default (userService: UserService) => {
   return {
     getUsers: async (_event: APIGatewayProxyEvent, _context: Context) => {
       // _context.event.requestContext.authorizer.userId is the Authenticated User id
@@ -25,4 +25,4 @@ export default function (userService: UserService) {
       };
     },
   };
-}
+};

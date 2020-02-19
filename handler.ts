@@ -41,7 +41,7 @@ let services: { userService: UserService };
 /**
  * Create the Service Instances to be shared amongst the Lambda Functions.
  */
-async function createServiceInstances() {
+const createServiceInstances = async () => {
   if (services) {
     return services;
   }
@@ -50,7 +50,7 @@ async function createServiceInstances() {
   const loadFromAWSSecrets = ['production', 'staging'].includes(process.env.ENV || 'development');
   await loadSecrets(loadFromAWSSecrets);
 
-  let infraServices: { eventPublisher: EventPublisher, userRepo: IUserRepo };
+  let infraServices: { eventPublisher: EventPublisher; userRepo: IUserRepo };
 
   try {
     infraServices = await infraServicesCreator();
@@ -68,12 +68,12 @@ async function createServiceInstances() {
   };
 
   return services;
-}
+};
 
 /**
  * Create the Apollo Handler at cold start.
  */
-async function createApolloHandler(): Promise<ApolloHandler> {
+const createApolloHandler = async (): Promise<ApolloHandler> => {
   if (apolloHandler) {
     return apolloHandler;
   }
@@ -101,12 +101,12 @@ async function createApolloHandler(): Promise<ApolloHandler> {
   apolloHandler = server.createHandler();
 
   return apolloHandler;
-}
+};
 
 /**
  * Create the REST Handlers at cold start.
  */
-async function createRESTHandlers() {
+const createRESTHandlers = async () => {
   if (restHandlers) {
     return restHandlers;
   }
@@ -120,7 +120,7 @@ async function createRESTHandlers() {
   };
 
   return restHandlers;
-}
+};
 
 // Export GraphQL Server
 
@@ -134,18 +134,18 @@ async function createRESTHandlers() {
  * @param apollo
  * @return Promise<void>
  */
-function runApollo(event: APIGatewayProxyEvent, context: Context, apollo: ApolloHandler): Promise<void> {
+const runApollo = (event: APIGatewayProxyEvent, context: Context, apollo: ApolloHandler): Promise<void> => {
   return new Promise((resolve, reject) => {
     const callback = (error: any, body: any) => (error ? reject(error) : resolve(body));
     apollo(event, context, callback);
   });
-}
+};
 
-async function graphqlHandler(lambdaEvent: APIGatewayProxyEvent, lambdaContext: Context) {
+const graphqlHandler = async (lambdaEvent: APIGatewayProxyEvent, lambdaContext: Context) => {
   const apollo: ApolloHandler = await createApolloHandler();
 
   return await runApollo(lambdaEvent, lambdaContext, apollo);
-}
+};
 
 export const enhancedGraphqlHandler: any = middy(graphqlHandler).use(cors());
 
@@ -161,13 +161,13 @@ export { authorizer };
 
 // Add REST endpoints
 
-function getCorsHeaders() {
+const getCorsHeaders = () => {
   return {
     'Access-Control-Allow-Credentials': true,
     'Access-Control-Allow-Headers': '*',
     'Access-Control-Allow-Origin': '*',
   };
-}
+};
 
 export const getUsers: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, context: Context) => {
   try {

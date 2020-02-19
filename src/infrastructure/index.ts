@@ -5,7 +5,7 @@ import brokerFactory from '@micheleangioni/node-messagebrokers';
 import config from '../config/index';
 import mongoInitializer from './mongo';
 
-export default async function () {
+export default async () => {
   // Add logger
   const logger = new Logger();
 
@@ -24,4 +24,4 @@ export default async function () {
     logger,
     userRepo,
   };
-}
+};

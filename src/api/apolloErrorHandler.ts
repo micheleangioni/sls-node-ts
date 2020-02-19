@@ -1,7 +1,7 @@
 import {GraphQLError, GraphQLFormattedError} from 'graphql';
 import { getErrorResponse } from './responseGenerator';
 
-export default function apolloErrorHandler(error: GraphQLError): GraphQLFormattedError {
+export default (error: GraphQLError): GraphQLFormattedError => {
   // Custom errors should have a custom statusCode property < 500
   if (error.extensions && error.extensions.exception && error.extensions.exception.statusCode < 500) {
     console.log(JSON.stringify(error));
@@ -20,4 +20,4 @@ export default function apolloErrorHandler(error: GraphQLError): GraphQLFormatte
       : 500;
 
   return getErrorResponse(error.message, code, statusCode);
-}
+};

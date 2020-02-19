@@ -1,7 +1,7 @@
 import {APIGatewayProxyResult} from 'aws-lambda';
 import { getErrorResponse } from './responseGenerator';
 
-export default function applicationErrorHandler(err: any): APIGatewayProxyResult {
+export default (err: any): APIGatewayProxyResult => {
   if (err.statusCode && err.code) {
     if (err.statusCode >= 500) {
       console.error(err);
@@ -19,4 +19,4 @@ export default function applicationErrorHandler(err: any): APIGatewayProxyResult
     body: JSON.stringify(getErrorResponse('Internal error', 'InternalError')),
     statusCode: 500,
   };
-}
+};

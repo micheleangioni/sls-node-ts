@@ -11,21 +11,21 @@ let userRepo: UserRepo;
 
 export {userRepo};
 
-export async function getRepos(): Promise<{ userRepo: UserRepo }> {
+export const getRepos = async (): Promise<{ userRepo: UserRepo }> => {
   if (!isMongoInitialized) {
     await initMongo();
   }
 
   return { userRepo };
-}
+};
 
-async function initMongo() {
+const initMongo = async () => {
   UserModel = (await initializer()).User;
   userRepo = userRepoCreator(UserModel);
   isMongoInitialized = true;
-}
+};
 
-export async function seedDb(): Promise<true> {
+export const seedDb = async (): Promise<true> => {
   if (!isMongoInitialized) {
     await initMongo();
   }
@@ -41,9 +41,9 @@ export async function seedDb(): Promise<true> {
   await UserModel.insertMany(usersObjectData);
 
   return true;
-}
+};
 
-export async function cleanDb(): Promise<true> {
+export const cleanDb = async (): Promise<true> => {
   if (!isMongoInitialized) {
     await initMongo();
   }
@@ -51,4 +51,4 @@ export async function cleanDb(): Promise<true> {
   await UserModel.deleteMany({});
 
   return true;
-}
+};

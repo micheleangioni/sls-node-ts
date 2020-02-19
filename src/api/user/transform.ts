@@ -1,7 +1,7 @@
 import User from '../../domain/user/user';
 import {TransformedUser} from './declarations';
 
-export default function (user: User): TransformedUser {
+export default (user: User): TransformedUser => {
   return {
     _id: user._id || '',
     createdAt: user.createdAt ? user.createdAt.toISOString() : undefined,
@@ -9,4 +9,4 @@ export default function (user: User): TransformedUser {
     updatedAt: user.updatedAt ? user.updatedAt.toISOString() : undefined,
     username: user.username,
   };
-}
+};

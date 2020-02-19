@@ -3,7 +3,7 @@ import {UserCreateData} from '../../application/user/declarations';
 import {ResolverContext} from '../declarations';
 import transform from './transform';
 
-export default function (userService: UserService) {
+export default (userService: UserService) => {
   return {
     resolvers: {
       Mutation: {
@@ -52,6 +52,6 @@ export default function (userService: UserService) {
       }
     `,
   };
-}
+};
 
 

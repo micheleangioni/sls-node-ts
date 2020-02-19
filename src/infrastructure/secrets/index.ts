@@ -2,7 +2,7 @@ import AWS from 'aws-sdk';
 import config from '../../config';
 import {Dictionary} from '../../domain/declarations';
 
-function getSecretValue(client: AWS.SecretsManager, secretName: string): Promise<Dictionary<string>> {
+const getSecretValue = (client: AWS.SecretsManager, secretName: string): Promise<Dictionary<string>> => {
   return new Promise((resolve, reject) => {
     client.getSecretValue({SecretId: secretName}, (err: any, data) => {
       if (err) {
@@ -41,7 +41,7 @@ function getSecretValue(client: AWS.SecretsManager, secretName: string): Promise
       resolve(JSON.parse(data.SecretString));
     });
   });
-}
+};
 
 /**
  * Load secrets and save them into the process.env.
@@ -50,7 +50,7 @@ function getSecretValue(client: AWS.SecretsManager, secretName: string): Promise
  * @param {boolean} fetchSecretsFromAWS
  * @return Promise<true>
  */
-export async function loadSecrets(fetchSecretsFromAWS = true) {
+export const loadSecrets = async (fetchSecretsFromAWS = true) => {
   const region = process.env.REGION;
 
   // Create a Secrets Manager client
@@ -68,4 +68,4 @@ export async function loadSecrets(fetchSecretsFromAWS = true) {
 
     return true;
   }
-}
+};
