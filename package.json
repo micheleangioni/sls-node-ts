@@ -48,7 +48,7 @@
     "validator": "^12.2.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.41",
+    "@types/aws-lambda": "^8.10.42",
     "@types/jest": "^25.1.2",
     "@types/node": "^12.12.25",
     "bufferutil": "^4.0.1",
