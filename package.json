@@ -62,7 +62,7 @@
     "serverless-localstack": "^0.4.24",
     "serverless-offline": "^5.12.1",
     "serverless-plugin-typescript": "^1.1.9",
-    "ts-jest": "^25.2.0",
+    "ts-jest": "^25.2.1",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5",
