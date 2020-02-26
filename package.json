@@ -30,7 +30,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@micheleangioni/node-messagebrokers": "^0.5.2",
+    "@micheleangioni/node-messagebrokers": "^0.6.0",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.12",
     "@types/mongoose": "^5.7.2",
