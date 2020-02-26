@@ -12,4 +12,12 @@ export class ApplicationError extends Error {
     this.message = message || 'InternalError';
     this.statusCode = statusCode || 500;
   }
+
+  public toString(): string {
+    return JSON.stringify({
+      code: this.code,
+      message: this.message,
+      statusCode: this.statusCode,
+    });
+  }
 }

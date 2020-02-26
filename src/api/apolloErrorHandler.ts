@@ -1,12 +1,13 @@
 import {GraphQLError, GraphQLFormattedError} from 'graphql';
+import ILogger from '../infrastructure/logger/ILogger';
 import { getErrorResponse } from './responseGenerator';
 
-export default (error: GraphQLError): GraphQLFormattedError => {
+export default (logger: ILogger) => (error: GraphQLError): GraphQLFormattedError => {
   // Custom errors should have a custom statusCode property < 500
   if (error.extensions && error.extensions.exception && error.extensions.exception.statusCode < 500) {
-    console.log(JSON.stringify(error));
+    logger.info(error.toString());
   } else {
-    console.error(JSON.stringify(error));
+    logger.error(error.toString());
   }
 
   // Return proper error response

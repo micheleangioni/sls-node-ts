@@ -1,12 +1,15 @@
 import {APIGatewayProxyResult} from 'aws-lambda';
-import { getErrorResponse } from './responseGenerator';
+import {ApplicationError} from '../application/ApplicationError';
+import {ErrorCodes} from '../application/declarations';
+import ILogger from '../infrastructure/logger/ILogger';
+import {getErrorResponse} from './responseGenerator';
 
-export default (err: any): APIGatewayProxyResult => {
-  if (err.statusCode && err.code) {
+export default (err: ApplicationError | Error, logger: ILogger): APIGatewayProxyResult => {
+  if (err instanceof ApplicationError) {
     if (err.statusCode >= 500) {
-      console.error(err);
+      logger.error(err);
     } else {
-      console.debug(err);
+      logger.debug(err);
     }
 
     return {
@@ -15,8 +18,10 @@ export default (err: any): APIGatewayProxyResult => {
     };
   }
 
+  logger.error(err.toString());
+
   return {
-    body: JSON.stringify(getErrorResponse('Internal error', 'InternalError')),
+    body: JSON.stringify(getErrorResponse('Internal error', ErrorCodes.INTERNAL_ERROR)),
     statusCode: 500,
   };
 };

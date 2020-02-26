@@ -24,6 +24,7 @@ import UserService from './src/application/user/userService';
 import { Dictionary } from './src/domain/declarations';
 import { IUserRepo } from './src/domain/user/IUserRepo';
 import infraServicesCreator from './src/infrastructure';
+import ILogger from './src/infrastructure/logger/ILogger';
 import { loadSecrets } from './src/infrastructure/secrets';
 
 type ApolloHandler = (
@@ -35,6 +36,7 @@ type ApolloHandler = (
 // Connection instances must be defined OUTSIDE the Lambda handlers to be shared amongst Lambda calls
 
 let apolloHandler: ApolloHandler;
+let logger: ILogger;
 let restHandlers: Dictionary<Function>;
 let services: { userService: UserService };
 
@@ -50,10 +52,11 @@ const createServiceInstances = async () => {
   const loadFromAWSSecrets = ['production', 'staging'].includes(process.env.ENV || 'development');
   await loadSecrets(loadFromAWSSecrets);
 
-  let infraServices: { eventPublisher: EventPublisher; userRepo: IUserRepo };
+  let infraServices: { eventPublisher: EventPublisher; logger: ILogger; userRepo: IUserRepo };
 
   try {
     infraServices = await infraServicesCreator();
+    logger = infraServices.logger;
   } catch (e) {
     // tslint:disable-next-line:no-console
     console.error('Error on infrastructure services startup', e);
@@ -92,7 +95,7 @@ const createApolloHandler = async (): Promise<ApolloHandler> => {
       event,
       headers: event.headers,
     }),
-    formatError: apolloErrorHandler,
+    formatError: apolloErrorHandler(logger),
     introspection: true,
     schema,
   });
@@ -180,6 +183,6 @@ export const getUsers: APIGatewayProxyHandler = async (event: APIGatewayProxyEve
       headers: getCorsHeaders(),
     };
   } catch (err) {
-    return applicationErrorHandler(err);
+    return applicationErrorHandler(err, logger);
   }
 };
