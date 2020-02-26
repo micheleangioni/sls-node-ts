@@ -41,7 +41,7 @@
     "graphql-tools": "^4.0.7",
     "middy": "^0.33.2",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.27",
+    "moment-timezone": "^0.5.28",
     "mongoose": "^5.9.2",
     "querystring": "^0.2.0",
     "source-map-support": "^0.5.16",
