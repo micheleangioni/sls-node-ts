@@ -119,7 +119,7 @@ const createRESTHandlers = async () => {
     : await createServiceInstances();
 
   restHandlers = {
-    ...userRest(userService),
+    ...userRest(userService, logger),
   };
 
   return restHandlers;

@@ -1,11 +1,12 @@
 import {APIGatewayProxyEvent, Context} from 'aws-lambda';
 import UserService from '../../application/user/userService';
+import ILogger from '../../infrastructure/logger/ILogger';
 import applicationErrorHandler from '../applicationErrorHandler';
 import {getSuccessResponse} from '../responseGenerator';
 import {TransformedUser} from './declarations';
 import transform from './transform';
 
-export default (userService: UserService) => {
+export default (userService: UserService, logger: ILogger) => {
   return {
     getUsers: async (_event: APIGatewayProxyEvent, _context: Context) => {
       // _context.event.requestContext.authorizer.userId is the Authenticated User id
@@ -16,7 +17,7 @@ export default (userService: UserService) => {
         users = (await userService.getAll())
           .map((user) => transform(user));
       } catch (err) {
-        return applicationErrorHandler(err);
+        return applicationErrorHandler(err, logger);
       }
 
       return {
