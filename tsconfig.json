@@ -18,8 +18,10 @@
   },
   "include": [
     "handler.ts",
-    "src/",
-    "test/"
+    "src/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "test"
+  ]
 }
