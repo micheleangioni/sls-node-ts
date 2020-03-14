@@ -7,7 +7,7 @@ import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 
 export default class UserService extends AbstractApplicationService {
-  constructor(private userRepo: IUserRepo, eventPublisher: EventPublisher) {
+  constructor(private readonly userRepo: IUserRepo, eventPublisher: EventPublisher) {
     super(eventPublisher);
   }
 
@@ -45,7 +45,7 @@ export default class UserService extends AbstractApplicationService {
 
         throw new ApplicationError({
           code: ErrorCodes.INVALID_DATA,
-          message,
+          error: message,
           statusCode: 412,
         });
       }

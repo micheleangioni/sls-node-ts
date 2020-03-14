@@ -5,9 +5,9 @@ import { getErrorResponse } from './responseGenerator';
 export default (logger: ILogger) => (error: GraphQLError): GraphQLFormattedError => {
   // Custom errors should have a custom statusCode property < 500
   if (error.extensions && error.extensions.exception && error.extensions.exception.statusCode < 500) {
-    logger.info(error.toString());
+    logger.info(error);
   } else {
-    logger.error(error.toString());
+    logger.error(error);
   }
 
   // Return proper error response

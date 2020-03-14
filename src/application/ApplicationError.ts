@@ -1,16 +1,18 @@
-import {ApplicationErrorData, ErrorCodes} from './declarations';
+import { ApplicationErrorData } from './declarations';
 
 export class ApplicationError extends Error {
-  public code: string;
-  public message: string;
-  public statusCode: number;
+  public readonly code: string;
+  public readonly error?: Error;
+  public readonly message: string;
+  public readonly statusCode: number;
+  public readonly stack?: string;
 
-  constructor({code, message, statusCode}: ApplicationErrorData) {
-    super(message);
+  constructor({ code, error, statusCode }: ApplicationErrorData) {
+    super(typeof error === 'string' ? error : error.message);
 
-    this.code = code || ErrorCodes.INTERNAL_ERROR;
-    this.message = message || 'InternalError';
-    this.statusCode = statusCode || 500;
+    this.code = code;
+    this.message = typeof error === 'string' ? error : error.message.toString();
+    this.statusCode = statusCode;
   }
 
   public toString(): string {
@@ -18,6 +20,7 @@ export class ApplicationError extends Error {
       code: this.code,
       message: this.message,
       statusCode: this.statusCode,
+      ...(this.stack && { stack: this.stack }),
     });
   }
 }

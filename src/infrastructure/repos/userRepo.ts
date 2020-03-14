@@ -6,7 +6,7 @@ import User from '../../domain/user/user';
 import {UserDataToBePersisted} from './declarations';
 
 export class UserRepo implements IUserRepo {
-  constructor(private userModel: Model<any>) {}
+  constructor(private readonly userModel: Model<any>) {}
 
   /**
    * Create and return a new MongoDB id.

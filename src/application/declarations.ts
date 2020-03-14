@@ -1,9 +1,9 @@
 import {IDomainEvent} from '../domain/IDomainEvent';
 
 export type ApplicationErrorData = {
-  code?: string;
-  message: string;
-  statusCode?: number;
+  code: string;
+  error: Error | string;
+  statusCode: number;
 };
 
 export enum ErrorCodes {

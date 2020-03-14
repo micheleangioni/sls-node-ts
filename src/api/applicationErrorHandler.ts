@@ -18,7 +18,7 @@ export default (err: ApplicationError | Error, logger: ILogger): APIGatewayProxy
     };
   }
 
-  logger.error(err.toString());
+  logger.error(err);
 
   return {
     body: JSON.stringify(getErrorResponse('Internal error', ErrorCodes.INTERNAL_ERROR)),
