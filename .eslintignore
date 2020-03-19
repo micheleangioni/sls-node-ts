@@ -1,6 +1,7 @@
 # /node_modules/* in the project root is ignored by default
 # build artifacts
 build/*
+.build/*
 coverage/*
 .serverless/*
 # data definition files
