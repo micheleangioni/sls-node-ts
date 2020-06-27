@@ -3,7 +3,7 @@ import {Model, mongo} from 'mongoose';
 import {UserData} from '../../domain/user/declarations';
 import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
-import {UserDataToBePersisted} from './declarations';
+import {PersistedUserData, ToBePersistedUserData} from './declarations';
 
 export class UserRepo implements IUserRepo {
   constructor(private readonly userModel: Model<any>) {}
@@ -125,19 +125,19 @@ export class UserRepo implements IUserRepo {
    * @returns {Promise<User>}
    */
   public async persist(user: User): Promise<User> {
-    const dataToBePersisted: UserDataToBePersisted = this.getDataToBePersisted(user);
+    const dataToBePersisted: ToBePersistedUserData = this.getDataToBePersisted(user);
 
     const updatedUser = await this.userModel.findOneAndUpdate(
       { _id: user._id },
       dataToBePersisted,
-      { new: true, upsert: true }).lean();
+      { new: true, upsert: true }).lean() as PersistedUserData;
 
     user.updateDates(moment(updatedUser.updatedAt));
 
     return user;
   }
 
-  private getDataToBePersisted(user: User): UserDataToBePersisted {
+  private getDataToBePersisted(user: User): ToBePersistedUserData {
     return {
       _id: user._id,
       email: user.email,

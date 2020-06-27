@@ -1,3 +1,4 @@
-import {BaseUserData} from '../../domain/user/declarations';
+import {BaseUserData, Timestamps} from '../../domain/user/declarations';
 
-export type UserDataToBePersisted = BaseUserData;
+export type ToBePersistedUserData = BaseUserData;
+export type PersistedUserData = ToBePersistedUserData & Required<Timestamps>;
