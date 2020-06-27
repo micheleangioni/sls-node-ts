@@ -35,7 +35,7 @@
     "@types/moment-timezone": "^0.5.13",
     "@types/mongoose": "^5.7.3",
     "@types/validator": "^12.0.1",
-    "apollo-server-lambda": "^2.11.0",
+    "apollo-server-lambda": "^2.14.2",
     "deepmerge": "^4.2.2",
     "graphql": "^14.6.0",
     "graphql-tools": "^4.0.7",
