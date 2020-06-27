@@ -63,9 +63,9 @@
     "serverless-offline": "^6.4.0",
     "serverless-plugin-typescript": "^1.1.9",
     "ts-jest": "^25.2.1",
-    "ts-loader": "^6.2.2",
+    "ts-loader": "^7.0.5",
     "ts-node": "^8.10.2",
-    "typescript": "^3.8.3",
+    "typescript": "^3.9.5",
     "typescript-eslint": "0.0.1-alpha.0",
     "utf-8-validate": "^5.0.2"
   },
