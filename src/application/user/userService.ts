@@ -40,7 +40,7 @@ export default class UserService extends AbstractApplicationService {
     } catch (e) {
       if (e.code === 11000) {
         const message = e.keyValue && Object.keys(e.keyValue).length > 0
-          ? `The ${Object.keys(e.keyValue)[0]} ${Object.values(e.keyValue)[0]} already exists`
+          ? `The ${Object.keys(e.keyValue)[0]} ${Object.values(e.keyValue)[0] as string} already exists`
           : 'Duplicated entry in the database';
 
         throw new ApplicationError({

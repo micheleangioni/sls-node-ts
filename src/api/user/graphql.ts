@@ -1,5 +1,6 @@
 import UserService from '../../application/user/userService';
 import {UserCreateData} from '../../application/user/declarations';
+import {Dictionary} from '../../domain/declarations';
 import {ResolverContext} from '../declarations';
 import transform from './transform';
 
@@ -21,7 +22,7 @@ export default (userService: UserService) => {
       Query: {
         getUsers: async (
           _source: string | undefined,
-          _params: object,
+          _params: Dictionary<string|number|boolean|undefined>,
           _context: ResolverContext,
         ) => {
           // In _context.event.requestContext.authorizer the Authorizer Context is available

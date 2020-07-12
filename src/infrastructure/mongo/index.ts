@@ -7,7 +7,7 @@ export default async () => {
     ? process.env.MONGO_URI
     : process.env.ENV === 'local'
       ? `mongodb://mongo:27017/${name}-${process.env.ENV}`
-      : `mongodb://127.0.0.1:27017/${name}-${process.env.ENV}`;
+      : `mongodb://127.0.0.1:27017/${name}-${process.env.ENV || ''}`;
 
   await mongoose.connect(mongoUri, { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true });
 

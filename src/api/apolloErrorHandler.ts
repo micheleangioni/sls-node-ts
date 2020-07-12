@@ -11,11 +11,11 @@ export default (logger: ILogger) => (error: GraphQLError): GraphQLFormattedError
   }
 
   // Return proper error response
-  const code = error.extensions && error.extensions.exception && error.extensions.exception.code
-    ? error.extensions.exception.code
-    : undefined;
+  const code = error.extensions?.exception?.code
+    ? String(error.extensions.exception.code)
+    : 'no-code';
   const statusCode = error.extensions && error.extensions.exception && error.extensions.exception.statusCode
-    ? error.extensions.exception.statusCode
+    ? parseInt(error.extensions.exception.statusCode)
     : error.name === 'ValidationError'
       ? 412
       : 500;

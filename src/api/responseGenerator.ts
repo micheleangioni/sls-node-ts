@@ -1,7 +1,8 @@
+import {Dictionary} from '../domain/declarations';
 import { IApiErrorResponse, IApiSuccessResponse, Metadata } from './declarations';
 
 export const getSuccessResponse = (
-  data: object | any[],
+  data: Dictionary<any> | any[],
   metadataObject?: {
     resultsName?: string;
     metadata: Metadata;

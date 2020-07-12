@@ -1,3 +1,4 @@
+import Cloudevent from 'cloudevents-sdk/v1';
 import {IDomainEvent} from '../domain/IDomainEvent';
 import {CloudEventFactory, IBrokerInterface} from '@micheleangioni/node-messagebrokers';
 import ILogger from '../infrastructure/logger/ILogger';
@@ -60,7 +61,7 @@ export default class EventPublisher {
     }
   }
 
-  private convertDomainEventToCloudEvent(source: string, event: IDomainEvent): any {
+  private convertDomainEventToCloudEvent(source: string, event: IDomainEvent): Cloudevent {
     return CloudEventFactory.createV1(event.getEventAggregate(), event.getEventName(), source, event.getEventData());
   }
 }

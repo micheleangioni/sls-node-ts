@@ -1,12 +1,15 @@
 import ILogger from './ILogger';
 
+type AnyDictionary = { [s: string]: any };
+
 const stringifyMessageProperties = (message: any, level: keyof ILogger): string => {
   return JSON.stringify(Object.getOwnPropertyNames(message)
     .reduce((plainObject, key) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       plainObject[key] = message[key];
 
       return plainObject;
-    }, { level } as { [key: string]: any }));
+    }, { level } as AnyDictionary));
 };
 
 const stringifyNonStackedErrorMessage = (message: any, level: keyof ILogger): string => {
@@ -16,7 +19,7 @@ const stringifyNonStackedErrorMessage = (message: any, level: keyof ILogger): st
 
   if (typeof message === 'string') {
     try {
-      const parsedMessage = JSON.parse(message);
+      const parsedMessage = JSON.parse(message) as AnyDictionary | any[];
 
       return JSON.stringify({ ...parsedMessage, ...{ level } });
     } catch (_) {

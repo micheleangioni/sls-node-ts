@@ -1,4 +1,4 @@
-// tslint:disable-next-line:no-console
+// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
 
 // In non staging or development environments, use local SNS connection in `@micheleangioni/node-messagebrokers` package
@@ -11,7 +11,13 @@ if (process.env.ENV === 'local' && !process.env.SNS_ENDPOINT) {
 }
 
 import { ApolloServer } from 'apollo-server-lambda';
-import { APIGatewayProxyCallback, APIGatewayProxyEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
+import {
+  APIGatewayProxyCallback,
+  APIGatewayProxyEvent,
+  APIGatewayProxyHandler,
+  APIGatewayProxyResult,
+  Context,
+} from 'aws-lambda';
 import middy from 'middy';
 import { cors } from 'middy/middlewares';
 import schemaCreator from './src/api';
@@ -37,7 +43,7 @@ type ApolloHandler = (
 
 let apolloHandler: ApolloHandler;
 let logger: ILogger;
-let restHandlers: Dictionary<Function>;
+let restHandlers: Dictionary<APIGatewayProxyHandler>;
 let services: { userService: UserService };
 
 /**
@@ -90,7 +96,7 @@ const createApolloHandler = async (): Promise<ApolloHandler> => {
   const schema = schemaCreator({ userService });
 
   const server = new ApolloServer({
-    context: ({ event, context }) => ({
+    context: ({ event, context }: { event: APIGatewayProxyEvent; context: Context }) => ({
       context,
       event,
       headers: event.headers,
@@ -176,7 +182,8 @@ export const getUsers: APIGatewayProxyHandler = async (event: APIGatewayProxyEve
   try {
     await createRESTHandlers();
 
-    const responseBody = await restHandlers.getUsers(event, context);
+    // @ts-ignore
+    const responseBody = await restHandlers.getUsers(event, context) as APIGatewayProxyResult;
 
     return {
       ...responseBody,
