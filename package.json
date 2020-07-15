@@ -38,7 +38,7 @@
     "apollo-server-lambda": "^2.15.1",
     "deepmerge": "^4.2.2",
     "graphql": "^15.1.0",
-    "graphql-tools": "^6.0.11",
+    "graphql-tools": "^6.0.13",
     "middy": "^0.36.0",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
