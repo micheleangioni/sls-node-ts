@@ -56,7 +56,7 @@
     "bufferutil": "^4.0.1",
     "eslint": "^7.6.0",
     "eslint-plugin-prefer-arrow": "^1.2.1",
-    "jest": "^26.1.0",
+    "jest": "^26.2.2",
     "serverless": "^1.74.1",
     "serverless-deployment-bucket": "^1.1.2",
     "serverless-localstack": "^0.4.24",
