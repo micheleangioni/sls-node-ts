@@ -19,6 +19,7 @@ jspm_packages
 *.launch
 .settings/
 *.sublime-workspace
+.vscode
 
 # Linux
 *~
