@@ -1,4 +1,6 @@
-service: ${file(package.json):name}
+service:
+  #  name: ${file(package.json):name}
+  name: slsnodets # for local development env name should be short
 
 plugins:
   - serverless-deployment-bucket
@@ -13,7 +15,7 @@ provider:
   tracing:
     apiGateway: false
     lambda: false
-  region: ${opt:region, 'eu-west-1'}
+  region: 'eu-west-1'
   stage: ${opt:stage, 'development'}
   iamManagedPolicies:
     - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
@@ -43,6 +45,7 @@ custom:
   localstack:
     debug: true
     stages:
+      - development
       - local
     autostart: false
     host: http://localhost
