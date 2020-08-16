@@ -9,7 +9,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-  memorySize: 512
+  memorySize: 256
   tracing:
     apiGateway: false
     lambda: false
