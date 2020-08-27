@@ -60,7 +60,7 @@
     "jest": "^26.4.2",
     "serverless": "^1.80.0",
     "serverless-deployment-bucket": "^1.1.2",
-    "serverless-localstack": "^0.4.24",
+    "serverless-localstack": "^0.4.26",
     "serverless-offline": "^6.5.0",
     "serverless-plugin-typescript": "^1.1.9",
     "ts-jest": "^26.3.0",
