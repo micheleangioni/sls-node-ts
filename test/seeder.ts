@@ -1,4 +1,4 @@
-import moment = require('moment-timezone');
+import dayjs from 'dayjs';
 import {Model} from 'mongoose';
 import initializer from '../src/infrastructure/mongo';
 import userRepoCreator, {UserRepo} from '../src/infrastructure/repos/userRepo';
@@ -33,8 +33,8 @@ export const seedDb = async (): Promise<true> => {
   const usersObjectData = usersData.map((userData) => ({
     ...userData,
     ...{
-      createdAt: moment(userData.createdAt),
-      updatedAt: moment(userData.updatedAt),
+      createdAt: dayjs(userData.createdAt),
+      updatedAt: dayjs(userData.updatedAt),
     },
   }));
 

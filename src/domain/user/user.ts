@@ -1,8 +1,8 @@
-import moment, {Moment} from 'moment-timezone';
+import dayjs, {Dayjs} from 'dayjs';
 import validator from 'validator';
 import {BaseEntity} from '../BaseEntity';
 import IEntity from '../IEntity';
-import { UserData } from './declarations';
+import {UserData} from './declarations';
 import {UserCreated} from './events/UserCreated';
 
 export default class User extends BaseEntity implements IEntity {
@@ -15,8 +15,8 @@ export default class User extends BaseEntity implements IEntity {
   private static AGGREGATE_NAME = 'user';
   public _id: string;
   public readonly email: string;
-  private _createdAt?: Moment;
-  private _updatedAt?: Moment;
+  private _createdAt?: Dayjs;
+  private _updatedAt?: Dayjs;
   private _username?: string;
 
   constructor({ _id, createdAt, email, updatedAt, username }: UserData) {
@@ -26,18 +26,18 @@ export default class User extends BaseEntity implements IEntity {
     User.checkEmail(email);
     this.email = email;
 
-    if (createdAt) { this._createdAt = moment(createdAt); }
-    if (updatedAt) { this._updatedAt = moment(updatedAt); }
+    if (createdAt) { this._createdAt = dayjs(createdAt); }
+    if (updatedAt) { this._updatedAt = dayjs(updatedAt); }
     if (username) { this._username = username; }
   }
 
   // Getters
 
-  get createdAt(): Moment | undefined {
+  get createdAt(): Dayjs | undefined {
     return this._createdAt;
   }
 
-  get updatedAt(): Moment | undefined {
+  get updatedAt(): Dayjs | undefined {
     return this._updatedAt;
   }
 
@@ -51,21 +51,21 @@ export default class User extends BaseEntity implements IEntity {
    * Update the createdAt and updatedAt keys.
    * If the createdAt key was not previously set, it means this is being persisted for the first time.
    *
-   * @param {Moment | Date} date
+   * @param {Dayjs | Date} date
    * @return void
    */
-  public updateDates(date: Moment | Date) {
+  public updateDates(date: Dayjs | Date) {
     if (!this._createdAt) {
-      this._createdAt = moment(date);
+      this._createdAt = dayjs(date);
 
       this.addDomainEvent(new UserCreated(User.AGGREGATE_NAME, {
         _id: this._id,
-        createdAt: this.createdAt || moment(),
+        createdAt: this.createdAt || dayjs(),
         email: this.email,
         ...(this.username && { username: this.username }),
       }));
     }
 
-    this._updatedAt = moment(date);
+    this._updatedAt = dayjs(date);
   }
 }

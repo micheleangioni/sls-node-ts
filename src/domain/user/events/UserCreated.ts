@@ -1,11 +1,11 @@
-import {Moment} from 'moment-timezone';
+import {Dayjs} from 'dayjs';
 import {BaseEvent} from '../../BaseEvent';
 import {IDomainEvent} from '../../IDomainEvent';
 import {UserCreatedData} from './declarations';
 
 export class UserCreated extends BaseEvent implements IDomainEvent {
   public readonly _id: string;
-  public readonly createdAt: Moment;
+  public readonly createdAt: Dayjs;
   public readonly email: string;
   public readonly username?: string;
   private readonly eventName = 'UserCreated';

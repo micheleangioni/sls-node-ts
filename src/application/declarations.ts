@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+
 import {IDomainEvent} from '../domain/IDomainEvent';
 
 export type ApplicationErrorData = {

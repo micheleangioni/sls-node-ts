@@ -42,6 +42,8 @@ provider:
 
 custom:
   defaultStage: local
+  serverless-offline:
+    allowCache: true
   localstack:
     debug: true
     stages:
