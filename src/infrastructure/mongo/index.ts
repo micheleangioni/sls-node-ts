@@ -23,7 +23,7 @@ export default async () => {
   }
 
   return {
-    mongoose,
     User,
+    mongoose,
   };
 };

@@ -1,6 +1,6 @@
 import {Schema} from 'mongoose';
 
 export default new Schema({
-  email: { type: String, required: true, unique: true },
-  username: { type: String, unique: true, sparse: true },
+  email: { required: true, type: String, unique: true },
+  username: { sparse: true, type: String, unique: true },
 }, { timestamps: true });

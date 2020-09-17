@@ -132,6 +132,7 @@
         ],
         "prefer-arrow/prefer-arrow-functions": "error",
         "prefer-const": "error",
+        "sort-keys": "error",
         "space-before-function-paren": [
             "error",
             {
