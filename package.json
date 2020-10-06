@@ -34,7 +34,7 @@
     "@micheleangioni/node-messagebrokers": "^0.7.0",
     "@types/mongoose": "^5.7.36",
     "@types/validator": "^13.1.0",
-    "apollo-server-lambda": "^2.18.1",
+    "apollo-server-lambda": "^2.18.2",
     "dayjs": "^1.9.1",
     "deepmerge": "^4.2.2",
     "graphql": "^15.3.0",
