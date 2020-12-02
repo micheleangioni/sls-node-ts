@@ -49,7 +49,7 @@
     "@types/aws-lambda": "^8.10.64",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.12.31",
-    "@typescript-eslint/eslint-plugin": "^4.8.0",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.8.2",
     "bufferutil": "^4.0.2",
     "eslint": "^7.14.0",
