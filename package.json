@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@micheleangioni/node-messagebrokers": "^0.7.0",
-    "@types/mongoose": "^5.10.1",
+    "@types/mongoose": "^5.10.2",
     "@types/validator": "^13.1.1",
     "apollo-server-lambda": "^2.19.0",
     "dayjs": "^1.9.6",
