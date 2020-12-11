@@ -46,7 +46,7 @@
     "validator": "^13.1.17"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.64",
+    "@types/aws-lambda": "^8.10.66",
     "@types/jest": "^26.0.18",
     "@types/node": "^12.12.31",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
