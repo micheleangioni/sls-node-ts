@@ -4,10 +4,10 @@ console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${pr
 // In non staging or development environments, use local SNS connection in `@micheleangioni/node-messagebrokers` package
 if (process.env.ENV === 'local' && !process.env.SNS_ENDPOINT) {
   // If deploying to Localstack, point SNS to the Localstack container
-  process.env.SNS_ENDPOINT = 'http://localstack:4575';
+  process.env.SNS_ENDPOINT = 'http://localstack:4566';
 } else if (process.env.ENV === 'development' && !process.env.SNS_ENDPOINT) {
   // If using serverless-offline, point SNS to the localhost Localstack
-  process.env.SNS_ENDPOINT = 'http://localhost:4575';
+  process.env.SNS_ENDPOINT = 'http://localhost:4566';
 }
 
 import { ApolloServer } from 'apollo-server-lambda';

@@ -117,7 +117,7 @@ all calls to these services need to the redirected manually to `http://localstac
 
 For SNS, this is done at the very top of the `handler.ts` file, by setting the `SNS_ENDPOINT` env variable.
 
-If willing to use other services, for example S3, you'll need to manually set the `endpoint` option key to point to `http://localstack:4572`.
+If willing to use other services, for example S3, you'll need to manually set the `endpoint` option key to point to `http://localstack:4566`.
 
 ## <a name="env"></a>Environment variables
 
@@ -126,7 +126,7 @@ If willing to use other services, for example S3, you'll need to manually set th
  - `MONGO_URI` : Set the complete MongoDB connection string. Default `mongodb://localhost:27017/sls-node-ts-<ENV>}`, where `<ENV>` in the `ENV` env variable value
  - `REGION` : AWS region, default `eu-west-1`
  - `SEND_DOMAIN_EVENTS` : if set to `true`, the application will effectively emit the Domain Events of the related Aggregate to its AWS SNS topic. Default is `undefined`
- - `SNS_ENDPOINT` : in non `staging` or `production` environments, you can send Domain Events to a local implementation of AWS SNS. Default is `http://localhost:4575`, i.e. the local url for the [Localstack implementation](https://github.com/localstack/localstack)
+ - `SNS_ENDPOINT` : in non `staging` or `production` environments, you can send Domain Events to a local implementation of AWS SNS. Default is `http://localhost:4566`, i.e. the local url to [Localstack](https://github.com/localstack/localstack)
 
 ## <a name="deployment"></a>Deployment
 
@@ -206,8 +206,8 @@ The `serverless.yml` file takes care about
 1. Creating the SNS topic, under `resources`;
 2. Giving to the Lambdas the permissions to publish events to the topic, in the `iamRoleStatements` section.
 
-In order to develop locally, the other environments other than `staging` and `development` the events will be send 
-to a local implementation of AWS SNS, running on `http://localhost:4575`. This is the default URL of [Localstack](https://github.com/localstack/localstack).
+In order to develop locally, the other environments other than `staging` and `development` the events will be sent 
+to a local implementation of AWS SNS, running on `http://localhost:4566`. This is the default URL of [Localstack](https://github.com/localstack/localstack).
 
 The local endpoint can be customized via the `SNS_ENDPOINT` environment variable.
 

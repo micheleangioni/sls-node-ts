@@ -1,6 +1,5 @@
-service:
-  #  name: ${file(package.json):name}
-  name: slsnodets # for local development env name should be short
+# service: ${file(package.json):name}
+service: slsnodets # for local development env name should be short
 
 plugins:
   - serverless-deployment-bucket
@@ -51,7 +50,7 @@ custom:
       - local
     autostart: false
     host: http://localhost
-    endpointFile: dev/localstack_endpoints.json
+    edgePort: 4566
 #  lambda:
 #    # Enable this flag to improve performance
 #    mountCode: True
