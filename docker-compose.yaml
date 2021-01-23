@@ -1,13 +1,13 @@
-version: '3.5'
+version: '3.8'
 services:
-  mongo:
-    container_name: mongo
+  mongosls:
+    container_name: mongosls
     image: mongo:latest
     ports:
       - 27017:27017
 
   localstack:
-    image: localstack/localstack:0.12.3
+    image: localstack/localstack:0.12.5
     ports:
       - "4566-4599:4566-4599"
       - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
@@ -18,7 +18,7 @@ services:
       - DOCKER_HOST=unix:///var/run/docker.sock
       - LAMBDA_DOCKER_NETWORK=sls-node-ts
     volumes:
-      - "${TMPDIR:-/tmp/localstack2}:/tmp/localstack2"
+      - "${TMPDIR:-/tmp/localstack2}:/tmp/localstack2" # comment in macOS, see https://github.com/localstack/localstack/issues/2515
       - /var/run/docker.sock:/var/run/docker.sock
 
 networks:

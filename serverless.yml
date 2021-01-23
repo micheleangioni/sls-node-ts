@@ -7,6 +7,9 @@ plugins:
   - serverless-localstack
   - serverless-offline
 
+package:
+  individually: false # use false for faster local development
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -64,12 +67,16 @@ functions:
       - http:
           method: post
           path: graphql
+#          cors: true
+#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
   getUsers:
     handler: handler.getUsers
     events:
       - http:
           method: get
           path: users
+#          cors: true
+#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
   authorizerFunc:
     handler: handler.authorizer
 
