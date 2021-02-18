@@ -40,7 +40,7 @@
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.4",
     "middy": "^0.36.0",
-    "mongoose": "^5.11.16",
+    "mongoose": "^5.11.17",
     "querystring": "^0.2.0",
     "source-map-support": "^0.5.19",
     "validator": "^13.5.2"
