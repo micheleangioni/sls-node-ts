@@ -6,15 +6,16 @@ import {UserData} from './declarations';
 import {UserCreated} from './events/UserCreated';
 
 export default class User extends BaseEntity implements IEntity {
+  private static AGGREGATE_NAME = 'user';
+
   private static checkEmail(email: string) {
     if (!validator.isEmail(email)) {
       throw new Error(`${email} is not a valid email`);
     }
   }
 
-  private static AGGREGATE_NAME = 'user';
-  public _id: string;
   public readonly email: string;
+  public _id: string;
   private _createdAt?: Dayjs;
   private _updatedAt?: Dayjs;
   private _username?: string;
@@ -27,7 +28,9 @@ export default class User extends BaseEntity implements IEntity {
     this.email = email;
 
     if (createdAt) { this._createdAt = dayjs(createdAt); }
+
     if (updatedAt) { this._updatedAt = dayjs(updatedAt); }
+
     if (username) { this._username = username; }
   }
 

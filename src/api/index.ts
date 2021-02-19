@@ -27,5 +27,3 @@ export default ({ userService }: { userService: UserService }) => {
     typeDefs: [ Query, userSchema.typeDef ],
   });
 };
-
-

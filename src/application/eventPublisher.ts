@@ -19,7 +19,7 @@ export default class EventPublisher {
     const groupedEvents = events.reduce((acc: GroupedByAggregateEvents, event) => {
       if (!acc[event.getEventAggregate()]) {
         acc[event.getEventAggregate()] = [event];
-      } else  {
+      } else {
         acc[event.getEventAggregate()].push(event);
       }
 

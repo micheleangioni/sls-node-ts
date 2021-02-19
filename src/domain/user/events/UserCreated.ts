@@ -4,11 +4,11 @@ import {IDomainEvent} from '../../IDomainEvent';
 import {UserCreatedData} from './declarations';
 
 export class UserCreated extends BaseEvent implements IDomainEvent {
-  public readonly _id: string;
   public readonly createdAt: Dayjs;
   public readonly email: string;
   public readonly username?: string;
   private readonly eventName = 'UserCreated';
+  public readonly _id: string;
 
   constructor(aggregate: string, { _id, createdAt, email, username }: UserCreatedData) {
     super(aggregate);
