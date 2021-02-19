@@ -127,10 +127,10 @@ export class UserRepo implements IUserRepo {
   public async persist(user: User): Promise<User> {
     const dataToBePersisted: ToBePersistedUserData = this.getDataToBePersisted(user);
 
-    const updatedUser = await this.userModel.findOneAndUpdate(
+    const updatedUser: PersistedUserData = await this.userModel.findOneAndUpdate(
       { _id: user._id },
       dataToBePersisted,
-      { new: true, upsert: true }).lean() as PersistedUserData;
+      { new: true, upsert: true }).lean();
 
     user.updateDates(dayjs(updatedUser.updatedAt));
 

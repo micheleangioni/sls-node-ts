@@ -5,7 +5,7 @@ import ILogger from '../infrastructure/logger/ILogger';
 import {GroupedByAggregateCloudEvents, GroupedByAggregateEvents} from './declarations';
 
 export default class EventPublisher {
-  constructor(private messageBroker: IBrokerInterface, private logger: ILogger) {}
+  constructor(private readonly messageBroker: IBrokerInterface, private readonly logger: ILogger) {}
 
   /**
    * Take a list of Domain Events, convert them to the CloudEvents format and then publish them.
