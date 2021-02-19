@@ -29,6 +29,7 @@ It comes with the following features out of the box:
 - [Offline bundling](https://github.com/dherault/serverless-offline) for local development
 - Local deployment to [Localstack](https://github.com/localstack/localstack)
 - Testing through Jest
+- Modern .eslint configuration
 
 ## Contents
 
