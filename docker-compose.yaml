@@ -7,7 +7,7 @@ services:
       - 27017:27017
 
   localstack:
-    image: localstack/localstack:0.12.7
+    image: localstack/localstack:0.12.9
     ports:
       - "4566-4599:4566-4599"
       - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
