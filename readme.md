@@ -54,7 +54,7 @@ It comes with the following features out of the box:
 
 ## <a name="requirements"></a>Requirements
 
-- Node.js 12.x
+- Node.js 14.x
 - NPM / Yarn
 - An AWS Account with proper permissions
 - Docker
