@@ -24,6 +24,6 @@ export default ({ userService }: { userService: UserService }) => {
 
   return makeExecutableSchema({
     resolvers: deepmerge.all([resolvers, userSchema.resolvers]) as IResolvers,
-    typeDefs: [ Query, userSchema.typeDef ],
+    typeDefs: [Query, userSchema.typeDef],
   });
 };

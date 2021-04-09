@@ -71,6 +71,7 @@
         "@typescript-eslint/triple-slash-reference": "error",
         "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true, "overrides": { "arrow": { "before": true, "after": true }} }],
         "@typescript-eslint/unified-signatures": "error",
+        "array-bracket-spacing": ["error", "never"],
         "camelcase": "error",
         "comma-dangle": ["error", "always-multiline"],
         "complexity": "off",
@@ -81,6 +82,10 @@
         "eqeqeq": ["error", "smart"],
         "guard-for-in": "error",
         "key-spacing": [2, {"beforeColon": false, "afterColon": true, "mode": "strict"}],
+        "keyword-spacing": ["error", {
+            "before": true,
+            "after": true
+        }],
         "max-classes-per-file": ["error", 1],
         "max-len": [
             "error",
@@ -136,7 +141,7 @@
                 "[methods]",
                 "[conventional-private-methods]"
             ],
-            "accessorPairPositioning": "getThenSet",
+            "accessorPairPositioning": "getThenSet"
         }],
         "sort-keys": "error",
         "space-before-function-paren": [
@@ -147,6 +152,7 @@
                 "asyncArrow": "always"
             }
         ],
+        "space-in-parens": ["error", "never"],
         "spaced-comment": "error",
         "valid-typeof": "off"
     }
