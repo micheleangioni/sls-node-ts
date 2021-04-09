@@ -20,18 +20,18 @@ import {
 } from 'aws-lambda';
 import middy from 'middy';
 import { cors } from 'middy/middlewares';
-import schemaCreator from './src/api';
-import apolloErrorHandler from './src/api/apolloErrorHandler';
-import applicationErrorHandler from './src/api/applicationErrorHandler';
-import authorizer from './src/api/authorizer';
-import userRest from './src/api/user/rest';
-import EventPublisher from './src/application/eventPublisher';
-import UserService from './src/application/user/userService';
-import { Dictionary } from './src/domain/declarations';
-import { IUserRepo } from './src/domain/user/IUserRepo';
-import infraServicesCreator from './src/infrastructure';
-import ILogger from './src/infrastructure/logger/ILogger';
-import { loadSecrets } from './src/infrastructure/secrets';
+import schemaCreator from './api';
+import apolloErrorHandler from './api/apolloErrorHandler';
+import applicationErrorHandler from './api/applicationErrorHandler';
+import authorizer from './api/authorizer';
+import userRest from './api/user/rest';
+import EventPublisher from './application/eventPublisher';
+import UserService from './application/user/userService';
+import { Dictionary } from './domain/declarations';
+import { IUserRepo } from './domain/user/IUserRepo';
+import infraServicesCreator from './infrastructure';
+import ILogger from './infrastructure/logger/ILogger';
+import { loadSecrets } from './infrastructure/secrets';
 
 type ApolloHandler = (
   event: APIGatewayProxyEvent,

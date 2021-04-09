@@ -18,7 +18,6 @@
     "rootDir": "./"
   },
   "include": [
-    "handler.ts",
     "src/**/*.ts"
   ],
   "exclude": [

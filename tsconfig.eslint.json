@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.json",
   "include": [
-    "handler.ts",
     "src/**/*.ts",
     "test/**/*.ts"
   ],

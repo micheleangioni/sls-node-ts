@@ -62,7 +62,7 @@ custom:
 
 functions:
   graphql:
-    handler: handler.enhancedGraphqlHandler
+    handler: src/handler.enhancedGraphqlHandler
     events:
       - http:
           method: post
@@ -70,7 +70,7 @@ functions:
 #          cors: true
 #          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
   getUsers:
-    handler: handler.getUsers
+    handler: src/handler.getUsers
     events:
       - http:
           method: get
@@ -78,7 +78,7 @@ functions:
 #          cors: true
 #          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
   authorizerFunc:
-    handler: handler.authorizer
+    handler: src/handler.authorizer
 
 resources:
   Resources:
