@@ -83,8 +83,8 @@ is to deploy it locally by using [Localstack](https://github.com/localstack/loca
 
 In order to deploy the application locally you need to:
 
-1. Create a local Docker network via `docker network create aws-nodejs`
-2. Run Localstack via docker compose by running `docker-compose up` (`TMPDIR=/private$TMPDIR docker-compose up` in MacOs)
+1. Create a local Docker network via `docker network create sls-node-ts`
+2. Run Localstack via docker compose by running `docker-compose up` (`TMPDIR=/private$TMPDIR docker-compose up` in MacOs) from the `/dev` folder
 3. Deploy the application locally via `npm run deploy-local`
 4. Connect via HTTP client (eg. using `Postman`) to the deployed url `http://localhost:4567/restapis/<CODE>/local/_user_request_/hello`
 where `<CODE>` is found in the `endpoints` section of the console output given by serverless in step 3. 
@@ -95,11 +95,29 @@ endpoints:
 ```
 then `<CODE>` is `trcki9mhws`. The `<CODE>` changes after every local deployment!
 
+#### LocalStack PRO
+
+In order to be able to mock more accurately the AWS environment, [LocalStack PRO](https://localstack.cloud/) can to be used. 
+To configure it, follow these steps:
+
+- Get an API key from LocalStack PRO
+- Copy the `/dev/.example.env` into a new `/dev/.env` file. You can use the following command `cp ./dev/.example.env ./dev/.env` from the project root
+- Edit the newly created `.env` file and enter your LocalStack PRO API key. Eg. if your API key is `key_123`, the file should look like this
+  ```
+  LOCALSTACK_API_KEY=key_123
+  ```
+- Run docker-compose via `cd dev/` and `TMPDIR=/private$TMPDIR docker-compose up`
+- Head to `https://app.localstack.cloud/` and log in
+- On the top left ensure that the Docker Status is `Running`
+- Navigate the deployed resources on the `Resources` page, available on the left menu
+
+It's possible to check the health of the LocalStack infrastructure pointing to `http://localhost:4566/health`.
+
 #### Caveats and limitations
 
 **Deleting the Application or re-deploying**
 
-Due to limitations to Localstack, the best way to re-deploy the application effectively is to first stop and start Docker Compose
+Due to limitations to LocalStack, the best way to re-deploy the application effectively is to first stop and start Docker Compose
 and then deploying the application again.
 
 **Network name**
