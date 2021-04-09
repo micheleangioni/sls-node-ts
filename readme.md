@@ -27,9 +27,9 @@ It comes with the following features out of the box:
 - MongoDB integration
 - Domain Events via AWS SNS
 - [Offline bundling](https://github.com/dherault/serverless-offline) for local development
-- Local deployment to [Localstack](https://github.com/localstack/localstack)
+- Local deployment to [LocalStack](https://github.com/localstack/localstack)
 - Testing through Jest
-- Modern .eslint configuration
+- Modern .eslintrc configuration
 
 ## Contents
 
