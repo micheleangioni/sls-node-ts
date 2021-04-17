@@ -1,5 +1,5 @@
 # service: ${file(package.json):name}
-service: slsnodets # for local development env name should be short
+service: slsnode # for local development env name should be short
 
 plugins:
   - serverless-deployment-bucket
@@ -28,16 +28,31 @@ provider:
       Resource: [
         "*"
       ]
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchWriteItem
+        - dynamodb:ConditionCheckItem
+      Resource:
+        - "Fn::GetAtt": [ UserTable, Arn ]
     - Effect: 'Allow'
       Action:
-        - 'sns:Publish'
+        - sns:Publish
       Resource:
         !Ref SnsUserTopic
   environment:
     ENV: ${self:provider.stage}
     REGION: ${self:provider.region}
-    UNDERLYING_CLIENT: 'awssns'
+    SEND_DOMAIN_EVENTS: 'true'
     SLS_DEBUG: '*'
+    UNDERLYING_CLIENT: 'awssns'
+    USER_TABLE: !Ref UserTable # inject the User table name as env variable
   deploymentBucket:
     name: ${file(package.json):name}-bucket
     serverSideEncryption: AES256
@@ -67,21 +82,55 @@ functions:
       - http:
           method: post
           path: graphql
-#          cors: true
-#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
+          cors: true
+          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
   getUsers:
     handler: src/handler.getUsers
     events:
       - http:
           method: get
           path: users
-#          cors: true
-#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
+          cors: true
+          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
   authorizerFunc:
     handler: src/handler.authorizer
 
 resources:
   Resources:
+    UserTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Users
+        BillingMode: PAY_PER_REQUEST # pay on-demand, no resources provisioned
+        AttributeDefinitions:
+          - AttributeName: _id
+            AttributeType: S
+          - AttributeName: email
+            AttributeType: S
+          - AttributeName: username
+            AttributeType: S
+        KeySchema:
+          - AttributeName: _id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: index_email
+            Projection:
+              ProjectionType: ALL
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+              - AttributeName: ''
+                KeyType: RANGE
+            BillingMode: PAY_PER_REQUEST
+          - IndexName: index_username
+            Projection:
+              ProjectionType: ALL
+            KeySchema:
+              - AttributeName: username
+                KeyType: HASH
+              - AttributeName: ''
+                KeyType: RANGE
+            BillingMode: PAY_PER_REQUEST
     SnsUserTopic:
       Type: AWS::SNS::Topic
       Properties:

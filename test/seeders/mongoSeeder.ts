@@ -1,17 +1,18 @@
 import dayjs from 'dayjs';
 import {Model} from 'mongoose';
-import initializer from '../src/infrastructure/mongo';
-import userRepoCreator, {UserRepo} from '../src/infrastructure/repos/userRepo';
-import usersData from './testData/users.json';
+import {IUserRepo} from '../../src/domain/user/IUserRepo';
+import initializer from '../../src/infrastructure/mongo';
+import userRepoCreator from '../../src/infrastructure/repos/userMongoRepo';
+import usersData from '../testData/users.json';
 
 let isMongoInitialized = false;
 // tslint:disable-next-line:variable-name
 let UserModel: Model<any>;
-let userRepo: UserRepo;
+let userRepo: IUserRepo;
 
 export {userRepo};
 
-export const getRepos = async (): Promise<{ userRepo: UserRepo }> => {
+export const getRepos = async (): Promise<{ userRepo: IUserRepo }> => {
   if (!isMongoInitialized) {
     await initMongo();
   }

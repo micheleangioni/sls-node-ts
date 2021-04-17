@@ -1,15 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
-
-// In non staging or development environments, use local SNS connection in `@micheleangioni/node-messagebrokers` package
-if (process.env.ENV === 'local' && !process.env.SNS_ENDPOINT) {
-  // If deploying to Localstack, point SNS to the Localstack container
-  process.env.SNS_ENDPOINT = 'http://localstack:4566';
-} else if (process.env.ENV === 'development' && !process.env.SNS_ENDPOINT) {
-  // If using serverless-offline, point SNS to the localhost Localstack
-  process.env.SNS_ENDPOINT = 'http://localhost:4566';
-}
-
 import { ApolloServer } from 'apollo-server-lambda';
 import {
   APIGatewayProxyCallback,
@@ -32,6 +20,19 @@ import { IUserRepo } from './domain/user/IUserRepo';
 import infraServicesCreator from './infrastructure';
 import ILogger from './infrastructure/logger/ILogger';
 import { loadSecrets } from './infrastructure/secrets';
+import isRunningInLocalStack from './infrastructure/utils/isRunningInLocalStack';
+
+// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
+
+// In non staging or development environments, use local SNS connection in `@micheleangioni/node-messagebrokers` package
+if (isRunningInLocalStack && !process.env.SNS_ENDPOINT) {
+  // If deploying to LocalStack, point SNS to the LocalStack container
+  process.env.SNS_ENDPOINT = 'http://localstack:4566';
+} else if (process.env.ENV === 'development' && !process.env.SNS_ENDPOINT) {
+  // If using serverless-offline, point SNS to the localhost LocalStack
+  process.env.SNS_ENDPOINT = 'http://localhost:4566';
+}
 
 type ApolloHandler = (
   event: APIGatewayProxyEvent,
@@ -49,7 +50,7 @@ let services: { userService: UserService };
 /**
  * Create the Service Instances to be shared amongst the Lambda Functions.
  */
-const createServiceInstances = async () => {
+const createServiceInstances = async (accountId: string) => {
   if (services) {
     return services;
   }
@@ -61,7 +62,7 @@ const createServiceInstances = async () => {
   let infraServices: { eventPublisher: EventPublisher; logger: ILogger; userRepo: IUserRepo };
 
   try {
-    infraServices = await infraServicesCreator();
+    infraServices = await infraServicesCreator(accountId);
     logger = infraServices.logger;
   } catch (e) {
     // tslint:disable-next-line:no-console
@@ -82,14 +83,14 @@ const createServiceInstances = async () => {
 /**
  * Create the Apollo Handler at cold start.
  */
-const createApolloHandler = async (): Promise<ApolloHandler> => {
+const createApolloHandler = async (accountId: string): Promise<ApolloHandler> => {
   if (apolloHandler) {
     return apolloHandler;
   }
 
   const { userService } = services
     ? services
-    : await createServiceInstances();
+    : await createServiceInstances(accountId);
 
   // Create GraphQL Server
 
@@ -115,14 +116,14 @@ const createApolloHandler = async (): Promise<ApolloHandler> => {
 /**
  * Create the REST Handlers at cold start.
  */
-const createRESTHandlers = async () => {
+const createRESTHandlers = async (accountId: string) => {
   if (restHandlers) {
     return restHandlers;
   }
 
   const { userService } = services
     ? services
-    : await createServiceInstances();
+    : await createServiceInstances(accountId);
 
   restHandlers = {
     ...userRest(userService, logger),
@@ -151,7 +152,7 @@ const runApollo = (event: APIGatewayProxyEvent, context: Context, apollo: Apollo
 };
 
 const graphqlHandler = async (lambdaEvent: APIGatewayProxyEvent, lambdaContext: Context) => {
-  const apollo: ApolloHandler = await createApolloHandler();
+  const apollo: ApolloHandler = await createApolloHandler(lambdaEvent.requestContext.accountId);
 
   return await runApollo(lambdaEvent, lambdaContext, apollo);
 };
@@ -180,7 +181,7 @@ const getCorsHeaders = () => {
 
 export const getUsers: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, context: Context) => {
   try {
-    await createRESTHandlers();
+    await createRESTHandlers(event.requestContext.accountId);
 
     // @ts-ignore
     const responseBody = await restHandlers.getUsers(event, context) as APIGatewayProxyResult;

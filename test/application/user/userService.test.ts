@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-
 import EventPublisher from '../../../src/application/eventPublisher';
 import UserService from '../../../src/application/user/userService';
 import {UserCreateData} from '../../../src/application/user/declarations';
 import {UserCreated} from '../../../src/domain/user/events/UserCreated';
-import {cleanDb, getRepos, seedDb} from '../../seeder';
+import {cleanDb, getRepos, seedDb} from '../../seeders/mongoSeeder';
 
 describe('Test the User Application Service', () => {
   const mockPublish = jest.fn();

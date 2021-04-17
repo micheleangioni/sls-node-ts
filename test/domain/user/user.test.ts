@@ -1,13 +1,13 @@
 import dayjs, {Dayjs} from 'dayjs';
+import {IUserRepo} from '../../../src/domain/user/IUserRepo';
 import User from '../../../src/domain/user/user';
-import {UserRepo} from '../../../src/infrastructure/repos/userRepo';
-import {getRepos} from '../../seeder';
+import {getRepos} from '../../seeders/dynamoSeeder';
 
 describe('Test the User Entity', () => {
-  let userRepo: UserRepo;
+  let userRepo: IUserRepo;
 
-  beforeAll(async (done) => {
-    userRepo = (await getRepos()).userRepo;
+  beforeAll((done) => {
+    userRepo = getRepos().userRepo;
     done();
   });
 

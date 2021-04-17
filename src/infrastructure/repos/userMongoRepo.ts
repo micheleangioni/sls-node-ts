@@ -5,7 +5,7 @@ import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 import {PersistedUserData, ToBePersistedUserData} from './declarations';
 
-export class UserRepo implements IUserRepo {
+export class UserMongoRepo implements IUserRepo {
   constructor(private readonly userModel: Model<any>) {}
 
   /**
@@ -119,7 +119,7 @@ export class UserRepo implements IUserRepo {
   }
 
   /**
-   * Create a new User.
+   * Persist input User.
    *
    * @param {User} user
    * @returns {Promise<User>}
@@ -127,12 +127,12 @@ export class UserRepo implements IUserRepo {
   public async persist(user: User): Promise<User> {
     const dataToBePersisted: ToBePersistedUserData = this.getDataToBePersisted(user);
 
-    const updatedUser: PersistedUserData = await this.userModel.findOneAndUpdate(
+    const persistedUser: PersistedUserData = await this.userModel.findOneAndUpdate(
       { _id: user._id },
       dataToBePersisted,
       { new: true, upsert: true }).lean();
 
-    user.updateDates(dayjs(updatedUser.updatedAt));
+    user.updateDates(dayjs(persistedUser.updatedAt));
 
     return user;
   }
@@ -146,6 +146,6 @@ export class UserRepo implements IUserRepo {
   }
 }
 
-export default (userModel: Model<any>): UserRepo => {
-  return new UserRepo(userModel);
+export default (userModel: Model<any>): UserMongoRepo => {
+  return new UserMongoRepo(userModel);
 };
