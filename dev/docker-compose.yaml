@@ -23,6 +23,24 @@ services:
       - "${TMPDIR:-/tmp/localstack2}:/tmp/localstack2" # comment in macOS, see https://github.com/localstack/localstack/issues/2515
       - /var/run/docker.sock:/var/run/docker.sock
 
+  # Let's create the needed AWS resources
+  setup-resources:
+    image: mesosphere/aws-cli
+    volumes:
+      - ./dev_env:/project/dev_env
+    environment:
+      - AWS_ACCESS_KEY_ID=dummyaccess
+      - AWS_SECRET_ACCESS_KEY=dummysecret
+      - AWS_DEFAULT_REGION=eu-west-1
+    entrypoint: /bin/sh -c
+    command: >
+      "
+        sleep 50;
+        aws sns create-topic --name events_aggregate_user --endpoint-url=http://localstack:4566;
+      "
+    depends_on:
+      - localstack
+
 networks:
   default:
     external:
