@@ -1,3 +1,4 @@
+import AWS from 'aws-sdk';
 import dayjs from 'dayjs';
 import {QueryResponse} from 'dynamoose/dist/DocumentRetriever';
 import {ModelType} from 'dynamoose/dist/General';
@@ -23,6 +24,8 @@ export const getRepos = (): { userRepo: IUserRepo } => {
 };
 
 const initDynamo = () => {
+  AWS.config.region = 'us-east-1';
+
   UserModel = initializer().User;
   userRepo = userRepoCreator(UserModel);
   isDynamoInitialized = true;
