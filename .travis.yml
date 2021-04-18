@@ -4,6 +4,7 @@ node_js:
   - '14'
 
 install:
+  - docker network create sls-node-ts
   - docker-compose -f dev/docker-compose.yaml up -d
   - npm install
 
