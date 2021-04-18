@@ -4,7 +4,7 @@ node_js:
   - '14'
 
 install:
-  - docker-compose up -d
+  - docker-compose -f dev/docker-compose.yaml up -d
   - npm install
 
 script:
