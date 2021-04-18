@@ -4,10 +4,9 @@ node_js:
   - '14'
 
 install:
+  - docker-compose up -d
   - npm install
 
 script:
   - npm test
 
-services:
-  - mongodb
