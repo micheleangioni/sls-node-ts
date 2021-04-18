@@ -13,6 +13,8 @@ let isDynamoInitialized = false;
 let UserModel: ModelType<UserModel>;
 let userRepo: IUserRepo;
 
+AWS.config.region = 'us-east-1';
+
 export {userRepo};
 
 export const getRepos = (): { userRepo: IUserRepo } => {
@@ -24,8 +26,6 @@ export const getRepos = (): { userRepo: IUserRepo } => {
 };
 
 const initDynamo = () => {
-  AWS.config.region = 'us-east-1';
-
   UserModel = initializer().User;
   userRepo = userRepoCreator(UserModel);
   isDynamoInitialized = true;
