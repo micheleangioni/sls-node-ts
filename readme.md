@@ -24,7 +24,8 @@ It comes with the following features out of the box:
 - [Apollo GraphQL server](https://www.apollographql.com/docs/apollo-server/) with modularized schemas
 - REST endpoint
 - DDD structure
-- MongoDB integration
+- Default DynamoDB integration
+- Optional MongoDB integration
 - Domain Events via AWS SNS
 - [Offline bundling](https://github.com/dherault/serverless-offline) for local development
 - Local deployment to [LocalStack](https://github.com/localstack/localstack)
@@ -44,6 +45,7 @@ It comes with the following features out of the box:
   - [Apollo Server (GraphQL)](#apollo)
   - [CORS](#cors)
   - [Domain Events](#devents)
+  - [DynamoDB](#dynamodb)
   - [Error Messages](#errmessages)
   - [MongoDB](#mongodb)
   - [Monitoring](#monitoring)
@@ -77,7 +79,7 @@ When interacting with other AWS services such as SNS, SQS or S3, running the app
 to check that all binding we specified in the `serverless.yml` file are working as expected.
 
 A way to check whether the application would behave like expected once deployed to AWS, without really deploying it,
-is to deploy it locally by using [Localstack](https://github.com/localstack/localstack).
+is to deploy it locally by using [LocalStack](https://github.com/localstack/localstack).
 
 #### How to deploy locally
 
@@ -113,35 +115,48 @@ To configure it, follow these steps:
 
 It's possible to check the health of the LocalStack infrastructure pointing to `http://localhost:4566/health`.
 
-#### Caveats and limitations
+#### Caveats, Limitations and Troubleshooting
+
+**Connecting to other AWS services from inside the application**
+
+Due to how Docker Compose works, in order to connect to the AWS services hosted in the LocalStack container,
+all calls to these services need to the redirected manually to `http://localstack:XXXX` (instead than `http://localhost:XXXX`).
+
+For SNS, this is done in the `src/infrastructure/index.ts` file, by setting the `SNS_ENDPOINT` env variable.
+The same happens when connecting to DynamoDB in the `src/infrastructure/dynamo/index.ts` file.
+
+If willing to use other services, for example S3, you'll need to manually set the `endpoint` option key to point to `http://localstack:4566`.
 
 **Deleting the Application or re-deploying**
 
 Due to limitations to LocalStack, the best way to re-deploy the application effectively is to first stop and start Docker Compose
 and then deploying the application again.
 
+In case you are getting some errors (eg. FunctionName not found), try to:
+
+- Restart the LocalStack container
+  - List active containers via `docker ps`
+  - Remove the LocalStack one via `docker rm <ID>`
+- Delete the `.serverless` folder via `rm -rf .serverless`
+- Delete the `.build` folder via `rm -rf .build`
+- Restart Docker
+
+**Lambda Authorizers (ex Custom Authorizers)**
+
+Lambda Authorizers are [completely ignored by LocalStack](https://github.com/localstack/localstack/issues/1315) in the free version.
+
+In order to deploy to LocalStack, comment the authorizer out in the serverless file.
+
 **Network name**
 
-The network name used in step 1 can be customised as preferred. 
-However, change it accordingly also in the `docker-compose.yaml` file under `networks.default.external.name` and in `LAMBDA_DOCKER_NETWORK`. 
-
-**Custom Authorizers**
-
-At the moment, Lambda Authorizers are [completely ignored by Localstack](https://github.com/localstack/localstack/issues/1315).
-
-**Connecting to other AWS services from inside the application**
-
-Due to how Docker Compose works, in order to connect to the AWS services hosted in the Localstack container,
-all calls to these services need to the redirected manually to `http://localstack:XXXX` (instead than `http://localhost:XXXX`).
-
-For SNS, this is done at the very top of the `handler.ts` file, by setting the `SNS_ENDPOINT` env variable.
-
-If willing to use other services, for example S3, you'll need to manually set the `endpoint` option key to point to `http://localstack:4566`.
+The network name used in step 1 can be customised as preferred.
+However, change it accordingly also in the `docker-compose.yaml` file under `networks.default.external.name` and in `LAMBDA_DOCKER_NETWORK`.
 
 ## <a name="env"></a>Environment variables
 
  - `NODE_ENV` : Set the environment name, not used in the code
  - `ENV` : Set the environment name, this is the variable used throughout the code and set via the Serverless CLI
+ - `DB` : Define which database to use. The default value is `dynamo`. Other possible values: `mongo`.
  - `MONGO_URI` : Set the complete MongoDB connection string. Default `mongodb://localhost:27017/sls-node-ts-<ENV>}`, where `<ENV>` in the `ENV` env variable value
  - `REGION` : AWS region, default `eu-west-1`
  - `SEND_DOMAIN_EVENTS` : if set to `true`, the application will effectively emit the Domain Events of the related Aggregate to its AWS SNS topic. Default is `undefined`
@@ -232,6 +247,18 @@ The local endpoint can be customized via the `SNS_ENDPOINT` environment variable
 
 For topic naming conventions, take a look at [this article](https://riccomini.name/how-paint-bike-shed-kafka-topic-naming-conventions).  
 
+#### <a name="dynamodb">DynamoDB
+
+By default, Serverless Node TypeScript uses DynamoDB as default persistence. The indexes are created directly in the serverless file.
+
+However, when running the application via serverless-offline or the tests, 
+it is useful to have a properly configured DynamoDB without having to first deploy the application via Serverless Framework.
+For this reason, the same DynamoDB schema is created in the docker-compose file.
+
+If you need help to build the DynamoDB schema, take a look at this [schema design tool](https://dynobase.dev/dynamodb-table-schema-design-tool/). 
+
+Looking for a GUI tool? Check [AWS NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html);
+
 #### <a name="errmessages">Error Messages
 
 All error messages have the following format:
@@ -256,7 +283,10 @@ In order to enable X-Ray, simply set the `tracing.apiGateway` and `tracing.lambd
 
 ### <a name="mongodb">MongoDB
 
-MongoDB is the chosen default database. The connection string can be configured by setting the `MONGO_URI` env variable.
+MongoDB is the fully supported but must be enabled in place of DynamoDB. 
+In order to do so, set the `DB` env variable to be `mongo`.
+
+The connection string can be configured by setting the `MONGO_URI` env variable.
 
 The default connection string is `mongodb://localhost:27017/sls-node-ts-<ENV>`, where `<ENV>` in the `ENV` env variable.
 In order to change it, head to the `src/infrastructure/mongo/index.ts` file.
