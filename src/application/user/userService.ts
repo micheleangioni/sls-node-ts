@@ -33,6 +33,24 @@ export default class UserService extends AbstractApplicationService {
       ...data,
     });
 
+    // Check whether a User with the same email or username already exists
+
+    if (await this.userRepo.findByEmail(data.email)) {
+      throw new ApplicationError({
+        code: ErrorCodes.FORBIDDEN,
+        error: 'Email already taken',
+        statusCode: 403,
+      });
+    }
+
+    if (data.username && await this.userRepo.findByUsername(data.username)) {
+      throw new ApplicationError({
+        code: ErrorCodes.FORBIDDEN,
+        error: 'Username already taken',
+        statusCode: 403,
+      });
+    }
+
     let persistedUser: User;
 
     try {

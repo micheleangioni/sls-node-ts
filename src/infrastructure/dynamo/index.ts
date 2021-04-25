@@ -26,7 +26,7 @@ export default () => {
   let User: ModelType<User>;
 
   try {
-    User = dynamoose.model<User>(userTable, usersSchema);
+    User = dynamoose.model<User>(userTable, usersSchema, { create: false });
   } catch (error) {
     User = dynamoose.model<User>(userTable);
   }

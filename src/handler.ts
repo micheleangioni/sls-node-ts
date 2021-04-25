@@ -20,19 +20,9 @@ import { IUserRepo } from './domain/user/IUserRepo';
 import infraServicesCreator from './infrastructure';
 import ILogger from './infrastructure/logger/ILogger';
 import { loadSecrets } from './infrastructure/secrets';
-import isRunningInLocalStack from './infrastructure/utils/isRunningInLocalStack';
 
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
-
-// In non staging or development environments, use local SNS connection in `@micheleangioni/node-messagebrokers` package
-if (isRunningInLocalStack && !process.env.SNS_ENDPOINT) {
-  // If deploying to LocalStack, point SNS to the LocalStack container
-  process.env.SNS_ENDPOINT = 'http://localstack:4566';
-} else if (process.env.ENV === 'development' && !process.env.SNS_ENDPOINT) {
-  // If using serverless-offline, point SNS to the localhost LocalStack
-  process.env.SNS_ENDPOINT = 'http://localhost:4566';
-}
 
 type ApolloHandler = (
   event: APIGatewayProxyEvent,

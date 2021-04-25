@@ -83,7 +83,7 @@ functions:
           method: post
           path: graphql
           cors: true
-          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
+#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
   getUsers:
     handler: src/handler.getUsers
     events:
@@ -91,12 +91,13 @@ functions:
           method: get
           path: users
           cors: true
-          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
-  authorizerFunc:
-    handler: src/handler.authorizer
+#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
+#  authorizerFunc:
+#    handler: src/handler.authorizer
 
 resources:
   Resources:
+    # DynamoDB
     UserTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -119,23 +120,21 @@ resources:
             KeySchema:
               - AttributeName: email
                 KeyType: HASH
-              - AttributeName: ''
-                KeyType: RANGE
-            BillingMode: PAY_PER_REQUEST
           - IndexName: index_username
             Projection:
               ProjectionType: ALL
             KeySchema:
               - AttributeName: username
                 KeyType: HASH
-              - AttributeName: ''
-                KeyType: RANGE
-            BillingMode: PAY_PER_REQUEST
+
+    # SNS
     SnsUserTopic:
       Type: AWS::SNS::Topic
       Properties:
         DisplayName: Domain Events of User Aggregate Topic
         TopicName: events_aggregate_user
+
+    # API Gateway
     GatewayResponseDefault4XX:
       Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:

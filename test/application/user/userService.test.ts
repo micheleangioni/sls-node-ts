@@ -3,7 +3,9 @@ import EventPublisher from '../../../src/application/eventPublisher';
 import UserService from '../../../src/application/user/userService';
 import {UserCreateData} from '../../../src/application/user/declarations';
 import {UserCreated} from '../../../src/domain/user/events/UserCreated';
-import {cleanDb, getRepos, seedDb} from '../../seeders/mongoSeeder';
+import {cleanDb, getRepos, seedDb} from '../../seeders/dynamoSeeder';
+
+jest.setTimeout(20000);
 
 describe('Test the User Application Service', () => {
   const mockPublish = jest.fn();
@@ -20,7 +22,7 @@ describe('Test the User Application Service', () => {
     process.env.SEND_DOMAIN_EVENTS = 'true';
     await cleanDb();
 
-    const userRepo = (await getRepos()).userRepo;
+    const userRepo = getRepos().userRepo;
     const mockEventPublisher = new mockEventPublisherFactory();
     userService = new UserService(userRepo, mockEventPublisher);
     done();

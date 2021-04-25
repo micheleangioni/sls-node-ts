@@ -7,7 +7,7 @@ import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
 import {PersistedUserData, ToBePersistedUserData} from './declarations';
 
-export class UserMongoRepo implements IUserRepo {
+export class UserDynamoRepo implements IUserRepo {
   constructor(private readonly userModel: ModelType<UserModel>) {}
 
   /**
@@ -117,6 +117,6 @@ export class UserMongoRepo implements IUserRepo {
   }
 }
 
-export default (userModel: ModelType<UserModel>): UserMongoRepo => {
-  return new UserMongoRepo(userModel);
+export default (userModel: ModelType<UserModel>): UserDynamoRepo => {
+  return new UserDynamoRepo(userModel);
 };

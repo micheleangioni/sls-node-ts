@@ -1,6 +1,5 @@
 import dynamoose from 'dynamoose';
 import { Document } from 'dynamoose/dist/Document';
-import isRunningLocally from '../../utils/isRunningLocally';
 
 export interface User extends Document {
   _id: string;
@@ -11,12 +10,8 @@ export interface User extends Document {
 }
 
 // Adding the indexes from here would require the lambdas to have permissions to edit the Tables,
-// which is something we don't want.
-// For this reason, it's better to apply the least privilege principle and create the indexes directly in the
-// Serverless.
-// The indexes will be added here only when the application is running locally, including in tests.
-
-const addIndexes = isRunningLocally;
+// which is something we don't want. For this reason, the indexes are created beforehand,
+// via Serverless Framework when deploying or docker-compose locally.
 
 export default new dynamoose.Schema({
   _id: {
@@ -24,23 +19,18 @@ export default new dynamoose.Schema({
     type: String,
   },
   email: {
-    ...(addIndexes && {
-      index: {
-        global: true,
-        name: 'index_email',
-      },
-    }),
+    index: {
+      global: true,
+      name: 'index_email',
+    },
     required: true,
     type: String,
   },
   username: {
-    ...(addIndexes && {
-      index: {
-        global: true,
-        name: 'index_username',
-      },
-    }),
-    required: true,
+    index: {
+      global: true,
+      name: 'index_username',
+    },
     type: String,
   },
 }, {
