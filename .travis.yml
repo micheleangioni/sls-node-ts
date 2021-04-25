@@ -3,9 +3,11 @@ language: node_js
 node_js:
   - '14'
 
-install:
+before_install:
   - docker network create sls-node-ts
   - docker-compose -f dev/docker-compose.yaml up -d
+
+install:
   - npm install
 
 script:
