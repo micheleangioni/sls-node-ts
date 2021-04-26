@@ -1,4 +1,3 @@
-import AWS from 'aws-sdk';
 import dynamoose from 'dynamoose';
 import {ModelType} from 'dynamoose/dist/General';
 import isRunningInLocalStack from '../utils/isRunningInLocalStack';
@@ -13,16 +12,6 @@ export default () => {
       : 'http://localhost:4566';
 
     dynamoose.aws.ddb.local(connectionString);
-
-    // When running the tests (including in CI) and AWS region must always be defined
-
-    console.info(`AWS.config.region is ${AWS.config.region || 'not set'}`);
-
-    if (!AWS.config.region) {
-      AWS.config.update({ region: 'eu-west-1' });
-      process.env.AWS_DEFAULT_REGION = 'eu-west-1';
-      process.env.AWS_REGION = 'eu-west-1';
-    }
   }
 
   // The check addresses a bug in Serverless Framework still present
