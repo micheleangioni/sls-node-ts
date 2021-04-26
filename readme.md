@@ -6,7 +6,7 @@
 
 > Serverless Node TypeScript is a starter kit to write serverless applications 
 > in Node.js and TypeScript and deploying them by using the Serverless Framework.
-> It comes with several configurations set up out of the box, such as MongoDB, a GraphQL API server, a REST endpoint and Domain Events via AWS SNS.
+> It comes with several configurations set up out of the box, such as DynamoDB, MongoDB, a GraphQL API server, a REST endpoint and Domain Events via AWS SNS.
 
 ## Introduction
 
