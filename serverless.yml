@@ -19,6 +19,12 @@ provider:
     lambda: false
   region: 'eu-west-1'
   stage: ${opt:stage, 'development'}
+
+  deploymentBucket:
+    name: ${file(package.json):name}-bucket
+    serverSideEncryption: AES256
+
+  # Policies
   iamManagedPolicies:
     - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
   iamRoleStatements:
@@ -46,6 +52,7 @@ provider:
         - sns:Publish
       Resource:
         !Ref SnsUserTopic
+
   environment:
     ENV: ${self:provider.stage}
     REGION: ${self:provider.region}
@@ -53,14 +60,19 @@ provider:
     SLS_DEBUG: '*'
     UNDERLYING_CLIENT: 'awssns'
     USER_TABLE: !Ref UserTable # inject the User table name as env variable
-  deploymentBucket:
-    name: ${file(package.json):name}-bucket
-    serverSideEncryption: AES256
+
+  # HTTP API (Gateway v2) Configuration
+  httpApi:
+    authorizers:
+      customAuthorizer:
+        type: request
+        functionName: authorizerFunc
 
 custom:
   defaultStage: local
   serverless-offline:
     allowCache: true
+    ignoreJWTSignature: true
   localstack:
     debug: true
     stages:
@@ -79,23 +91,26 @@ functions:
   graphql:
     handler: src/handler.enhancedGraphqlHandler
     events:
-      - http:
+      - httpApi:
           method: post
           path: graphql
-          cors: true
+          cors: true # For configuration, see https://www.serverless.com/framework/docs/providers/aws/events/http-api#cors-setup
 #          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
   getUsers:
     handler: src/handler.getUsers
     events:
-      - http:
+      - httpApi:
           method: get
           path: users
-          cors: true
-#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
-#  authorizerFunc:
-#    handler: src/handler.authorizer
+          cors: true # For configuration, see https://www.serverless.com/framework/docs/providers/aws/events/http-api#cors-setup
+          authorizer:
+            name: customAuthorizer
+  authorizerFunc:
+    handler: src/handler.authorizer
 
 resources:
+
+  #Creating New Resources
   Resources:
     # DynamoDB
     UserTable:
@@ -133,23 +148,3 @@ resources:
       Properties:
         DisplayName: Domain Events of User Aggregate Topic
         TopicName: events_aggregate_user
-
-    # API Gateway
-    GatewayResponseDefault4XX:
-      Type: 'AWS::ApiGateway::GatewayResponse'
-      Properties:
-        ResponseParameters:
-          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
-        ResponseType: DEFAULT_4XX
-        RestApiId:
-          Ref: 'ApiGatewayRestApi'
-    GatewayResponseDefault5XX:
-      Type: 'AWS::ApiGateway::GatewayResponse'
-      Properties:
-        ResponseParameters:
-          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
-        ResponseType: DEFAULT_5XX
-        RestApiId:
-          Ref: 'ApiGatewayRestApi'

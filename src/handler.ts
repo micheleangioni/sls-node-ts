@@ -150,12 +150,10 @@ const graphqlHandler = async (lambdaEvent: APIGatewayProxyEvent, lambdaContext: 
 export const enhancedGraphqlHandler: any = middy(graphqlHandler).use(cors());
 
 /**
- * Using AWS API Gateway Lambda Authorizers to perform Authentication.
+ * Using Lambda Authorizers to perform Authentication.
  *
- * @see https://serverless.com/blog/strategies-implementing-user-authentication-serverless-applications/
- * @see https://serverless.com/framework/docs/providers/aws/events/apigateway/#http-endpoints-with-custom-authorizers/
- * @see https://aws.amazon.com/blogs/compute/introducing-custom-authorizers-in-amazon-api-gateway/
- * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html
+ * @see https://www.serverless.com/framework/docs/providers/aws/events/http-api#jwt-authorizers
+ * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-lambda-authorizer.html
  */
 export { authorizer };
 

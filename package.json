@@ -5,7 +5,7 @@
   "main": "src/handler.ts",
   "scripts": {
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\"",
-    "offline": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless.js offline start --port 3000 --stage development",
+    "offline": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless.js offline start --noAuth --port 3000 --stage development",
     "package": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless.js package --stage development",
     "test": "node --max-old-space-size=4096 node_modules/jest/bin/jest --runInBand --forceExit --verbose",
     "watch-test": "node --max-old-space-size=4096 node_modules/jest/bin/jest --runInBand --verbose --watchAll",
@@ -62,7 +62,7 @@
     "serverless": "^2.38.0",
     "serverless-deployment-bucket": "^1.4.3",
     "serverless-localstack": "^0.4.30",
-    "serverless-offline": "^6.9.0",
+    "serverless-offline": "^7.0.0",
     "serverless-plugin-typescript": "^1.1.9",
     "ts-jest": "^26.5.4",
     "ts-node": "^9.1.1",
