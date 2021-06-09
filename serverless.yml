@@ -62,11 +62,11 @@ provider:
     USER_TABLE: !Ref UserTable # inject the User table name as env variable
 
   # HTTP API (Gateway v2) Configuration
-  httpApi:
-    authorizers:
-      customAuthorizer:
-        type: request
-        functionName: authorizerFunc
+#  httpApi:
+#    authorizers:
+#      customAuthorizer:
+#        type: request
+#        functionName: authorizerFunc
 
 custom:
   defaultStage: local
@@ -91,22 +91,21 @@ functions:
   graphql:
     handler: src/handler.enhancedGraphqlHandler
     events:
-      - httpApi:
+      - httpApi: # HTTP API (Gateway V2)
           method: post
-          path: graphql
+          path: /graphql
           cors: true # For configuration, see https://www.serverless.com/framework/docs/providers/aws/events/http-api#cors-setup
 #          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
   getUsers:
     handler: src/handler.getUsers
     events:
-      - httpApi:
+      - http: # REST API (Gateway V1)
           method: get
-          path: users
-          cors: true # For configuration, see https://www.serverless.com/framework/docs/providers/aws/events/http-api#cors-setup
-          authorizer:
-            name: customAuthorizer
-  authorizerFunc:
-    handler: src/handler.authorizer
+          path: /users
+          cors: true
+#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
+#  authorizerFunc:
+#    handler: src/handler.authorizer
 
 resources:
 
