@@ -18,50 +18,44 @@ describe('Test the User Application Service', () => {
 
   let userService: UserService;
 
-  beforeAll(async (done) => {
+  beforeAll(async () => {
     process.env.SEND_DOMAIN_EVENTS = 'true';
     await cleanDb();
 
     const userRepo = getRepos().userRepo;
     const mockEventPublisher = new mockEventPublisherFactory();
     userService = new UserService(userRepo, mockEventPublisher);
-    done();
   });
 
-  afterAll(async (done) => {
+  afterAll(async () => {
     delete process.env.SEND_DOMAIN_EVENTS;
     await cleanDb();
-    done();
   });
 
   describe('Test getAll()', () => {
-    beforeAll(async (done) => {
+    beforeAll(async () => {
       await cleanDb();
       await seedDb();
-      done();
     });
 
-    test('It correctly gets the users', async (done) => {
+    test('It correctly gets the users', async () => {
       const users = await userService.getAll();
 
       expect(users.length).toBe(2);
-      done();
     });
   });
 
   describe('Test createUser()', () => {
-    beforeEach(async (done) => {
+    beforeEach(async () => {
       await cleanDb();
-      done();
     });
 
-    afterEach(async (done) => {
+    afterEach(async () => {
       await cleanDb();
       mockPublish.mockReset();
-      done();
     });
 
-    test('It correctly creates a User', async (done) => {
+    test('It correctly creates a User', async () => {
       const userData: UserCreateData = {
         email: 'michele@test.com',
         username: 'Michele',
@@ -82,10 +76,9 @@ describe('Test the User Application Service', () => {
         email: user.email,
         username: user.username,
       });
-      done();
     });
 
-    test('It gets a error if trying to add a User twice', async (done) => {
+    test('It gets a error if trying to add a User twice', async () => {
       const userData: UserCreateData = {
         email: 'michele_new@test.com',
         username: 'Michele New',
@@ -93,8 +86,6 @@ describe('Test the User Application Service', () => {
 
       await userService.createUser(userData, '/users');
       await expect(userService.createUser(userData, '/users')).rejects.toThrow();
-
-      done();
     });
   });
 });
