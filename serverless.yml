@@ -14,11 +14,17 @@ provider:
   name: aws
   runtime: nodejs14.x
   memorySize: 256
+  region: 'eu-west-1'
+  stage: ${opt:stage, 'development'}
+  timeout: 30
   tracing:
     apiGateway: false
     lambda: false
-  region: 'eu-west-1'
-  stage: ${opt:stage, 'development'}
+
+  tags:
+    project: slsnode
+    httpApi:
+      useProviderTags: true
 
   deploymentBucket:
     name: ${file(package.json):name}-bucket
@@ -61,12 +67,12 @@ provider:
     UNDERLYING_CLIENT: 'awssns'
     USER_TABLE: !Ref UserTable # inject the User table name as env variable
 
-  # HTTP API (Gateway v2) Configuration
-#  httpApi:
-#    authorizers:
-#      customAuthorizer:
-#        type: request
-#        functionName: authorizerFunc
+#   HTTP API (Gateway v2) Configuration
+  httpApi:
+    authorizers:
+      customAuthorizerV2:
+        type: request
+        functionName: authorizerFuncV2
 
 custom:
   defaultStage: local
@@ -95,7 +101,8 @@ functions:
           method: post
           path: /graphql
           cors: true # For configuration, see https://www.serverless.com/framework/docs/providers/aws/events/http-api#cors-setup
-#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
+          authorizer:
+            name: customAuthorizerV2 # uncomment when deploying to AWS cloud
   getUsers:
     handler: src/handler.getUsers
     events:
@@ -103,9 +110,11 @@ functions:
           method: get
           path: /users
           cors: true
-#          authorizer: authorizerFunc # uncomment when deploying to AWS cloud
-#  authorizerFunc:
-#    handler: src/handler.authorizer
+          authorizer: authorizerFuncV1 # uncomment when deploying to AWS cloud
+  authorizerFuncV1:
+    handler: src/handler.authorizerV1
+  authorizerFuncV2:
+    handler: src/handler.authorizerV2
 
 resources:
 

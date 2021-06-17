@@ -58,7 +58,7 @@
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-sort-class-members": "^1.11.0",
     "jest": "^26.6.3",
-    "serverless": "^2.45.2",
+    "serverless": "^2.46.0",
     "serverless-deployment-bucket": "^1.5.1",
     "serverless-localstack": "^0.4.32",
     "serverless-offline": "^7.0.0",

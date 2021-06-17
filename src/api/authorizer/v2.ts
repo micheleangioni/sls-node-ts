@@ -9,7 +9,7 @@ type APIGatewayLambdaAuthorizerResponseV2 = {
 
 const authorizer: APIGatewayProxyHandlerV2<APIGatewayLambdaAuthorizerResponseV2>
   = async (event: APIGatewayProxyEventV2, _context: Context): Promise<APIGatewayLambdaAuthorizerResponseV2> => {
-    console.log('INSIDE THE AUTHORIZER');
+    console.log('INSIDE THE AUTHORIZER V2');
     console.log('event', event);
 
     const tokenParts = (event.headers.Authorization || event.headers.Authorization)?.split(' ');

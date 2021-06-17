@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import { ApolloServer } from 'apollo-server-lambda';
 import {
   APIGatewayProxyCallback,
@@ -11,7 +13,8 @@ import { cors } from 'middy/middlewares';
 import schemaCreator from './api';
 import apolloErrorHandler from './api/apolloErrorHandler';
 import applicationErrorHandler from './api/applicationErrorHandler';
-import authorizer from './api/authorizer';
+import authorizerV1 from './api/authorizer/v1';
+import authorizerV2 from './api/authorizer/v2';
 import userRest from './api/user/rest';
 import EventPublisher from './application/eventPublisher';
 import UserService from './application/user/userService';
@@ -150,12 +153,20 @@ const graphqlHandler = async (lambdaEvent: APIGatewayProxyEvent, lambdaContext: 
 export const enhancedGraphqlHandler: any = middy(graphqlHandler).use(cors());
 
 /**
- * Using Lambda Authorizers to perform Authentication.
+ * Using Lambda Authorizers to perform Authentication with REST API (Gateway V1).
  *
  * @see https://www.serverless.com/framework/docs/providers/aws/events/http-api#jwt-authorizers
  * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-lambda-authorizer.html
  */
-export { authorizer };
+export { authorizerV1 };
+
+/**
+ * Using Lambda Authorizers to perform Authentication with HTTP API (Gateway V2).
+ *
+ *
+ * @see https://www.serverless.com/framework/docs/providers/aws/events/http-api#using-function-from-existing-service-as-an-authorizer
+ */
+export { authorizerV2 };
 
 // Add REST endpoints
 
