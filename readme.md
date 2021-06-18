@@ -76,7 +76,7 @@ To run the application locally, just run `npm run offline`.
 #### Motivations
 
 When interacting with other AWS services such as SNS, SQS or S3, running the application offline is not enough
-to check that all binding we specified in the `serverless.yml` file are working as expected.
+to check that all resources described in the `serverless.yml` file are working as expected.
 
 A way to check whether the application would behave like expected once deployed to AWS, without really deploying it,
 is to deploy it locally by using [LocalStack](https://github.com/localstack/localstack).
@@ -144,8 +144,10 @@ In case you are getting some errors (eg. FunctionName not found), try to:
 **Lambda Authorizers (ex Custom Authorizers)**
 
 Lambda Authorizers are [completely ignored by LocalStack](https://github.com/localstack/localstack/issues/1315) in the free version.
+Also, Lambda Authorizers are currently supported only for REST API (AWS Gateway V1), while they are ignored for HTTP API (AWS Gateway V2)
+also in the Pro version.
 
-In order to deploy to LocalStack, comment the authorizer out in the serverless file.
+In order to remove the Lambda Authorizers when deploying to LocalStack, comment the authorizer out in the serverless file.
 
 **Network name**
 
@@ -185,7 +187,7 @@ Inside it, custom code can be added, for example, to check or introspect an inpu
 
 Serverless Node TypeScript comes with an Apollo Server configured out of the box.
 
-The default endpoint is `/graphql` and you can use a [GraphQL Introspector] to see the available Queries and Mutations.
+The default endpoint is `/graphql` and you can use a **GraphQL Introspector** to see the available Queries and Mutations.
 
 For example, the following Query lists the available Users:
 
@@ -224,8 +226,8 @@ equal to `'*'`.
 In order to customise the CORS response, check the [Middy CORS middleware](https://github.com/middyjs/middy/blob/master/docs/middlewares.md#cors).
 and the `handler.ts` file.
 
-Furthermore, in order to properly [use CORS with lambda authorizers](https://serverless.com/blog/cors-api-gateway-survival-guide/),
-their headers must be configured manually in the `serverless.yml` file.
+Furthermore, in order to properly [use CORS with lambda authorizers](https://serverless.com/blog/cors-api-gateway-survival-guide/)
+with REST API (AWS Gateway V1), their headers must be configured manually in the `serverless.yml` file.
 
 ### <a name="devents">Domain Events
 

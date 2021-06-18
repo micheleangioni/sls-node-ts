@@ -102,7 +102,7 @@ functions:
           path: /graphql
           cors: true # For configuration, see https://www.serverless.com/framework/docs/providers/aws/events/http-api#cors-setup
           authorizer:
-            name: customAuthorizerV2 # uncomment when deploying to AWS cloud
+            name: customAuthorizerV2 # comment when deploying to LocalStack
   getUsers:
     handler: src/handler.getUsers
     events:
@@ -110,7 +110,7 @@ functions:
           method: get
           path: /users
           cors: true
-          authorizer: authorizerFuncV1 # uncomment when deploying to AWS cloud
+          authorizer: authorizerFuncV1 # comment when deploying to LocalStack, if not using LocalStack PRO
   authorizerFuncV1:
     handler: src/handler.authorizerV1
   authorizerFuncV2:
