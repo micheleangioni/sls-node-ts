@@ -1,0 +1,31 @@
+name: CI Workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup node ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Create a Docker network
+        run: docker network create sls-node-ts
+
+      - name: Run docker-compose
+        run: docker-compose -f dev/docker-compose.yaml up -d
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
