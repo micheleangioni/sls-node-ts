@@ -24,6 +24,10 @@ jobs:
       - name: Run docker-compose
         run: docker-compose -f dev/docker-compose.yaml up -d
 
+      - name: Sleep for 60 seconds
+        run: sleep 60s
+        shell: bash
+
       - name: Install dependencies
         run: npm install
 
