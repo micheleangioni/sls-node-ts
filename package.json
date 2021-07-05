@@ -41,7 +41,7 @@
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.5",
     "middy": "^0.36.0",
-    "mongoose": "^5.12.13",
+    "mongoose": "^5.13.2",
     "source-map-support": "^0.5.19",
     "uuid": "^8.3.2",
     "validator": "^13.5.2"
