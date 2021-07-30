@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["es2018"],
+    "lib": ["es2019"],
     "moduleResolution": "node",
     "module": "commonjs",
     "noUnusedLocals": true,
