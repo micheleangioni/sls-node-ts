@@ -16,7 +16,7 @@ provider:
   memorySize: 256
   region: 'eu-west-1'
   stage: ${opt:stage, 'development'}
-  timeout: 30
+  timeout: 15
   tracing:
     apiGateway: false
     lambda: false
