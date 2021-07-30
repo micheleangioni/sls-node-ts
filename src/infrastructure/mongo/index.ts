@@ -14,7 +14,7 @@ export default async () => {
   // The following tweak allows for seeding in testing directly using Mongoose to handle DB operations
 
   // tslint:disable-next-line:variable-name
-  let User: Model<any>;
+  let User: Model<any, any, any>;
 
   try {
     User = mongoose.model('users', usersSchema);

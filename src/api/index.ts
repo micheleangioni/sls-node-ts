@@ -1,5 +1,6 @@
 import deepmerge from 'deepmerge';
-import { IResolvers, makeExecutableSchema } from 'graphql-tools';
+import { IResolvers } from '@graphql-tools/utils';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import UserService from '../application/user/userService';
 import userSchemacreator from './user/graphql';
 

@@ -7,7 +7,7 @@ import usersData from '../testData/users.json';
 
 let isMongoInitialized = false;
 // tslint:disable-next-line:variable-name
-let UserModel: Model<any>;
+let UserModel: Model<any, any, any>;
 let userRepo: IUserRepo;
 
 export {userRepo};
