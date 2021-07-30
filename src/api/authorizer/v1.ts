@@ -8,6 +8,7 @@ import policyGenerator from './policyGenerator';
  * When calling the Callback with an error, only 'Allow', 'Deny' and 'Unauthorized' are valid values.
  *
  * @see https://stackoverflow.com/questions/55064760/lambda-authorizer-not-returning-proper-error-message-with-callback-in-node-js
+ * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html
  */
 export default (
   event: APIGatewayTokenAuthorizerEvent,
@@ -18,14 +19,26 @@ export default (
   console.log('event', event);
 
   if (!event.authorizationToken) {
-    return callback('Unauthorized');
+    return callback(
+      null,
+      policyGenerator(
+        'user',
+        'Deny',
+        event.methodArn,
+      ));
   }
 
   const tokenParts = event.authorizationToken.split(' ');
   const tokenValue = tokenParts[1];
 
   if (!(tokenParts[0].toLowerCase() === 'bearer' && tokenValue)) {
-    return callback('Unauthorized');
+    return callback(
+      null,
+      policyGenerator(
+        'user',
+        'Deny',
+        event.methodArn,
+      ));
   }
 
   // [...] check Authorization token
