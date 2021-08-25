@@ -36,7 +36,7 @@
     "@graphql-tools/utils": "^8.0.1",
     "@types/mongoose": "^5.11.97",
     "@types/validator": "^13.6.3",
-    "apollo-server-lambda": "^2.25.2",
+    "apollo-server-lambda": "^3.2.0",
     "dayjs": "^1.10.6",
     "deepmerge": "^4.2.2",
     "dynamoose": "^2.7.3",
