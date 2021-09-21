@@ -42,7 +42,7 @@
     "dynamoose": "^2.7.3",
     "graphql": "^15.5.1",
     "middy": "^0.36.0",
-    "mongoose": "^5.13.4",
+    "mongoose": "^6.0.7",
     "source-map-support": "^0.5.19",
     "uuid": "^8.3.2",
     "validator": "^13.6.0"
