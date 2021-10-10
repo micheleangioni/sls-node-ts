@@ -28,6 +28,10 @@ jobs:
         run: sleep 120s
         shell: bash
 
+      - name: Checks
+        run: aws dynamodb list-tables --endpoint http://localhost:4566
+        shell: bash
+
       - name: Install dependencies
         run: npm install
 
