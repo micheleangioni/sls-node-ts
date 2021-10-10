@@ -144,10 +144,12 @@ In case you are getting some errors (eg. FunctionName not found), try to:
 **Lambda Authorizers (ex Custom Authorizers)**
 
 Lambda Authorizers are [completely ignored by LocalStack](https://github.com/localstack/localstack/issues/1315) in the free version.
-Also, Lambda Authorizers are currently supported only for REST API (AWS Gateway V1), while they are ignored for HTTP API (AWS Gateway V2)
+Also, Lambda Authorizers are currently supported only for REST API (AWS Gateway V1), while they either are ignored or cause errors for HTTP API (AWS Gateway V2)
 also in the Pro version.
 
 In order to remove the Lambda Authorizers when deploying to LocalStack, comment the authorizer out in the serverless file.
+
+The same applies when running serverless-offile: please comment our the Lambda Authorizers for HTTP API (AWS Gateway V2) as they are not supported.
 
 **Network name**
 
