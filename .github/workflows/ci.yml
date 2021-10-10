@@ -24,8 +24,8 @@ jobs:
       - name: Run docker-compose
         run: docker-compose -f dev/docker-compose.yaml up -d
 
-      - name: Sleep for 60 seconds
-        run: sleep 60s
+      - name: Sleep for 120 seconds
+        run: sleep 120s
         shell: bash
 
       - name: Install dependencies
