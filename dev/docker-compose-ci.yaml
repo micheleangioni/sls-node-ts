@@ -19,6 +19,7 @@ services:
       - DATA_DIR=/tmp/localstack2
       - DOCKER_HOST=unix:///var/run/docker.sock
       - LAMBDA_DOCKER_NETWORK=sls-node-ts
+      - SERVICES=dynamodb,sns,sqs
     volumes:
       - "${TMPDIR:-/tmp/localstack2}:/tmp/localstack2" # comment in macOS, see https://github.com/localstack/localstack/issues/2515
       - /var/run/docker.sock:/var/run/docker.sock
