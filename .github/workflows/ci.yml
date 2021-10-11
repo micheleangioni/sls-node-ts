@@ -22,11 +22,10 @@ jobs:
         run: docker network create sls-node-ts
 
       - name: Run docker-compose
-        run: docker-compose -f dev/docker-compose.yaml up
-#        run: docker-compose -f dev/docker-compose.yaml up -d
+        run: docker-compose -f dev/docker-compose.yaml up -d
 
-      - name: Sleep for 120 seconds
-        run: sleep 120s
+      - name: Sleep for 150 seconds
+        run: sleep 150s
         shell: bash
 
       - name: Configure
@@ -36,7 +35,7 @@ jobs:
           aws configure set default.region us-east-1 --endpoint http://localhost:4566
         shell: bash
 
-      - name: Checks
+      - name: Checks DynamoDB
         env:
           AWS_DEFAULT_REGION: us-east-1
           AWS_REGION: us-east-1
@@ -44,6 +43,16 @@ jobs:
           AWS_ACCESS_KEY_ID: dummy-access-key
           AWS_SECRET_ACCESS_KEY: dummy-secret-key
         run: aws dynamodb list-tables --endpoint http://localhost:4566 --region us-east-1
+        shell: bash
+
+      - name: Checks SQS
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_REGION: us-east-1
+          AWS_ACCOUNT_ID: "000000000000"
+          AWS_ACCESS_KEY_ID: dummy-access-key
+          AWS_SECRET_ACCESS_KEY: dummy-secret-key
+        run: aws sns list-topics --endpoint http://localhost:4566 --region us-east-1
         shell: bash
 
       - name: Install dependencies
