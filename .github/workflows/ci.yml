@@ -22,7 +22,8 @@ jobs:
         run: docker network create sls-node-ts
 
       - name: Run docker-compose
-        run: docker-compose -f dev/docker-compose.yaml up -d
+        run: docker-compose -f dev/docker-compose.yaml up
+#        run: docker-compose -f dev/docker-compose.yaml up -d
 
       - name: Sleep for 120 seconds
         run: sleep 120s
