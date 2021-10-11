@@ -28,9 +28,22 @@ jobs:
         run: sleep 120s
         shell: bash
 
-#      - name: Checks
-#        run: aws dynamodb list-tables --endpoint http://localhost:4566 --region us-east-1
-#        shell: bash
+      - name: Configure
+        run: |
+          aws configure set aws_access_key_id dummy-access-key --endpoint http://localhost:4566
+          aws configure set aws_secret_access_key dummy-secret-key --endpoint http://localhost:4566
+          aws configure set default.region us-east-1 --endpoint http://localhost:4566
+        shell: bash
+
+      - name: Checks
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_REGION: us-east-1
+          AWS_ACCOUNT_ID: "000000000000"
+          AWS_ACCESS_KEY_ID: dummy-access-key
+          AWS_SECRET_ACCESS_KEY: dummy-secret-key
+        run: aws dynamodb list-tables --endpoint http://localhost:4566 --region us-east-1
+        shell: bash
 
       - name: Install dependencies
         run: npm install
