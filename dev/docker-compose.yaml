@@ -7,7 +7,7 @@ services:
       - 27017:27017
 
   localstack:
-    image: localstack/localstack:0.12.12
+    image: localstack/localstack:0.12.18
     ports:
       - "443:443"
       - "4566-4599:4566-4599"
