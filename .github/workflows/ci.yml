@@ -34,9 +34,6 @@ jobs:
       - name: Check running containers
         run: docker ps -a
 
-      - name: Print LocalStack logs
-        run: docker logs localstack
-
       - name: Run tests
         env:
           AWS_DEFAULT_REGION: us-east-1
@@ -45,3 +42,6 @@ jobs:
           AWS_ACCESS_KEY_ID: dummy-access-key
           AWS_SECRET_ACCESS_KEY: dummy-secret-key
         run: npm test
+
+      - name: Print LocalStack logs
+        run: docker logs localstack
