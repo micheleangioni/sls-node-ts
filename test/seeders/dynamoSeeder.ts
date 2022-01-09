@@ -13,7 +13,7 @@ let isDynamoInitialized = false;
 let UserModel: ModelType<UserModel>;
 let userRepo: IUserRepo;
 
-AWS.config.region = 'us-east-1';
+AWS.config.region = 'eu-west-1';
 
 export {userRepo};
 
