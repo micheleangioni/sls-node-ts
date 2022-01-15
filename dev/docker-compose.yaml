@@ -7,7 +7,7 @@ services:
       - 27017:27017
 
   localstack:
-    image: localstack/localstack:0.12.19
+    image: localstack/localstack:0.13.3
     ports:
       - "443:443"
       - "4566-4599:4566-4599"
@@ -19,7 +19,7 @@ services:
       - DATA_DIR=/tmp/localstack2
       - DOCKER_HOST=unix:///var/run/docker.sock
       - LAMBDA_DOCKER_NETWORK=sls-node-ts
-      - LS_LOG=trace # Specify the log level ('trace', 'debug', 'info', 'warn', 'error', 'warning')
+      # - LS_LOG=trace # Specify the log level ('trace', 'debug', 'info', 'warn', 'error', 'warning')
     volumes:
       - "${TMPDIR:-/tmp/localstack2}:/tmp/localstack2" # comment in macOS, see https://github.com/localstack/localstack/issues/2515
       - /var/run/docker.sock:/var/run/docker.sock

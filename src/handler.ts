@@ -1,15 +1,13 @@
 /* eslint-disable max-len */
 
-import { ApolloServer } from 'apollo-server-lambda';
+import {ApolloServer} from 'apollo-server-lambda';
 import {
-  APIGatewayProxyCallback,
   APIGatewayProxyEvent,
   APIGatewayProxyHandler,
   APIGatewayProxyResult,
   Context,
 } from 'aws-lambda';
-import middy from 'middy';
-import { cors } from 'middy/middlewares';
+import {APIGatewayProxyCallbackV2, APIGatewayProxyEventV2} from 'aws-lambda/trigger/api-gateway-proxy';
 import schemaCreator from './api';
 import apolloErrorHandler from './api/apolloErrorHandler';
 import applicationErrorHandler from './api/applicationErrorHandler';
@@ -23,14 +21,15 @@ import { IUserRepo } from './domain/user/IUserRepo';
 import infraServicesCreator from './infrastructure';
 import ILogger from './infrastructure/logger/ILogger';
 import { loadSecrets } from './infrastructure/secrets';
+import isRunningInLocalStack from './infrastructure/utils/isRunningInLocalStack';
 
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
 
 type ApolloHandler = (
-  event: APIGatewayProxyEvent,
+  event: APIGatewayProxyEventV2,
   context: Context,
-  callback: APIGatewayProxyCallback,
+  callback: APIGatewayProxyCallbackV2,
 ) => void;
 
 // Connection instances must be defined OUTSIDE the Lambda handlers to be shared amongst Lambda calls
@@ -90,7 +89,7 @@ const createApolloHandler = async (accountId: string): Promise<ApolloHandler> =>
   const schema = schemaCreator({ userService });
 
   const server = new ApolloServer({
-    context: ({ event, context }: { event: APIGatewayProxyEvent; context: Context }) => ({
+    context: ({ event, context }: { event: APIGatewayProxyEventV2; context: Context }) => ({
       context,
       event,
       headers: event.headers,
@@ -101,9 +100,15 @@ const createApolloHandler = async (accountId: string): Promise<ApolloHandler> =>
   });
 
   // Create and return the ApolloHandler
-  apolloHandler = server.createHandler();
-
-  return apolloHandler;
+  return server.createHandler({
+    expressGetMiddlewareOptions: {
+      cors: {
+        allowedHeaders: '*',
+        credentials: true,
+        origin: '*',
+      },
+    },
+  });
 };
 
 /**
@@ -127,30 +132,33 @@ const createRESTHandlers = async (accountId: string) => {
 
 // Export GraphQL Server
 
-/**
- * This trick is needed because the Apollo handler requires a callback as 3rd argument,
- * while we need to define the graphqlHandler() function as async, without using the callback.
- *
- * @see https://github.com/apollographql/apollo-server/issues/2705
- * @param {APIGatewayProxyEvent} event
- * @param {Context} context
- * @param apollo
- * @return Promise<void>
- */
-const runApollo = (event: APIGatewayProxyEvent, context: Context, apollo: ApolloHandler): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    const callback = (error: any, body: any) => (error ? reject(error) : resolve(body));
-    apollo(event, context, callback);
-  });
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export const graphqlHandler = async (lambdaEvent: APIGatewayProxyEventV2, lambdaContext: Context) => {
+  /**
+   * Localstack doesn't inject the `version` and http fields into the event object.
+   *
+   * @see https://github.com/localstack/localstack/issues/5259
+   * https://github.com/localstack/localstack/issues/5281
+   */
+  if (isRunningInLocalStack) {
+    lambdaEvent.version = '2.0';
+    lambdaEvent.rawPath = '/graphql';
+    lambdaEvent.requestContext.http = {
+      method: 'POST',
+      path: '/graphql',
+      protocol: 'HTTP/1.1',
+      sourceIp: 'IP',
+      userAgent: 'agent',
+    };
+  }
+
+  /**
+   * The 3rd argument, the callback, is indeed optional.
+   * @see https://www.apollographql.com/docs/apollo-server/migration/#apollo-server-lambda
+   */
+  // @ts-ignore
+  return (await createApolloHandler('ciaone'))(lambdaEvent, lambdaContext);
 };
-
-const graphqlHandler = async (lambdaEvent: APIGatewayProxyEvent, lambdaContext: Context) => {
-  const apollo: ApolloHandler = await createApolloHandler(lambdaEvent.requestContext.accountId);
-
-  return await runApollo(lambdaEvent, lambdaContext, apollo);
-};
-
-export const enhancedGraphqlHandler: any = middy(graphqlHandler).use(cors());
 
 /**
  * Using Lambda Authorizers to perform Authentication with REST API (Gateway V1).
@@ -162,7 +170,6 @@ export { authorizerV1 };
 
 /**
  * Using Lambda Authorizers to perform Authentication with HTTP API (Gateway V2).
- *
  *
  * @see https://www.serverless.com/framework/docs/providers/aws/events/http-api#using-function-from-existing-service-as-an-authorizer
  */
