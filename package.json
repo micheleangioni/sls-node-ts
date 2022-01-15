@@ -1,6 +1,6 @@
 {
   "name": "sls-node-ts",
-  "version": "0.11.5",
+  "version": "0.12.0",
   "description": "Serverless Node.js TypeScript starter to write serverless applications by using the Serverless Framework in Node.js and TypeScript",
   "main": "src/handler.ts",
   "scripts": {
