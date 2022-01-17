@@ -8,22 +8,24 @@ export default (logger: ILogger) => (error: GraphQLError): GraphQLFormattedError
 
   // @see https://www.apollographql.com/docs/apollo-server/data/errors/ for the list of errors
   if (code === 'INTERNAL_SERVER_ERROR') {
-    logger.info(error);
-  } else {
     logger.error(error);
+  } else {
+    logger.info(error);
   }
 
   // Return proper error response
   let statusCode: number = 500;
 
   switch (code) {
-    case 'ValidationError':
+    case 'UNAUTHENTICATED':
       statusCode = 401;
       break;
-    case 'UNAUTHENTICATED':
+    case 'FORBIDDEN':
       statusCode = 403;
       break;
     case 'BAD_USER_INPUT':
+    case 'GRAPHQL_PARSE_FAILED':
+    case 'GRAPHQL_VALIDATION_FAILED':
       statusCode = 412;
       break;
     default:
