@@ -1,6 +1,6 @@
 {
   "name": "sls-node-ts",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "Serverless Node.js TypeScript starter to write serverless applications by using the Serverless Framework in Node.js and TypeScript",
   "main": "src/handler.ts",
   "scripts": {
@@ -41,7 +41,7 @@
     "deepmerge": "^4.2.2",
     "dynamoose": "^2.8.3",
     "graphql": "^16.2.0",
-    "mongoose": "^5.13.14",
+    "mongoose": "^6.1.7",
     "source-map-support": "^0.5.21",
     "uuid": "^8.3.2",
     "validator": "^13.7.0"
