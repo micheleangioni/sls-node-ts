@@ -8,7 +8,7 @@ export default () => {
   if (isRunningLocally) {
     // If deploying to LocalStack, point Dynamo to the LocalStack container, otherwise to the localhost LocalStack
     const connectionString = isRunningInLocalStack
-      ? 'http://localstack:4566'
+      ? process.env.AWS_ENDPOINT_URL
       : 'http://localhost:4566';
 
     dynamoose.aws.ddb.local(connectionString);
