@@ -1,7 +1,7 @@
 # Serverless Node TypeScript
 
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/micheleangioni/sls-node-ts?color=stable&label=version)
-[![Build Status](https://api.travis-ci.org/micheleangioni/sls-node-ts.svg?branch=master)](https://travis-ci.org/micheleangioni/sls-node-ts)
+[![Build Status](https://github.com/micheleangioni/sls-node-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/micheleangioni/sls-node-ts/actions/workflows/ci.yml)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 > Serverless Node TypeScript is a starter kit to write serverless applications 
