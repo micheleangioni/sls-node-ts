@@ -144,12 +144,8 @@ In case you are getting some errors (eg. FunctionName not found), try to:
 **Lambda Authorizers (ex Custom Authorizers)**
 
 Lambda Authorizers are [completely ignored by LocalStack](https://github.com/localstack/localstack/issues/1315) in the free version.
-Also, Lambda Authorizers are currently supported only for REST API (AWS Gateway V1), while they either are ignored or cause errors for HTTP API (AWS Gateway V2)
-also in the Pro version.
 
-In order to remove the Lambda Authorizers when deploying to LocalStack, comment the authorizer out in the serverless file.
-
-The same applies when running serverless-offile: please comment our the Lambda Authorizers for HTTP API (AWS Gateway V2) as they are not supported.
+serverless-offline instead only supports Lambda Authorizers for REST API (AWS Gateway V1), while ignoring Lambda Authorizers for HTTP API (AWS Gateway V2) as they are not supported.
 
 **Network name**
 
@@ -182,7 +178,7 @@ To completely remove the deployed application, run `npm run remove-staging` or `
 Authentication is handled via [Lambda Authorizers](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html),
 easily configurable [via Serverless Framework](https://serverless.com/framework/docs/providers/aws/events/apigateway#http-endpoints-with-custom-authorizers).
 
-In practice, before starting our Lambda function, the Lambda Authorizer in `src/api/authorizer/index.ts` will run.
+In practice, before starting our Lambda function, the Lambda Authorizer in `src/api/authorizer/v1.ts` or `src/api/authorizer/v2.ts` will run.
 Inside it, custom code can be added, for example, to check or introspect an input Authorization Token.
 
 #### <a name="apollo">Apollo Server (GraphQL)

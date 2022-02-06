@@ -1,3 +1,4 @@
+frameworkVersion: '3'
 service: slsnode # for local development env name should be short
 
 plugins:
@@ -22,41 +23,41 @@ provider:
 
   tags:
     project: slsnode
-    httpApi:
-      useProviderTags: true
 
   deploymentBucket:
     name: ${file(package.json):name}-bucket
     serverSideEncryption: AES256
 
   # Policies
-  iamManagedPolicies:
-    - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-  iamRoleStatements:
-    - Effect: 'Allow'
-      Action:
-        - 'secretsmanager:GetSecretValue'
-      Resource: [
-        "*"
-      ]
-    - Effect: Allow
-      Action:
-        - dynamodb:DescribeTable
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-        - dynamodb:BatchWriteItem
-        - dynamodb:ConditionCheckItem
-      Resource:
-        - "Fn::GetAtt": [ UserTable, Arn ]
-    - Effect: 'Allow'
-      Action:
-        - sns:Publish
-      Resource:
-        !Ref SnsUserTopic
+  iam:
+    role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'secretsmanager:GetSecretValue'
+          Resource: [
+            "*"
+          ]
+        - Effect: Allow
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:BatchWriteItem
+            - dynamodb:ConditionCheckItem
+          Resource:
+            - "Fn::GetAtt": [ UserTable, Arn ]
+        - Effect: 'Allow'
+          Action:
+            - sns:Publish
+          Resource:
+            !Ref SnsUserTopic
 
   environment:
     ENV: ${self:provider.stage}
@@ -68,6 +69,7 @@ provider:
 
   # HTTP API (Gateway v2) Configuration
   httpApi:
+    useProviderTags: true
     authorizers:
       customAuthorizerV2:
         type: request
@@ -101,7 +103,7 @@ functions:
           path: /graphql
           cors: true # For configuration, see https://www.serverless.com/framework/docs/providers/aws/events/http-api#cors-setup
           authorizer:
-            name: customAuthorizerV2 # comment when deploying to LocalStack and serverless-offline
+            name: customAuthorizerV2
   getUsers:
     handler: src/handler.getUsers
     events:

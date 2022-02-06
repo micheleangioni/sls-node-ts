@@ -21,7 +21,6 @@ import { IUserRepo } from './domain/user/IUserRepo';
 import infraServicesCreator from './infrastructure';
 import ILogger from './infrastructure/logger/ILogger';
 import { loadSecrets } from './infrastructure/secrets';
-import isRunningInLocalStack from './infrastructure/utils/isRunningInLocalStack';
 
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 console.log(`Booting SLS-NODE-TS in ${process.env.NODE_ENV} NODE_ENV and in ${process.env.ENV} ENV.`);
@@ -134,24 +133,6 @@ const createRESTHandlers = async (accountId: string) => {
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export const graphqlHandler = async (lambdaEvent: APIGatewayProxyEventV2, lambdaContext: Context) => {
-  /**
-   * Localstack doesn't inject the `version` and http fields into the event object.
-   *
-   * @see https://github.com/localstack/localstack/issues/5259
-   * https://github.com/localstack/localstack/issues/5281
-   */
-  if (isRunningInLocalStack) {
-    lambdaEvent.version = '2.0';
-    lambdaEvent.rawPath = '/graphql';
-    lambdaEvent.requestContext.http = {
-      method: 'POST',
-      path: '/graphql',
-      protocol: 'HTTP/1.1',
-      sourceIp: 'IP',
-      userAgent: 'agent',
-    };
-  }
-
   /**
    * The 3rd argument, the callback, is indeed optional.
    * @see https://www.apollographql.com/docs/apollo-server/migration/#apollo-server-lambda
