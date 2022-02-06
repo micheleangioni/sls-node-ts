@@ -9,7 +9,7 @@ services:
   localstack:
     image: localstack/localstack:0.14.0
     ports:
-      - "53:53"
+#      - "53:53" // Commented out as failing in GitHub actions
       - "443:443"
       - "4510-4559:4510-4559"
       - "4566:4566"
