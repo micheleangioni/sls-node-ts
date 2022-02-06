@@ -9,10 +9,7 @@ type APIGatewayLambdaAuthorizerResponseV2 = {
 
 const authorizer: APIGatewayProxyHandlerV2<APIGatewayLambdaAuthorizerResponseV2>
   = async (event: APIGatewayProxyEventV2, _context: Context): Promise<APIGatewayLambdaAuthorizerResponseV2> => {
-    console.log('INSIDE THE AUTHORIZER V2');
-    console.log('event', event);
-
-    const tokenParts = (event.headers.Authorization || event.headers.Authorization)?.split(' ');
+    const tokenParts = event.headers.Authorization?.split(' ');
 
     if (!tokenParts) {
       return {
@@ -22,7 +19,7 @@ const authorizer: APIGatewayProxyHandlerV2<APIGatewayLambdaAuthorizerResponseV2>
 
     const [tokenAuth, tokenValue] = tokenParts;
 
-    if (!(tokenAuth === 'bearer' && tokenValue)) {
+    if (!(tokenAuth.toLowerCase() === 'bearer' && tokenValue)) {
       return {
         isAuthorized: false,
       };
@@ -37,7 +34,7 @@ const authorizer: APIGatewayProxyHandlerV2<APIGatewayLambdaAuthorizerResponseV2>
       context: {
         userId: sub.toString(),
       },
-      isAuthorized: false,
+      isAuthorized: true,
     };
   };
 

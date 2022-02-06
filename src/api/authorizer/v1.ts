@@ -15,9 +15,6 @@ export default (
   _context: any,
   callback: (err: any | null, policy?: Dictionary<any>,
   ) => void): void => {
-  console.log('INSIDE THE AUTHORIZER V1');
-  console.log('event', event);
-
   if (!event.authorizationToken) {
     return callback(
       null,
