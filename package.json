@@ -41,7 +41,7 @@
     "deepmerge": "^4.2.2",
     "dynamoose": "^2.8.3",
     "graphql": "^16.2.0",
-    "mongoose": "^5.13.14",
+    "mongoose": "^6.2.1",
     "source-map-support": "^0.5.21",
     "uuid": "^8.3.2",
     "validator": "^13.7.0"
