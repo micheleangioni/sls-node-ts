@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-
 import {ApolloServer} from 'apollo-server-lambda';
 import {
   APIGatewayProxyEvent,
@@ -53,6 +52,7 @@ const createServiceInstances = async (accountId: string) => {
   let infraServices: { eventPublisher: EventPublisher; logger: ILogger; userRepo: IUserRepo };
 
   try {
+    // eslint-disable-next-line prefer-const
     infraServices = await infraServicesCreator(accountId);
     logger = infraServices.logger;
   } catch (e) {
@@ -99,7 +99,7 @@ const createApolloHandler = async (accountId: string): Promise<ApolloHandler> =>
   });
 
   // Create and return the ApolloHandler
-  return server.createHandler({
+  return Promise.resolve(server.createHandler({
     expressGetMiddlewareOptions: {
       cors: {
         allowedHeaders: '*',
@@ -107,7 +107,7 @@ const createApolloHandler = async (accountId: string): Promise<ApolloHandler> =>
         origin: '*',
       },
     },
-  });
+  }));
 };
 
 /**

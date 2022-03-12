@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import EventPublisher from '../../../src/application/eventPublisher';
 import UserService from '../../../src/application/user/userService';
 import {UserCreateData} from '../../../src/application/user/declarations';

@@ -1,10 +1,10 @@
+import {IUserRepo} from '../../domain/user/IUserRepo';
+import User from '../../domain/user/user';
 import {AbstractApplicationService} from '../AbstractApplicationService';
 import {ApplicationError} from '../ApplicationError';
 import {ErrorCodes} from '../declarations';
 import EventPublisher from '../eventPublisher';
 import {UserCreateData} from './declarations';
-import {IUserRepo} from '../../domain/user/IUserRepo';
-import User from '../../domain/user/user';
 
 export default class UserService extends AbstractApplicationService {
   constructor(private readonly userRepo: IUserRepo, eventPublisher: EventPublisher) {
@@ -54,6 +54,7 @@ export default class UserService extends AbstractApplicationService {
     let persistedUser: User;
 
     try {
+      // eslint-disable-next-line prefer-const
       persistedUser = await this.userRepo.persist(user);
     } catch (e) {
       if (e.code === 11000) {

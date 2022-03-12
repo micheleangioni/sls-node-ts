@@ -1,5 +1,4 @@
-/* eslint-disable no-shadow */
-
+import IEventInterface from '@micheleangioni/node-messagebrokers/dist/events/IEventInterface';
 import {IDomainEvent} from '../domain/IDomainEvent';
 
 export type ApplicationErrorData = {
@@ -21,5 +20,5 @@ export type GroupedByAggregateEvents = {
 };
 
 export type GroupedByAggregateCloudEvents = {
-  [aggregate: string]: any[];
+  [aggregate: string]: IEventInterface[];
 };

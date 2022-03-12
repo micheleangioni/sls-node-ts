@@ -1,22 +1,51 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "noImplicitAny": true,
-    "resolveJsonModule": true,
+    // Project options
+    "allowJs": true, // Allow JavaScript files to be imported inside your project, instead of just .ts and .tsx files
+    "declaration": false, // Generate .d.ts files for every TypeScript or JavaScript file inside your project
+    "lib": ["es2021"], // Specifies which default set of type definitions to use ("DOM", "ES6", etc)
+    "module": "commonjs", // Sets the module system for the program. "CommonJS" for node projects.
+    "noEmit": false, // Do not emit compiler output files like JavaScript source code, source-maps or declarations.
+    "outDir": ".build", // .js (as well as .d.ts, .js.map, etc.) files will be emitted into this directory
+    "rootDir": "./", // The longest common path of all non-declaration input files
+    "sourceMap": true, // Enables the generation of sourcemap files
+    "target": "es2019", // Target environment
+
+    // Module resolution
     "allowSyntheticDefaultImports": true,
-    "lib": ["es2019"],
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "sourceMap": true,
-    "allowJs": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
+    "baseUrl": "./", // Sets a base directory to resolve non-absolute module names
+    "esModuleInterop": true, // fixes some issues TS originally had with the ES6 spec where TypeScript treats CommonJS/AMD/UMD modules similar to ES6 module
+    "moduleResolution": "node", // Pretty much always node for modern JS. Other option is "classic"
+
+    // Advanced
+    "forceConsistentCasingInFileNames": true, // TypeScript will issue an error if a program tries to include a file by a casing different from the casing on disk
+    "listEmittedFiles": false, // Print names of generated files part of the compilation
+    "listFiles": false, // Print names of files part of the compilation
+    "resolveJsonModule": true, // Allows importing modules with a ‘.json’ extension, which is a common practice in node projects
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "traceResolution": false, // Report module resolution log messages
     "useUnknownInCatchVariables": false,
-    "target": "es2019",
-    "outDir": ".build",
-    "rootDir": "./"
+
+    // Experimental
+    "experimentalDecorators": false, // Enables experimental support for decorators
+    "emitDecoratorMetadata": false, // Enables experimental support for emitting type metadata for decorators which works with the module
+
+    // Strict checks
+    "strict": true, // Enable all strict type-checking options
+    // "allowUnreachableCode": false, // Pick up dead code paths
+    // "alwaysStrict": true, // Parse in strict mode and emit "use strict" for each source file
+     "noImplicitAny": true, // Raise error on expressions and declarations with an implied 'any' type
+    // "noImplicitThis": true, // Raise error on 'this' expressions with an implied 'any' type
+    // "strictFunctionTypes": true, // Enable strict checking of function types
+    // "strictNullChecks": true, // Enable strict null checks
+    "strictPropertyInitialization": false, // Enable strict checking of property initialization in classes
+
+    // Linter Checks
+    "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statement
+    "noImplicitReturns": false, // Report error when not all code paths in function return a value
+    "noUnusedLocals": true, // Report errors on unused local variables
+    "noUnusedParameters": true, // Report errors on unused parameters
+    "pretty": true // Stylize errors and messages using color and context
   },
   "include": [
     "src/**/*.ts"

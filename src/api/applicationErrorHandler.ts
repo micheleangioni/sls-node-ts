@@ -4,7 +4,7 @@ import {ErrorCodes} from '../application/declarations';
 import ILogger from '../infrastructure/logger/ILogger';
 import {getErrorResponse} from './responseGenerator';
 
-export default (err: ApplicationError | Error, logger: ILogger): APIGatewayProxyResult => {
+export default (err: unknown, logger: ILogger): APIGatewayProxyResult => {
   if (err instanceof ApplicationError) {
     if (err.statusCode >= 500) {
       logger.error(err);

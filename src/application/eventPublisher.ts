@@ -1,6 +1,6 @@
+import {CloudEventFactory, IBrokerInterface} from '@micheleangioni/node-messagebrokers';
 import {CloudEvent} from 'cloudevents';
 import {IDomainEvent} from '../domain/IDomainEvent';
-import {CloudEventFactory, IBrokerInterface} from '@micheleangioni/node-messagebrokers';
 import ILogger from '../infrastructure/logger/ILogger';
 import {GroupedByAggregateCloudEvents, GroupedByAggregateEvents} from './declarations';
 

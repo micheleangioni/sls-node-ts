@@ -2,9 +2,9 @@ import dayjs from 'dayjs';
 import {QueryResponse} from 'dynamoose/dist/DocumentRetriever';
 import {ModelType} from 'dynamoose/dist/General';
 import { v4 as uuidv4 } from 'uuid';
-import { User as UserModel } from '../dynamo/schemas/usersSchema';
 import {IUserRepo} from '../../domain/user/IUserRepo';
 import User from '../../domain/user/user';
+import { User as UserModel } from '../dynamo/schemas/usersSchema';
 import {PersistedUserData, ToBePersistedUserData} from './declarations';
 
 export class UserDynamoRepo implements IUserRepo {
@@ -95,7 +95,7 @@ export class UserDynamoRepo implements IUserRepo {
     if (user.createdAt) {
       const updatedUser: PersistedUserData = await this.userModel.update(
         { _id: user._id },
-        dataToBePersisted
+        dataToBePersisted,
       );
 
       user.updateDates(dayjs(updatedUser.updatedAt));

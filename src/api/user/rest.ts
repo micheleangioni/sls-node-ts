@@ -12,7 +12,7 @@ export default (userService: UserService, logger: ILogger): Dictionary<APIGatewa
     getUsers: async (_event: APIGatewayProxyEvent, _context: Context) => {
       // _context.event.requestContext.authorizer.userId is the Authenticated User id
 
-      let users: TransformedUser[];
+      let users: TransformedUser[] = [];
 
       try {
         users = (await userService.getAll())

@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
-import config from '../../config';
 import {Dictionary} from '../../domain/declarations';
+import config from '../../config';
 
 const getSecretValue = (client: AWS.SecretsManager, secretName: string): Promise<Dictionary<string>> => {
   return new Promise((resolve, reject) => {
