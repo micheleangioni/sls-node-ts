@@ -17,7 +17,7 @@ services:
     environment:
       - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY}
       - DEBUG=1
-      - LAMBDA_EXECUTOR=docker
+      - LAMBDA_EXECUTOR=docker-reuse # see https://docs.localstack.cloud/localstack/configuration/
       - DATA_DIR=/tmp/localstack2
       - DOCKER_HOST=unix:///var/run/docker.sock
       - LAMBDA_DOCKER_NETWORK=sls-node-ts
