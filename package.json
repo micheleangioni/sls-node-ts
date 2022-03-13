@@ -8,6 +8,7 @@
     "offline": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless.js offline start --noAuth --stage development",
     "package": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless.js package --stage development",
     "test": "node --max-old-space-size=4096 node_modules/jest/bin/jest --runInBand --forceExit --verbose",
+    "test:coverage": "node --max-old-space-size=4096 node_modules/jest/bin/jest --runInBand --forceExit --verbose --coverage",
     "watch-test": "node --max-old-space-size=4096 node_modules/jest/bin/jest --runInBand --verbose --watchAll",
     "deploy-local": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless.js deploy --stage local --region us-east-1 --verbose --force",
     "deploy-staging": "node --max-old-space-size=4096 node_modules/serverless/bin/serverless.js deploy --stage staging --region eu-west-1 --verbose --force",

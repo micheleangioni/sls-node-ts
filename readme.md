@@ -321,7 +321,7 @@ the one defined in the `name` field of the `package.json`.
 
 ## <a name="testing"></a>Testing
 
-Run `npm test` to run the tests or `npm run watch-test` to run the tests with the watcher.
+Run `npm test` to run the tests or `npm run test:coverage` to run the tests with coverage.
 
 ## <a name="guidelines"></a>Contribution Guidelines
 

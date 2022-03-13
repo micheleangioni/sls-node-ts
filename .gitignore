@@ -37,3 +37,6 @@ ehthumbs_vista.db
 # Build files
 .build
 build
+
+# Tests Coverage
+coverage
