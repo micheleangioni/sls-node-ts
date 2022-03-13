@@ -28,32 +28,34 @@
       "js",
       "json"
     ],
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "clearMocks": true
   },
   "dependencies": {
     "@micheleangioni/node-messagebrokers": "^0.9.4",
     "@graphql-tools/schema": "^8.3.2",
     "@graphql-tools/utils": "^8.6.2",
+    "@types/mongoose": "^5.11.97",
     "@types/validator": "^13.7.1",
     "apollo-server-lambda": "^3.6.3",
     "dayjs": "^1.10.8",
     "deepmerge": "^4.2.2",
     "dynamoose": "^2.8.5",
     "graphql": "^16.3.0",
-    "mongoose": "^6.2.3",
+    "mongoose": "^5.13.14",
     "source-map-support": "^0.5.21",
     "uuid": "^8.3.2",
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.92",
+    "@types/aws-lambda": "^8.10.93",
     "@types/jest": "^27.4.1",
     "@types/node": "^14.18.12",
     "@types/uuid": "^8.3.4",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
     "bufferutil": "^4.0.6",
-    "eslint": "^7.32.0",
+    "eslint": "^8.11.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-sort-class-members": "^1.14.1",
     "jest": "^27.5.1",
@@ -63,8 +65,8 @@
     "serverless-offline": "^8.4.0",
     "serverless-plugin-typescript": "^2.1.1",
     "ts-jest": "^27.1.3",
-    "ts-node": "^10.5.0",
-    "typescript": "~4.4.4",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.2",
     "utf-8-validate": "^5.0.8"
   },
   "author": {
