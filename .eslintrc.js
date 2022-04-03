@@ -142,6 +142,8 @@ module.exports = {
         '[properties]',
         '[conventional-private-properties]',
         'constructor',
+        '[getters]',
+        '[setters]',
         '[methods]',
         '[conventional-private-methods]',
       ],
