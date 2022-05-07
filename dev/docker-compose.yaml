@@ -7,7 +7,7 @@ services:
       - 27017:27017
 
   localstack:
-    image: localstack/localstack:0.14.0
+    image: localstack/localstack:0.14.2
     ports:
 #      - "53:53" // Commented out as failing in GitHub actions
       - "443:443"
