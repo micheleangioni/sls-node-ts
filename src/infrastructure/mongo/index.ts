@@ -9,7 +9,7 @@ export default async () => {
       ? 'mongodb://mongosls:27017/sls-node-ts-localstack'
       : `mongodb://127.0.0.1:27017/sls-node-ts-${process.env.ENV || ''}`;
 
-  await mongoose.connect(mongoUri, { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true });
+  await mongoose.connect(mongoUri, {});
 
   // The following tweak allows for seeding in testing directly using Mongoose to handle DB operations
 
