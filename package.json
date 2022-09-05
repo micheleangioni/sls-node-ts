@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@micheleangioni/node-messagebrokers": "^0.9.4",
-    "@graphql-tools/schema": "^8.3.6",
+    "@graphql-tools/schema": "^9.0.3",
     "@graphql-tools/utils": "^8.6.5",
     "@types/validator": "^13.7.2",
     "apollo-server-lambda": "^3.6.7",
