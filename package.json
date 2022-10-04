@@ -50,7 +50,7 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.95",
     "@types/jest": "^27.4.1",
-    "@types/node": "^14.18.16",
+    "@types/node": "^18.8.1",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
